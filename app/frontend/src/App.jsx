@@ -18,10 +18,12 @@ import RestroFeedback from "./pages/restro/Feedback";
 import RestroSettings from "./pages/restro/Settings";
 import RestroNotifications from "./pages/restro/Notifications";
 import RestroInvoice from "./pages/restro/Invoice";
+import RestroStaff from "./pages/restro/Staff";
 import CustomerMenu from "./pages/customer/Menu";
 import CustomerCart from "./pages/customer/Cart";
 import CustomerMyOrder from "./pages/customer/MyOrder";
 import NotFound from "./pages/NotFound";
+import Landing from "./pages/Landing";
 
 const ProtectedSuperAdmin = ({ children }) => {
   const { user } = useAuthStore();
@@ -57,13 +59,14 @@ export default function App() {
         <Route path="report" element={<RestroReport />} />
         <Route path="notifications" element={<RestroNotifications />} />
         <Route path="invoice/:id" element={<RestroInvoice />} />
+        <Route path="staff" element={<RestroStaff />} />
         <Route path="feedback" element={<RestroFeedback />} />
         <Route path="settings" element={<RestroSettings />} />
       </Route>
       <Route path="/menu/:slug" element={<CustomerMenu />} />
       <Route path="/menu/:slug/cart" element={<CustomerCart />} />
       <Route path="/menu/:slug/order/:ordercode" element={<CustomerMyOrder />} />
-      <Route path="/" element={<Navigate to="/admin/login" replace />} />
+      <Route path="/" element={<Landing />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

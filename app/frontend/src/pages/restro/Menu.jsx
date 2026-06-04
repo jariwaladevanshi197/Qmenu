@@ -114,36 +114,76 @@ export default function RestroMenu() {
         ))}
       </div>
 
-      {/* Items grid */}
+      {/* Items table */}
       {itemsLoading ? <PageLoader /> : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="card overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-gray-50 border-b border-gray-100">
+                <th className="px-4 py-3 text-left font-medium text-gray-500 w-14">Image</th>
+                <th className="px-4 py-3 text-left font-medium text-gray-500">Name</th>
+                <th className="px-4 py-3 text-left font-medium text-gray-500 hidden md:table-cell">Gujarati / Hindi</th>
+                <th className="px-4 py-3 text-left font-medium text-gray-500">Type</th>
+                <th className="px-4 py-3 text-left font-medium text-gray-500">Status</th>
+                <th className="px-4 py-3 text-right font-medium text-gray-500">Price</th>
+                <th className="px-4 py-3 text-center font-medium text-gray-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
           {items.map((item) => (
-            <div key={item.id} className={`card overflow-hidden ${!item.available ? 'opacity-60' : ''}`}>
-              <div className="relative">
+            <tr key={item.id} className={`border-b border-gray-50 hover:bg-gray-50/60 transition-colors ${!item.available ? 'opacity-50' : ''}`}>
+              {/* Image */}
+              <td className="px-4 py-3">
                 {item.image ? (
-                  <img src={`${API}${item.image}`} alt={item.name_eng} className="w-full h-36 object-cover" />
+                  <img src={item.image.startsWith('http') ? item.image : `${API}${item.image}`} alt={item.name_eng}
+                    className="w-10 h-10 rounded-lg object-cover border border-gray-100" />
                 ) : (
-                  <div className="w-full h-36 bg-gray-100 flex items-center justify-center"><ImageOff size={28} className="text-gray-300" /></div>
-                )}
-                <span className={`absolute top-2 left-2 ${item.veg ? 'bg-green-500' : 'bg-red-500'} text-white text-xs px-2 py-0.5 rounded-full flex items-center gap-1`}>
-                  {item.veg ? <Leaf size={10} /> : <Drumstick size={10} />} {item.veg ? 'Veg' : 'Non-veg'}
-                </span>
-                {!item.available && <span className="absolute top-2 right-2 badge-red">Unavailable</span>}
-              </div>
-              <div className="p-3">
-                <p className="font-medium text-gray-900 truncate">{item.name_eng}</p>
-                <p className="text-xs text-gray-400">{item.name_guj} · {item.name_hindi}</p>
-                <div className="flex items-center justify-between mt-2">
-                  <p className="font-bold text-primary-600">₹{item.price}</p>
-                  <div className="flex gap-1">
-                    <button className="btn-ghost btn-sm p-1.5" onClick={() => openEditItem(item)}><Pencil size={13} /></button>
-                    <button className="btn-ghost btn-sm p-1.5 text-red-400 hover:bg-red-50" onClick={() => setDeleteTarget({ type: 'item', id: item.id })}><Trash2 size={13} /></button>
+                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                    <ImageOff size={14} className="text-gray-300" />
                   </div>
+                )}
+              </td>
+              {/* Name */}
+              <td className="px-4 py-3">
+                <p className="font-medium text-gray-900">{item.name_eng}</p>
+              </td>
+              {/* Gujarati / Hindi */}
+              <td className="px-4 py-3 hidden md:table-cell">
+                <p className="text-xs text-gray-500">{item.name_guj || '—'}</p>
+                <p className="text-xs text-gray-400">{item.name_hindi || '—'}</p>
+              </td>
+              {/* Veg/Non-veg */}
+              <td className="px-4 py-3">
+                <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${item.veg ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                  {item.veg ? <Leaf size={10} /> : <Drumstick size={10} />}
+                  {item.veg ? 'Veg' : 'Non-veg'}
+                </span>
+              </td>
+              {/* Available */}
+              <td className="px-4 py-3">
+                <span className={`badge ${item.available ? 'badge-green' : 'badge-red'}`}>
+                  {item.available ? 'Available' : 'Unavailable'}
+                </span>
+              </td>
+              {/* Price */}
+              <td className="px-4 py-3 text-right font-bold text-primary-600">₹{item.price}</td>
+              {/* Actions */}
+              <td className="px-4 py-3">
+                <div className="flex items-center justify-center gap-1">
+                  <button className="btn-ghost btn-sm p-1.5" onClick={() => openEditItem(item)} title="Edit"><Pencil size={13} /></button>
+                  <button className="btn-ghost btn-sm p-1.5 text-red-400 hover:bg-red-50" onClick={() => setDeleteTarget({ type: 'item', id: item.id })} title="Delete"><Trash2 size={13} /></button>
                 </div>
-              </div>
-            </div>
+              </td>
+            </tr>
           ))}
-          {!items.length && <p className="col-span-full text-center py-10 text-gray-400">No items. Add your first menu item!</p>}
+        </tbody>
+        </table>
+        {!items.length && (
+          <div className="text-center py-12 text-gray-400">
+            <ImageOff size={32} className="mx-auto mb-3 text-gray-300" />
+            <p>No items yet. Click <strong>+ Add Item</strong> to get started.</p>
+          </div>
+        )}
         </div>
       )}
 

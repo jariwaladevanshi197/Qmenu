@@ -155,14 +155,59 @@ export const getReport = async (req, res) => {
     const { from, to } = req.query;
     const where = { restroid: req.user.id };
     if (from) where.timestamp = { gte: new Date(from) };
-    if (to) where.timestamp = { ...where.timestamp, lte: new Date(to) };
+    if (to) where.timestamp = { ...where.timestamp, lte: new Date(new Date(to).setHours(23, 59, 59, 999)) };
 
-    const [orders, revenue] = await Promise.all([
+    const [orders, revenue, allOrders] = await Promise.all([
       prisma.orderHistory.count({ where }),
       prisma.orderHistory.aggregate({ where, _sum: { grandtotal: true, subtotal: true, discount: true, servicecharge: true } }),
+      prisma.orderHistory.findMany({ where, include: { items: true }, orderBy: { timestamp: 'asc' } }),
     ]);
 
-    res.json({ orders, revenue: revenue._sum });
+    // Daily revenue breakdown
+    const dailyMap = {};
+    allOrders.forEach((o) => {
+      const day = new Date(o.timestamp).toISOString().split('T')[0];
+      if (!dailyMap[day]) dailyMap[day] = { date: day, revenue: 0, orders: 0 };
+      dailyMap[day].revenue += o.grandtotal || 0;
+      dailyMap[day].orders += 1;
+    });
+    const daily = Object.values(dailyMap).sort((a, b) => a.date.localeCompare(b.date));
+
+    // Top selling items
+    const itemMap = {};
+    allOrders.forEach((o) => {
+      o.items.forEach((i) => {
+        if (!itemMap[i.name_eng]) itemMap[i.name_eng] = { name: i.name_eng, qty: 0, revenue: 0 };
+        itemMap[i.name_eng].qty += i.quantity;
+        itemMap[i.name_eng].revenue += i.totalprice;
+      });
+    });
+    const topItems = Object.values(itemMap)
+      .sort((a, b) => b.qty - a.qty)
+      .slice(0, 10);
+
+    // Hourly distribution
+    const hourMap = {};
+    allOrders.forEach((o) => {
+      const h = new Date(o.timestamp).getHours();
+      if (!hourMap[h]) hourMap[h] = { hour: `${h}:00`, orders: 0 };
+      hourMap[h].orders += 1;
+    });
+    const hourly = Array.from({ length: 24 }, (_, h) => hourMap[h] || { hour: `${h}:00`, orders: 0 });
+
+    res.json({
+      summary: {
+        orders,
+        grandtotal: revenue._sum.grandtotal || 0,
+        subtotal:   revenue._sum.subtotal   || 0,
+        discount:   revenue._sum.discount   || 0,
+        servicecharge: revenue._sum.servicecharge || 0,
+        avgOrderValue: orders > 0 ? (revenue._sum.grandtotal || 0) / orders : 0,
+      },
+      daily,
+      topItems,
+      hourly,
+    });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import {
   LayoutDashboard, BookOpen, Table2, ClipboardList,
   History, BarChart2, MessageSquare, Settings,
-  LogOut, UtensilsCrossed, Menu, Bell,
+  LogOut, UtensilsCrossed, Menu, Bell, Users,
 } from "lucide-react";
 
 const radiusPx = { sharp: "2px", rounded: "10px", pill: "999px" };
@@ -110,8 +110,9 @@ export default function RestroLayout() {
       qc.invalidateQueries(["active-orders"]);
       qc.invalidateQueries(["restro-stats"]);
     });
-    socket.on("waiter:called", ({ tableid }) => {
-      toast(`Waiter needed at Table #${tableid}`, { icon: "🔔", duration: 10000 });
+    socket.on("waiter:called", ({ tableid, tableName }) => {
+      const location = tableName || (tableid ? `Table #${tableid}` : "Walk-in customer");
+      toast(`🔔 Waiter needed — ${location}`, { duration: 10000 });
       qc.invalidateQueries(["waiter-requests"]);
       qc.invalidateQueries(["restro-stats"]);
     });
@@ -129,6 +130,7 @@ export default function RestroLayout() {
     { to: "/restro/history",       label: "History",      icon: History },
     { to: "/restro/report",        label: "Report",       icon: BarChart2 },
     { to: "/restro/feedback",      label: "Feedback",     icon: MessageSquare },
+    { to: "/restro/staff",         label: "Staff",        icon: Users },
     { to: "/restro/settings",      label: "Settings",     icon: Settings },
   ];
 

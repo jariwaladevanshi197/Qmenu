@@ -5,9 +5,9 @@ import toast from 'react-hot-toast';
 import Modal from '../../components/ui/Modal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import { PageLoader } from '../../components/ui/Spinner';
-import { Plus, Pencil, ToggleLeft, ToggleRight, Key, CreditCard, Search } from 'lucide-react';
+import { Plus, Pencil, Key, CreditCard, Search } from 'lucide-react';
 
-const SUBTYPE_LABELS = { 0: 'Normal', 1: 'Mega', 2: 'Mega+Site' };
+const SUBTYPE_LABELS = { 0: 'Legacy', 1: 'Mega', 2: 'Mega+Web' };
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 // Defined OUTSIDE component so it's never recreated on re-render
@@ -17,8 +17,8 @@ const Field = ({ label, children }) => (
 
 const emptyForm = {
   restroname: '', mobileno: '', email: '', address: '', password: '', conpassword: '',
-  gstno: '', subtype: '0', subplan: '1', price: '', themecode: '',
-  latitude: '', longitude: '', distance: '', logo: null,
+  gstno: '', subtype: '1', subplan: '1', price: '', themecode: '',
+  latitude: '', longitude: '', distance: '', maxStaff: '5', logo: null,
 };
 
 export default function SuperAdminRestaurants() {
@@ -80,7 +80,7 @@ export default function SuperAdminRestaurants() {
   };
 
   const openEdit = (r) => {
-    setForm({ restroname: r.restroname, mobileno: r.mobileno, email: r.email, address: r.address, password: '', conpassword: '', gstno: r.gstno || '', subtype: String(r.subtype), subplan: String(r.subplan), price: String(r.price), themecode: String(r.themecode || ''), latitude: r.latitude || '', longitude: r.longitude || '', distance: r.distance || '', logo: null });
+    setForm({ restroname: r.restroname, mobileno: r.mobileno, email: r.email, address: r.address, password: '', conpassword: '', gstno: r.gstno || '', subtype: String(r.subtype), subplan: String(r.subplan), price: String(r.price), themecode: String(r.themecode || ''), latitude: r.latitude || '', longitude: r.longitude || '', distance: r.distance || '', maxStaff: String(r.maxStaff || 5), logo: null });
     setEditTarget(r.id);
   };
 
@@ -113,9 +113,8 @@ export default function SuperAdminRestaurants() {
         </div>
         <select className="input w-44" value={subtypeFilter} onChange={(e) => setSubtypeFilter(e.target.value)}>
           <option value="">All Types</option>
-          <option value="0">Normal</option>
           <option value="1">Mega</option>
-          <option value="2">Mega+Site</option>
+          <option value="2">Mega + Web</option>
         </select>
       </div>
 
@@ -127,8 +126,9 @@ export default function SuperAdminRestaurants() {
               <th className="px-4 py-3 text-left font-medium text-gray-500">Restaurant</th>
               <th className="px-4 py-3 text-left font-medium text-gray-500">Mobile</th>
               <th className="px-4 py-3 text-left font-medium text-gray-500">Type</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-500">Staff Limit</th>
               <th className="px-4 py-3 text-left font-medium text-gray-500">Expires</th>
-              <th className="px-4 py-3 text-left font-medium text-gray-500">Status</th>
+              <th className="px-4 py-3 text-center font-medium text-gray-500">Active</th>
               <th className="px-4 py-3 text-left font-medium text-gray-500">Actions</th>
             </tr></thead>
             <tbody>
@@ -145,19 +145,27 @@ export default function SuperAdminRestaurants() {
                     <td className="px-4 py-3 text-gray-600">{r.mobileno}</td>
                     <td className="px-4 py-3"><span className="badge-blue">{SUBTYPE_LABELS[r.subtype]}</span></td>
                     <td className="px-4 py-3">
+                      <span className="inline-flex items-center gap-1 text-xs font-medium text-gray-600">
+                        👥 {r.maxStaff || 5} users
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
                       <span className={expired ? 'text-red-500 text-xs font-medium' : 'text-gray-600 text-xs'}>
                         {exp.toLocaleDateString()}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
-                      <span className={r.status ? 'badge-green' : 'badge-red'}>{r.status ? 'Active' : 'Inactive'}</span>
+                    {/* Active toggle — separate column */}
+                    <td className="px-4 py-3 text-center">
+                      <button
+                        onClick={() => toggleMutation.mutate(r.id)}
+                        title={r.status ? 'Click to deactivate' : 'Click to activate'}
+                        className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200 focus:outline-none ${r.status ? 'bg-green-500' : 'bg-gray-300'}`}>
+                        <span className={`inline-block w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 ${r.status ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
                         <button className="btn-ghost btn-sm p-1.5" onClick={() => openEdit(r)} title="Edit"><Pencil size={14} /></button>
-                        <button className="btn-ghost btn-sm p-1.5" onClick={() => toggleMutation.mutate(r.id)} title="Toggle status">
-                          {r.status ? <ToggleRight size={14} className="text-green-500" /> : <ToggleLeft size={14} className="text-gray-400" />}
-                        </button>
                         <button className="btn-ghost btn-sm p-1.5" onClick={() => openPlan(r)} title="Update plan"><CreditCard size={14} /></button>
                         <button className="btn-ghost btn-sm p-1.5" onClick={() => setPassTarget(r.id)} title="Change password"><Key size={14} /></button>
                       </div>
@@ -183,7 +191,7 @@ export default function SuperAdminRestaurants() {
           <Field label="Confirm Password"><input className="input" type="password" value={form.conpassword} onChange={(e) => setForm({ ...form, conpassword: e.target.value })} /></Field>
           <Field label="Type">
             <select className="input" value={form.subtype} onChange={(e) => setForm({ ...form, subtype: e.target.value })}>
-              <option value="0">Normal</option><option value="1">Mega</option><option value="2">Mega+Site</option>
+              <option value="1">Mega</option><option value="2">Mega + Web</option>
             </select>
           </Field>
           <Field label="Duration (months)">
@@ -192,6 +200,10 @@ export default function SuperAdminRestaurants() {
             </select>
           </Field>
           <Field label="Price (₹)"><input className="input" type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} /></Field>
+          <Field label="Max Staff Users 👥">
+            <input className="input" type="number" min="1" max="50" value={form.maxStaff} onChange={(e) => setForm({ ...form, maxStaff: e.target.value })} placeholder="e.g. 5" />
+            <p className="text-xs text-gray-400 mt-1">How many staff accounts this restaurant can create</p>
+          </Field>
           <Field label="Theme">
             <select className="input" value={form.themecode} onChange={(e) => setForm({ ...form, themecode: e.target.value })}>
               <option value="">Select Theme</option>
@@ -218,7 +230,7 @@ export default function SuperAdminRestaurants() {
           <div className="sm:col-span-2"><Field label="Address"><textarea className="input" rows={2} value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} /></Field></div>
           <Field label="Type">
             <select className="input" value={form.subtype} onChange={(e) => setForm({ ...form, subtype: e.target.value })}>
-              <option value="0">Normal</option><option value="1">Mega</option><option value="2">Mega+Site</option>
+              <option value="1">Mega</option><option value="2">Mega + Web</option>
             </select>
           </Field>
           <Field label="Theme">
@@ -226,6 +238,10 @@ export default function SuperAdminRestaurants() {
               <option value="">Select Theme</option>
               {themes.map((t) => <option key={t.id} value={t.id}>{t.title}</option>)}
             </select>
+          </Field>
+          <Field label="Max Staff Users 👥">
+            <input className="input" type="number" min="1" max="50" value={form.maxStaff} onChange={(e) => setForm({ ...form, maxStaff: e.target.value })} />
+            <p className="text-xs text-gray-400 mt-1">Max staff accounts this restaurant can create</p>
           </Field>
           <Field label="Update Logo"><input className="input" type="file" accept="image/*" onChange={(e) => setForm({ ...form, logo: e.target.files[0] })} /></Field>
         </div>
@@ -242,7 +258,7 @@ export default function SuperAdminRestaurants() {
         <div className="space-y-3">
           <Field label="Type">
             <select className="input" value={planForm.subtype} onChange={(e) => setPlanForm({ ...planForm, subtype: e.target.value })}>
-              <option value="0">Normal</option><option value="1">Mega</option><option value="2">Mega+Site</option>
+              <option value="1">Mega</option><option value="2">Mega + Web</option>
             </select>
           </Field>
           <div className="grid grid-cols-2 gap-3">

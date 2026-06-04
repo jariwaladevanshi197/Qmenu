@@ -61,7 +61,16 @@ export default function RestroSettings() {
           <Field label="Email"><input className="input" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
           <Field label="GST No"><input className="input" value={form.gstno} onChange={(e) => setForm({ ...form, gstno: e.target.value })} /></Field>
           <div className="sm:col-span-2"><Field label="Address"><textarea className="input" rows={2} value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} /></Field></div>
-          {profile?.logo && <div className="sm:col-span-2"><p className="label">Current Logo</p><img src={`${API}${profile.logo}`} alt="logo" className="w-20 h-20 rounded-xl object-cover" /></div>}
+          {profile?.logo && (
+            <div className="sm:col-span-2">
+              <p className="label">Current Logo</p>
+              <img
+                src={profile.logo.startsWith('http') ? profile.logo : `${API}${profile.logo}`}
+                alt="logo"
+                className="w-20 h-20 rounded-xl object-cover border border-gray-100 shadow-sm"
+              />
+            </div>
+          )}
           <div className="sm:col-span-2"><Field label="Update Logo"><input className="input" type="file" accept="image/*" onChange={(e) => setForm({ ...form, logo: e.target.files[0] })} /></Field></div>
         </div>
       </div>

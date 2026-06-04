@@ -20,6 +20,6 @@ export const emitOrderUpdate = (io, restroid, order) => {
   io.to(`restro:${restroid}`).emit('order:updated', order);
 };
 
-export const emitWaiterCall = (io, restroid, tableid) => {
-  io.to(`restro:${restroid}`).emit('waiter:called', { tableid });
+export const emitWaiterCall = (io, restroid, tableid, tableName) => {
+  io.to(`restro:${restroid}`).emit('waiter:called', { tableid, tableName });
 };

@@ -108,11 +108,21 @@ export const callWaiter = async (req, res) => {
     const restro = await prisma.restaurant.findUnique({ where: { slug: req.params.slug }, select: { id: true, restrootp: true } });
     if (!restro) return res.status(404).json({ error: 'Restaurant not found' });
 
-    const { tableid, otp } = req.body;
-    if (otp !== restro.restrootp) return res.status(401).json({ error: 'Invalid OTP' });
+    const { tableid } = req.body;
 
-    const request = await prisma.waiterRequest.create({ data: { restroid: restro.id, tableid: tableid ? parseInt(tableid) : null } });
-    emitWaiterCall(req.app.get('io'), restro.id, tableid);
+    // No OTP required — anyone on the menu page can call waiter
+    let tableName = null;
+    if (tableid) {
+      const table = await prisma.table.findFirst({ where: { id: parseInt(tableid), restroid: restro.id } });
+      if (!table) return res.status(400).json({ error: 'Invalid table' });
+      tableName = table.name;
+    }
+
+    const request = await prisma.waiterRequest.create({
+      data: { restroid: restro.id, tableid: tableid ? parseInt(tableid) : null },
+      include: { table: true },
+    });
+    emitWaiterCall(req.app.get('io'), restro.id, tableid, tableName);
     res.json(request);
   } catch (e) {
     res.status(500).json({ error: e.message });

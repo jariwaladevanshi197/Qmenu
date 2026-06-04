@@ -27,15 +27,16 @@ export const superAdminLogin = async (req, res) => {
 
 export const restroLogin = async (req, res) => {
   try {
-    const { slug, password } = req.body;
-    if (!slug || !password) return res.status(400).json({ error: 'Slug and password required' });
+    const { mobileno, password } = req.body;
+    if (!mobileno || !password) return res.status(400).json({ error: 'Mobile number and password required' });
 
-    const restro = await prisma.restaurant.findUnique({ where: { slug } });
-    if (!restro) return res.status(401).json({ error: 'Invalid credentials' });
-    if (!restro.status) return res.status(403).json({ error: 'Account inactive' });
+    // Find restaurant by mobile number
+    const restro = await prisma.restaurant.findFirst({ where: { mobileno: String(mobileno) } });
+    if (!restro) return res.status(401).json({ error: 'Invalid mobile number or password' });
+    if (!restro.status) return res.status(403).json({ error: 'Account inactive. Contact admin.' });
 
     const valid = await bcrypt.compare(password, restro.password);
-    if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
+    if (!valid) return res.status(401).json({ error: 'Invalid mobile number or password' });
 
     const token = signToken({ id: restro.id, role: 'restro', slug: restro.slug, subtype: restro.subtype });
     res.json({

@@ -39,7 +39,7 @@ export const getRestaurants = async (req, res) => {
 
 export const createRestaurant = async (req, res) => {
   try {
-    const { restroname, mobileno, email, address, password, gstno, subtype, subplan, price, themecode, latitude, longitude, distance } = req.body;
+    const { restroname, mobileno, email, address, password, gstno, subtype, subplan, price, themecode, latitude, longitude, distance, maxStaff } = req.body;
 
     const slug = await generateSlug(restroname);
     const hashed = await bcrypt.hash(password, 10);
@@ -57,6 +57,7 @@ export const createRestaurant = async (req, res) => {
         latitude, longitude, distance,
         expdate, logo: logoPath, slug,
         restrootp: Math.floor(1000 + Math.random() * 9000).toString(),
+        maxStaff: parseInt(maxStaff || 5),
       },
     });
 
@@ -80,9 +81,8 @@ export const createRestaurant = async (req, res) => {
 export const updateRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
-    const { restroname, mobileno, email, address, gstno, subtype, themecode, latitude, longitude, distance } = req.body;
-
-    const data = { restroname, mobileno, email, address, gstno, subtype: parseInt(subtype), themecode: parseInt(themecode) || null, latitude, longitude, distance };
+    const { restroname, mobileno, email, address, gstno, subtype, themecode, latitude, longitude, distance, maxStaff } = req.body;
+    const data = { restroname, mobileno, email, address, gstno, subtype: parseInt(subtype), themecode: parseInt(themecode) || null, latitude, longitude, distance, maxStaff: parseInt(maxStaff || 5) };
     if (req.file) data.logo = await saveToSupabase(req.file, 'logos');
 
     const restro = await prisma.restaurant.update({ where: { id: parseInt(id) }, data });

@@ -78,7 +78,7 @@ export default function RestroNotifications() {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">
-                    {req.table ? req.table.name : `Table #${req.tableid || '?'}`}
+                    {req.table ? req.table.name : req.tableid ? `Table #${req.tableid}` : 'Walk-in Customer'}
                   </p>
                   <div className="flex items-center gap-1 mt-1 text-xs text-gray-400">
                     <Clock size={11} />

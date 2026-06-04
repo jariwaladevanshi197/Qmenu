@@ -7,7 +7,7 @@ import { useTheme } from '../../hooks/useTheme';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
 import Modal from '../../components/ui/Modal';
-import { ShoppingCart, Search, Leaf, Drumstick, Plus, Minus, Download, Bell, X } from 'lucide-react';
+import { ShoppingCart, Search, Leaf, Drumstick, Plus, Minus, Download, Bell, X, MessageSquare, Star } from 'lucide-react';
 
 const LANGS = [{ key: 'name_eng', label: 'Eng' }, { key: 'name_guj', label: 'ગુજ' }, { key: 'name_hindi', label: 'हिं' }];
 const API = import.meta.env.VITE_API_URL?.replace('/api', '') || '';
@@ -20,9 +20,12 @@ export default function CustomerMenu() {
   const [lang, setLang] = useState('name_eng');
   const [search, setSearch] = useState('');
   const [activecat, setActivecat] = useState(null);
-  const [waiterOpen, setWaiterOpen] = useState(false);
-  const [waiterOtp, setWaiterOtp] = useState('');
   const [waiterLoading, setWaiterLoading] = useState(false);
+  const [waiterDone, setWaiterDone] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackForm, setFeedbackForm] = useState({ fullname: '', mobile: '', email: '', feedback: '', dob: '' });
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
+  const [rating, setRating] = useState(0);
   const { items: cartItems, addItem, updateQty, setSlug, count } = useCartStore();
 
   useEffect(() => { setSlug(slug); }, [slug, setSlug]);
@@ -41,7 +44,7 @@ export default function CustomerMenu() {
   const th = useTheme(restro?.theme);
 
   useEffect(() => {
-    if (categories.length && !activecat) setActivecat(categories[0].id);
+    if (categories.length && activecat === null) setActivecat('all');
   }, [categories]);
 
   const getQty = (id) => cartItems.find((i) => i.menuitemid === id)?.quantity || 0;
@@ -51,14 +54,30 @@ export default function CustomerMenu() {
     toast.success(`${item.name_eng} added`, { duration: 1500 });
   };
 
-  const callWaiter = async () => {
+  const submitFeedback = async () => {
+    if (!feedbackForm.fullname.trim()) return toast.error('Please enter your name');
+    setFeedbackLoading(true);
+    try {
+      await api.post(`/customer/restro/${slug}/feedback`, feedbackForm);
+      toast.success('Thank you for your feedback! 🙏');
+      setFeedbackOpen(false);
+      setFeedbackForm({ fullname: '', mobile: '', email: '', feedback: '', dob: '' });
+      setRating(0);
+    } catch (e) {
+      toast.error(e.response?.data?.error || 'Failed to submit');
+    } finally { setFeedbackLoading(false); }
+  };
+
+  const handleWaiterClick = async () => {
+    if (waiterDone || waiterLoading) return;
     setWaiterLoading(true);
     try {
-      await api.post(`/customer/restro/${slug}/waiter`, { tableid, otp: waiterOtp });
-      toast.success('Waiter called!');
-      setWaiterOpen(false); setWaiterOtp('');
+      await api.post(`/customer/restro/${slug}/waiter`, { tableid });
+      toast.success('🔔 Waiter is on the way!', { duration: 5000 });
+      setWaiterDone(true);
+      setTimeout(() => setWaiterDone(false), 30000);
     } catch (e) {
-      toast.error(e.response?.data?.error || 'Invalid OTP');
+      toast.error(e.response?.data?.error || 'Failed to call waiter');
     } finally { setWaiterLoading(false); }
   };
 
@@ -67,7 +86,11 @@ export default function CustomerMenu() {
 
   const allItems = categories.flatMap((c) => c.menuItems);
   const filtered = search ? allItems.filter((i) => i[lang]?.toLowerCase().includes(search.toLowerCase())) : null;
-  const activeCatItems = filtered || categories.find((c) => c.id === activecat)?.menuItems || [];
+  const activeCatItems = filtered
+    ? filtered
+    : activecat === 'all'
+      ? allItems
+      : categories.find((c) => c.id === activecat)?.menuItems || [];
 
   return (
     <div className="min-h-screen pb-24" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif`, color: th.text }}>
@@ -113,7 +136,7 @@ export default function CustomerMenu() {
               </button>
             ))}
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {restro.pdf && (
               <a href={restro.pdf.startsWith('http') ? restro.pdf : `${API}${restro.pdf}`} download
                 className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border"
@@ -121,9 +144,27 @@ export default function CustomerMenu() {
                 <Download size={11} /> PDF
               </a>
             )}
-            <button className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border" onClick={() => setWaiterOpen(true)}
+            {/* Feedback button */}
+            <button
+              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border transition-all"
+              onClick={() => setFeedbackOpen(true)}
               style={{ borderColor: `${th.primary}40`, color: th.primary, borderRadius: th.radius }}>
-              <Bell size={11} /> Waiter
+              <MessageSquare size={11} /> Feedback
+            </button>
+            {/* Waiter button */}
+            <button
+              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border transition-all"
+              onClick={handleWaiterClick}
+              disabled={waiterLoading || waiterDone}
+              style={{
+                borderColor: waiterDone ? '#16a34a40' : `${th.primary}40`,
+                color: waiterDone ? '#16a34a' : th.primary,
+                borderRadius: th.radius,
+                opacity: waiterLoading ? 0.6 : 1,
+              }}>
+              {waiterLoading ? <><Bell size={11} /> Calling...</>
+                : waiterDone  ? <>✓ Called</>
+                : <><Bell size={11} /> {tableid ? 'Call Waiter' : 'Waiter'}</>}
             </button>
           </div>
         </div>
@@ -131,6 +172,19 @@ export default function CustomerMenu() {
         {/* Category tabs */}
         {!search && (
           <div className="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1 scrollbar-none">
+
+            {/* All tab */}
+            <button onClick={() => setActivecat('all')}
+              className="shrink-0 px-4 py-2 text-sm font-semibold transition-all"
+              style={{
+                backgroundColor: activecat === 'all' ? th.primary : th.card,
+                color: activecat === 'all' ? th.btnText : th.text,
+                borderRadius: th.radius,
+                boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+              }}>
+              All ({allItems.length})
+            </button>
+
             {categories.map((cat) => (
               <button key={cat.id} onClick={() => setActivecat(cat.id)}
                 className="shrink-0 px-4 py-2 text-sm font-semibold transition-all"
@@ -199,15 +253,54 @@ export default function CustomerMenu() {
         </div>
       </div>
 
-      {/* Waiter Modal */}
-      <Modal open={waiterOpen} onClose={() => setWaiterOpen(false)} title="Call Waiter" size="sm">
-        <p className="text-sm text-gray-500 mb-4">Enter the restaurant code to call a waiter.</p>
-        <input className="input" placeholder="Enter code" value={waiterOtp} onChange={(e) => setWaiterOtp(e.target.value)} maxLength={6} />
-        <div className="flex gap-3 mt-4">
-          <button className="btn-secondary flex-1" onClick={() => setWaiterOpen(false)}>Cancel</button>
-          <button className="flex-1 py-2 text-sm font-bold rounded-lg" onClick={callWaiter} disabled={waiterLoading}
+
+      {/* Feedback Modal */}
+      <Modal open={feedbackOpen} onClose={() => setFeedbackOpen(false)} title="Share Your Feedback" size="sm">
+        <div className="space-y-3">
+          {/* Star rating */}
+          <div>
+            <p className="text-sm text-gray-500 mb-2">How was your experience?</p>
+            <div className="flex gap-1">
+              {[1,2,3,4,5].map((star) => (
+                <button key={star} onClick={() => setRating(star)} className="transition-transform hover:scale-110">
+                  <Star size={28} fill={star <= rating ? '#f59e0b' : 'none'} stroke={star <= rating ? '#f59e0b' : '#d1d5db'} />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="label">Your Name *</label>
+            <input className="input" placeholder="Enter your name" value={feedbackForm.fullname}
+              onChange={(e) => setFeedbackForm({ ...feedbackForm, fullname: e.target.value })} />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label">Mobile</label>
+              <input className="input" placeholder="10-digit number" value={feedbackForm.mobile}
+                onChange={(e) => setFeedbackForm({ ...feedbackForm, mobile: e.target.value })} />
+            </div>
+            <div>
+              <label className="label">Birthday</label>
+              <input className="input" type="date" value={feedbackForm.dob}
+                onChange={(e) => setFeedbackForm({ ...feedbackForm, dob: e.target.value })} />
+            </div>
+          </div>
+          <div>
+            <label className="label">Email (optional)</label>
+            <input className="input" type="email" placeholder="your@email.com" value={feedbackForm.email}
+              onChange={(e) => setFeedbackForm({ ...feedbackForm, email: e.target.value })} />
+          </div>
+          <div>
+            <label className="label">Message</label>
+            <textarea className="input" rows={3} placeholder="Tell us about your experience..."
+              value={feedbackForm.feedback} onChange={(e) => setFeedbackForm({ ...feedbackForm, feedback: e.target.value })} />
+          </div>
+        </div>
+        <div className="flex gap-3 mt-5">
+          <button className="btn-secondary flex-1" onClick={() => setFeedbackOpen(false)}>Cancel</button>
+          <button className="flex-1 py-2 text-sm font-bold rounded-lg" onClick={submitFeedback} disabled={feedbackLoading}
             style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}>
-            {waiterLoading ? 'Calling...' : 'Call Waiter'}
+            {feedbackLoading ? 'Submitting...' : '🙏 Submit'}
           </button>
         </div>
       </Modal>

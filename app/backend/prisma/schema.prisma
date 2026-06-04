@@ -43,6 +43,7 @@ model Restaurant {
   restrootp     String   @default("0")
   discount      Float    @default(0)
   servicecharge Float    @default(0)
+  maxStaff      Int      @default(5)
 
   theme          Theme?           @relation(fields: [themecode], references: [id])
   categories     Category[]
@@ -53,8 +54,24 @@ model Restaurant {
   feedback       Feedback[]
   paymentHistory PaymentHistory[]
   waiterRequests WaiterRequest[]
+  staff          Staff[]
 
   @@map("restro")
+}
+
+model Staff {
+  id         Int      @id @default(autoincrement())
+  restroid   Int
+  fullname   String
+  username   String   @unique
+  password   String
+  role       String   @default("staff")  // manager | cashier | staff
+  status     Int      @default(1)
+  createdAt  DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restroid], references: [id], onDelete: Cascade)
+
+  @@map("staff")
 }
 
 model Theme {
