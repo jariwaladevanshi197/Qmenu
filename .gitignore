@@ -1,8 +1,31 @@
-node_modules
+﻿# Dependencies — never commit
+node_modules/
+**/node_modules/
+
+# Environment secrets — never commit
 .env
 .env.local
 .env.production
-*.log
-.DS_Store
-dist
+.env.*.local
+**/.env
+**/.env.local
+**/.env.production
+
+# Build output
+dist/
+build/
+
+# Uploads (stored in Supabase)
 uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
