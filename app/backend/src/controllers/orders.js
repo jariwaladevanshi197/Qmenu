@@ -1,0 +1,215 @@
+import { PrismaClient } from '@prisma/client';
+import { emitOrderUpdate } from '../socket/index.js';
+import { generateOrderCode } from '../utils/helpers.js';
+
+const prisma = new PrismaClient();
+
+export const getActiveOrders = async (req, res) => {
+  try {
+    const orders = await prisma.order.findMany({
+      where: { restroid: req.user.id, status: { in: ['PENDING', 'CONFIRMED'] } },
+      include: { items: true, table: true },
+      orderBy: { createdAt: 'asc' },
+    });
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const confirmOrder = async (req, res) => {
+  try {
+    const order = await prisma.order.updateMany({
+      where: { id: parseInt(req.params.id), restroid: req.user.id },
+      data: { status: 'CONFIRMED' },
+    });
+    const updated = await prisma.order.findUnique({ where: { id: parseInt(req.params.id) }, include: { items: true, table: true } });
+    emitOrderUpdate(req.app.get('io'), req.user.id, updated);
+    res.json(updated);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const completeOrder = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: { items: true, table: true },
+    });
+    if (!order || order.restroid !== req.user.id) return res.status(404).json({ error: 'Order not found' });
+
+    const restro = await prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { discount: true, servicecharge: true } });
+    const discount = restro.discount || 0;
+    const sc = restro.servicecharge || 0;
+    const subtotal = order.items.reduce((s, i) => s + i.totalprice, 0);
+    const discountAmt = (subtotal * discount) / 100;
+    const scAmt = ((subtotal - discountAmt) * sc) / 100;
+    const grandtotal = subtotal - discountAmt + scAmt;
+
+    await prisma.order.update({ where: { id }, data: { status: 'COMPLETED', subtotal, discount: discountAmt, servicecharge: scAmt, grandtotal } });
+
+    const history = await prisma.orderHistory.create({
+      data: {
+        restroid: req.user.id,
+        ordercode: order.ordercode,
+        tablename: order.table?.name || '',
+        customername: order.customername,
+        customermob: order.customermob,
+        subtotal, discount: discountAmt, servicecharge: scAmt, grandtotal,
+        items: {
+          create: order.items.map((i) => ({
+            name_eng: i.name_eng, name_guj: i.name_guj, name_hindi: i.name_hindi,
+            price: i.price, quantity: i.quantity, totalprice: i.totalprice,
+          })),
+        },
+      },
+      include: { items: true },
+    });
+
+    emitOrderUpdate(req.app.get('io'), req.user.id, { ...order, status: 'COMPLETED' });
+    res.json(history);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const cancelOrder = async (req, res) => {
+  try {
+    await prisma.order.updateMany({
+      where: { id: parseInt(req.params.id), restroid: req.user.id },
+      data: { status: 'CANCELLED' },
+    });
+    emitOrderUpdate(req.app.get('io'), req.user.id, { id: parseInt(req.params.id), status: 'CANCELLED' });
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const mergeOrders = async (req, res) => {
+  try {
+    const { orderIds } = req.body;
+    if (!orderIds?.length) return res.status(400).json({ error: 'No orders provided' });
+
+    const orders = await prisma.order.findMany({
+      where: { id: { in: orderIds }, restroid: req.user.id, status: { in: ['PENDING', 'CONFIRMED'] } },
+      include: { items: true, table: true },
+    });
+
+    const allItems = orders.flatMap((o) => o.items.map(({ id: _id, orderid: _oid, ...rest }) => rest));
+    const merged = await prisma.order.create({
+      data: {
+        restroid: req.user.id,
+        tableid: orders[0].tableid,
+        ordercode: generateOrderCode(),
+        customername: orders.map((o) => o.customername).filter(Boolean).join(', '),
+        status: 'CONFIRMED',
+        items: { create: allItems },
+      },
+      include: { items: true, table: true },
+    });
+
+    await prisma.order.updateMany({ where: { id: { in: orderIds } }, data: { status: 'CANCELLED' } });
+    emitOrderUpdate(req.app.get('io'), req.user.id, merged);
+    res.json(merged);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const getSingleHistory = async (req, res) => {
+  try {
+    const order = await prisma.orderHistory.findFirst({
+      where: { id: parseInt(req.params.id), restroid: req.user.id },
+      include: { items: true },
+    });
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    res.json(order);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const getOrderHistory = async (req, res) => {
+  try {
+    const { from, to } = req.query;
+    const where = { restroid: req.user.id };
+    if (from) where.timestamp = { ...where.timestamp, gte: new Date(from) };
+    if (to) where.timestamp = { ...where.timestamp, lte: new Date(to) };
+
+    const history = await prisma.orderHistory.findMany({
+      where,
+      include: { items: true },
+      orderBy: { timestamp: 'desc' },
+    });
+    res.json(history);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const getReport = async (req, res) => {
+  try {
+    const { from, to } = req.query;
+    const where = { restroid: req.user.id };
+    if (from) where.timestamp = { gte: new Date(from) };
+    if (to) where.timestamp = { ...where.timestamp, lte: new Date(to) };
+
+    const [orders, revenue] = await Promise.all([
+      prisma.orderHistory.count({ where }),
+      prisma.orderHistory.aggregate({ where, _sum: { grandtotal: true, subtotal: true, discount: true, servicecharge: true } }),
+    ]);
+
+    res.json({ orders, revenue: revenue._sum });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const getFeedback = async (req, res) => {
+  try {
+    const feedback = await prisma.feedback.findMany({
+      where: { restroid: req.user.id },
+      orderBy: { timestamp: 'desc' },
+    });
+    res.json(feedback);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const deleteFeedback = async (req, res) => {
+  try {
+    await prisma.feedback.deleteMany({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const getWaiterRequests = async (req, res) => {
+  try {
+    const requests = await prisma.waiterRequest.findMany({
+      where: { restroid: req.user.id, status: 0 },
+      include: { table: true },
+      orderBy: { createdAt: 'asc' },
+    });
+    res.json(requests);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const dismissWaiterRequest = async (req, res) => {
+  try {
+    await prisma.waiterRequest.updateMany({
+      where: { id: parseInt(req.params.id), restroid: req.user.id },
+      data: { status: 1 },
+    });
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};

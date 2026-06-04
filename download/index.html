@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Q-MENU | The Digital Menu System</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- plugin styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/bootstrap-datepicker.min.css" />
+  <link rel="stylesheet" href="assets/css/bootstrap-select.min.css" />
+  <link rel="stylesheet" href="assets/css/animate.min.css" />
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+  <link rel="stylesheet" href="assets/css/magnific-popup.css" />
+  <link rel="stylesheet" href="assets/css/jquery.bxslider.min.css" />
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+  <link rel="stylesheet" href="assets/css/owl.theme.default.min.css" />
+  <link rel="stylesheet" href="assets/css/swiper.min.css" />
+  <link rel="stylesheet" href="assets/css/oapee-icons.css" />
+
+  <!-- template styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/premium.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+</head>
+
+<body>
+  <div class="preloader">
+    <img src="assets/images/loading.png" class="preloader__image" alt="" />
+  </div>
+  <!-- /.preloader -->
+
+  <div class="page-wrapper">
+    <header class="site-header-one stricky site-header-one__fixed-top">
+      <div class="container-fluid">
+        <div class="site-header-one__logo">
+          <a href="index.html" class="navbar-brand-text">
+            <span>Q</span>-MENU
+          </a>
+          <div class="header-right d-flex align-items-center">
+            <a href="scan/index.html" class="qr-scanner-link d-lg-none"
+              style="margin-right: 20px; font-size: 24px; color: var(--premium-primary);"><i
+                class="fa fa-qrcode"></i></a>
+            <span class="side-menu__toggler"><i class="fa fa-bars"></i></span>
+          </div>
+          <!-- /.side-menu__toggler -->
+        </div>
+        <!-- /.site-header-one__logo -->
+        <div class="main-nav__main-navigation one-page-scroll-menu ml-auto">
+          <ul class="main-nav__navigation-box">
+            <li class="scrollToLink">
+              <a href="#home">Home</a>
+            </li>
+            <li class="scrollToLink"><a href="#about">About</a></li>
+            <li class="scrollToLink"><a href="#features">Features</a></li>
+            <li class="scrollToLink"><a href="#pricing">Pricing</a></li>
+            <li class="scrollToLink"><a href="#contact">Contact</a></li>
+            <li class="nav-btn-item">
+              <a href="scan/index.html" class="thm-btn banner-one__btn qrcode"><span>QR Scanner</span></a>
+            </li>
+          </ul>
+          <!-- /.main-nav__navigation-box -->
+        </div>
+        <!-- /.main-nav__main-navigation -->
+      </div>
+      <!-- /.container-fluid -->
+    </header>
+    <!-- /.site-header-one -->
+
+    <section class="banner-one" id="home">
+      <div class="bg-blob blob-1"></div>
+      <div class="bg-blob blob-2"></div>
+      <!-- Removed outdated shapes for minimalist premium look -->
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 d-flex">
+            <div class="my-auto">
+              <div class="banner-one__content">
+                <h3>
+                  Elevate Your <br />
+                  Dining <span style="color: var(--premium-primary)">Experience</span>
+                </h3>
+                <p>
+                  Welcome to the new era of restaurant management. Our state-of-the-art digital menu system enhances
+                  customer engagement and streamlines your operations.
+                </p>
+                <div class="banner-btns">
+                  <a href="#features" class="thm-btn"><span>Learn More</span></a>
+                  <a href="scan/index.html" class="thm-btn secondary-btn"
+                    style="margin-left: 15px; background: transparent !important; border: 1px solid var(--premium-border) !important; color: #fff !important;"><span>Try
+                      Demo</span></a>
+                </div>
+              </div>
+              <!-- /.banner-one__content -->
+            </div>
+            <!-- /.my-auto -->
+          </div>
+          <!-- /.col-lg-6 -->
+          <div class="col-lg-6 d-flex justify-content-end">
+            <div class="banner-one__image-wrap wow fadeInRight" data-wow-duration="1500ms">
+              <div class="hero-image-container">
+                <img src="assets/images/mobile.png" class="hero-main-img" alt="" />
+                <!-- Floating Professional Badge -->
+                <div class="stat-card">
+                  <div class="stat-icon"><i class="fa fa-chart-line"></i></div>
+                  <div class="stat-info">
+                    <span>99.9%</span>
+                    <p>Uptime</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="mouse">
+          <div class="wheel"></div>
+        </div>
+      </div>
+    </section>
+    <!-- /.banner-one -->
+
+    <section class="about-one" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms">
+            <div class="about-one__image">
+              <div class="tech-stack-viz">
+                <div class="glass-card card-1">
+                  <div class="card-title">Live Menu</div>
+                  <div class="card-dots"><span></span><span></span><span></span></div>
+                </div>
+                <div class="glass-card card-2">
+                  <div class="card-title">Staff Panel</div>
+                  <div class="card-graph"></div>
+                </div>
+                <div class="glass-card card-3">
+                  <div class="card-title">QR Engine</div>
+                  <i class="fa fa-qrcode"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="about-one__content">
+              <div class="block-title text-left">
+                <h3>The New Era of <span>Restaurant</span> Management</h3>
+              </div>
+              <p>Q-MENU is more than just a digital menu; it's a comprehensive platform designed to bridge the gap
+                between technology and hospitality. We empower restaurant owners to deliver a touchless, efficient, and
+                premium dining experience.</p>
+              <ul class="list-unstyled about-one__list">
+                <li><i class="fa fa-check-circle"></i> Instant Setup & Easy QR Deployment</li>
+                <li><i class="fa fa-check-circle"></i> Real-time Menu & Price Management</li>
+                <li><i class="fa fa-check-circle"></i> Multi-language & Customizable Support</li>
+              </ul>
+              <a href="#features" class="thm-btn"><span>Our Features</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="service-one" id="features">
+      <div class="container">
+        <div class="block-title text-center">
+          <h3>Revolutionizing Your <span>Restaurant</span></h3>
+          <p>
+            Cutting-edge features designed to scale your business and delight your guests with a fully digitalized
+            experience.
+          </p>
+        </div>
+        <!-- /.block-title -->
+        <div class="row">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" data-wow-duration="1500ms"
+            data-wow-delay="0ms">
+            <div class="service-one__single">
+              <h3>
+                Easy <br />
+                To Use
+              </h3>
+              <p>
+                <!-- Menu can be easily opened and viewed by scanning the QR CODE. -->
+              </p>
+              <div class="service-one__icon">
+                <i class="fa fa-thumbs-up"></i>
+              </div>
+              <!-- /.service-one__icon -->
+            </div>
+            <!-- /.service-one__single -->
+          </div>
+          <!-- /.col-lg-3 col-md-6 col-sm-12 -->
+          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" data-wow-duration="1500ms"
+            data-wow-delay="100ms">
+            <div class="service-one__single">
+              <h3>
+                Customer <br />
+                Friendly
+              </h3>
+              <p>
+                <!-- Customers doesn't require to install any type of application
+                  for viewing the menu. -->
+              </p>
+              <div class="service-one__icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <!-- /.service-one__icon -->
+            </div>
+            <!-- /.service-one__single -->
+          </div>
+          <!-- /.col-lg-3 col-md-6 col-sm-12 -->
+          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" data-wow-duration="1500ms"
+            data-wow-delay="200ms">
+            <div class="service-one__single">
+              <h3>More <br />Usefulness</h3>
+              <p>
+                <!-- Instant Menu helps to create a digital menu of the
+                  restaurants, hotels, cafe, lodge, street food, food truck,
+                  icecream parlour, etc. -->
+              </p>
+              <div class="service-one__icon">
+                <i class="fa fa-handshake"></i>
+              </div>
+              <!-- /.service-one__icon -->
+            </div>
+            <!-- /.service-one__single -->
+          </div>
+          <!-- /.col-lg-3 col-md-6 col-sm-12 -->
+          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" data-wow-duration="1500ms"
+            data-wow-delay="300ms">
+            <div class="service-one__single">
+              <h3>
+                Fully <br />
+                Customized
+              </h3>
+              <p>
+                <!-- Menu can be viewed in multiple languages with multiple themes. -->
+              </p>
+              <div class="service-one__icon">
+                <i class="fa fa-cogs"></i>
+              </div>
+              <!-- /.service-one__icon -->
+            </div>
+            <!-- /.service-one__single -->
+          </div>
+          <!-- /.col-lg-3 col-md-6 col-sm-12 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.service-one -->
+
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <div class="block-title text-center">
+          <h3>Simple <span>Process</span></h3>
+          <p>The smartest way to manage your restaurant in 3 easy steps.</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="step-card wow fadeInUp" data-wow-delay="0ms">
+              <div class="step-number">01</div>
+              <div class="step-content">
+                <div class="step-icon"><i class="fa fa-qrcode"></i></div>
+                <h3>Scan</h3>
+                <p>Customers scan the unique QR code on their table using any smartphone camera.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="step-card wow fadeInUp" data-wow-delay="200ms">
+              <div class="step-number">02</div>
+              <div class="step-content">
+                <div class="step-icon"><i class="fa fa-utensils"></i></div>
+                <h3>Order</h3>
+                <p>Browse the interactive digital menu and place orders directly from the browser.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="step-card wow fadeInUp" data-wow-delay="400ms">
+              <div class="step-number">03</div>
+              <div class="step-content">
+                <div class="step-icon"><i class="fa fa-credit-card"></i></div>
+                <h3>Pay</h3>
+                <p>Fast and secure payment options for a seamless checkout experience.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.how-it-works -->
+
+    <section class="cta-three">
+      <!-- Removed outdated shapes -->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="cta-three__content">
+              <div class="block-title text-left">
+                <h3>
+                  Powerful <span>Application</span><br />
+                  For Your Restaurant
+                </h3>
+              </div>
+              <!-- /.block-title text-left -->
+              <div class="cta-three__icon-wrap">
+                <div class="cta-three__icon-single">
+                  <div class="cta-three__icon">
+                    <i class="oapee-icon-app-development"></i>
+                  </div>
+                  <!-- /.cta-three__icon -->
+                  <h3>
+                    Responsive <br />
+                    Design
+                  </h3>
+                </div>
+                <!-- /.cta-three__icon-single -->
+                <div class="cta-three__icon-single">
+                  <div class="cta-three__icon">
+                    <i class="oapee-icon-computer-graphic"></i>
+                  </div>
+                  <!-- /.cta-three__icon -->
+                  <h3>
+                    Menu <br />
+                    Compatibility
+                  </h3>
+                </div>
+                <!-- /.cta-three__icon-single -->
+              </div>
+              <!-- /.cta-three__icon-wrap -->
+              <div class="cta-three__text">
+                <p>
+                  We provide application that can be
+                  used in devices like smartphone, tablet and
+                  computer. Restaurants can update their menu at any time
+                  without changing the QR Code and The menu will be updated automatically.
+
+                  For more information "Call Us".
+                </p>
+              </div>
+              <!-- /.cta-three__text -->
+              <a href="tel: +919714275344" class="thm-btn cta-three__btn"><span>Call Us</span></a>
+              <!-- /.thm-btn cta-three__btn -->
+            </div>
+            <!-- /.cta-three__content -->
+          </div>
+          <!-- /.col-lg-6 -->
+          <div class="col-lg-6 wow fadeInRight" data-wow-duration="1500ms">
+            <div class="cta-three__image">
+              <img src="assets/images/tabmob.png" alt="" />
+            </div>
+            <!-- /.cta-three__image -->
+          </div>
+          <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.cta-three -->
+
+    <section class="outlet-section" id="outlets">
+      <div class="container">
+        <div class="block-title text-center">
+          <h3>Built For Every <span>Business</span></h3>
+          <p>The all-in-one Management System for all types of restaurant formats and food outlets.</p>
+        </div>
+        <div class="outlet-grid">
+          <div class="outlet-item wow zoomIn" data-wow-delay="0ms">
+            <i class="fa fa-utensils"></i>
+            <h4>Food Courts</h4>
+          </div>
+          <div class="outlet-item wow zoomIn" data-wow-delay="100ms">
+            <i class="fa fa-coffee"></i>
+            <h4>Cafes</h4>
+          </div>
+          <div class="outlet-item wow zoomIn" data-wow-delay="200ms">
+            <i class="fa fa-wine-glass"></i>
+            <h4>Fine Dine</h4>
+          </div>
+          <div class="outlet-item wow zoomIn" data-wow-delay="300ms">
+            <i class="fa fa-beer"></i>
+            <h4>Bar & Brewery</h4>
+          </div>
+          <div class="outlet-item wow zoomIn" data-wow-delay="400ms">
+            <i class="fa fa-pizza-slice"></i>
+            <h4>Pizzerias</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.outlet-section -->
+
+    <section class="pricing-one" id="pricing">
+      <div class="container">
+        <div class="block-title text-center">
+          <h3>Plans Built For <span>Growth</span></h3>
+          <p>Transparent pricing with no hidden costs. Scale your business with Q-MENU.</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 wow fadeInUp" data-wow-delay="100ms">
+            <div class="pricing-one__single">
+              <div class="pricing-one__inner">
+                <p>Basic</p>
+                <h3>₹499<span>/mo</span></h3>
+                <ul class="list-unstyled pricing-one__list">
+                  <li>Digital Menu</li>
+                  <li>Unlimited QR Scans</li>
+                  <li>Standard Layout</li>
+                  <li>Email Support</li>
+                </ul>
+                <a href="#contact" class="thm-btn pricing-one__btn"><span>Choose Plan</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 wow fadeInUp" data-wow-delay="200ms">
+            <div class="pricing-one__single pricing-pro">
+              <div class="pricing-one__inner">
+                <p>Pro</p>
+                <h3>₹1499<span>/mo</span></h3>
+                <ul class="list-unstyled pricing-one__list">
+                  <li>Everything in Basic</li>
+                  <li>Order Tracking</li>
+                  <li>Staff Dashboard</li>
+                  <li>24/7 Priority Support</li>
+                </ul>
+                <a href="#contact" class="thm-btn pricing-one__btn"><span>Choose Plan</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 wow fadeInUp" data-wow-delay="300ms">
+            <div class="pricing-one__single">
+              <div class="pricing-one__inner">
+                <p>Enterprise</p>
+                <h3>Custom</h3>
+                <ul class="list-unstyled pricing-one__list">
+                  <li>Multi-Outlet Support</li>
+                  <li>Custom Integration</li>
+                  <li>On-Site Training</li>
+                  <li>Dedicated Manager</li>
+                </ul>
+                <a href="#contact" class="thm-btn pricing-one__btn"><span>Contact Sales</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-one" id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5">
+            <div class="contact-one__info">
+              <div class="block-title">
+                <h3>Get <span>In Touch</span></h3>
+              </div>
+              <p>Ready to digitize your menu? Contact our team for a personal demo or plan selection.</p>
+              <ul class="list-unstyled contact-one__info-list">
+                <li>
+                  <i class="fa fa-envelope"></i>
+                  <a href="mailto:jariwaladevanshi197@gmail.com">jariwaladevanshi197@gmail.com</a>
+                </li>
+                <li>
+                  <i class="fa fa-phone"></i>
+                  <a href="tel:+919714275344">+91 97142 75344</a>
+                </li>
+                <li>
+                  <i class="fa fa-map-marker"></i>
+                  Surat, Gujarat, India.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <form action="contact.php" method="post" class="contact-one__form" id="contact-form">
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" name="fname" placeholder="First Name" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" name="lname" placeholder="Last Name" required>
+                </div>
+                <div class="col-md-12">
+                  <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="col-md-12">
+                  <div class="phone-input-wrapper">
+                    <input type="tel" id="placeholder-phone" name="phone_full" required>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <textarea name="message" placeholder="Your Message" required></textarea>
+                </div>
+                <div class="col-md-12">
+                  <button type="submit" class="thm-btn contact-one__btn"><span>Send Message</span></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="cta-one">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="cta-one__content">
+              <h3>
+                Digital First. <br />
+                The Future of <span style="color: var(--premium-primary)">Dining</span>
+              </h3>
+              <p>Join the revolution and transform your restaurant today.</p>
+            </div>
+            <!-- /.cta-one__content -->
+          </div>
+          <!-- /.col-lg-6 -->
+          <div class="col-lg-4 d-flex">
+            <div class="my-auto d-flex justify-content-end">
+              <a href="tel: +919714275344" class="thm-btn cta-one__btn"><span>Contact Us</span></a>
+              <!-- /.thm-btn cta-one__btn -->
+            </div>
+            <!-- /.my-auto -->
+          </div>
+          <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.cta-one -->
+
+    <footer class="site-footer">
+      <div class="site-footer__upper">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6">
+              <div class="footer-widget footer-widget__about">
+                <a href="index.html" class="navbar-brand-text mb-4">
+                  <span>Q</span>-MENU
+                </a>
+                <p>
+                  We are the restaurant management company to provide digital
+                  menu system to restaurant with customer satisfaction.
+                </p>
+                <a href="tel: +919714275344" class="thm-btn"><span>Call Us</span></a>
+                <!-- /.thm-btn -->
+              </div>
+              <!-- /.footer-widget footer-widget__about -->
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-xl-3 col-lg-6">
+              <div class="footer-widget footer-widget__links">
+                <h3 class="footer-widget__title">Explore</h3>
+                <!-- /.footer-widget__title -->
+                <ul class="list-unstyled footer-widget__links-list">
+                  <li>
+                    <a href="#about">About</a>
+                  </li>
+                  <li><a href="#contact">Contact</a></li>
+                  <li>
+                    <a href="admin/index.php">Admin Login</a>
+                  </li>
+                  <li>
+                    <a href="adminrestro/sign-in.php">Account Login</a>
+                  </li>
+                </ul>
+                <!-- /.list-unstyled footer-widget__links-list -->
+              </div>
+              <!-- /.footer-widget footer-widget__links -->
+            </div>
+            <!-- /.col-lg-2 -->
+            <div class="col-xl-3 col-lg-6">
+              <div class="footer-widget footer-widget__contact">
+                <h3 class="footer-widget__title">Contact</h3>
+                <!-- /.footer-widget__title -->
+                <ul class="footer-widget__contact-list list-unstyled">
+                  <li>
+                    <i class="fa fa-phone-square"></i>
+                    <a href="tel: +919714275344">+91 97142 75344</a>
+                  </li>
+                  <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:jariwaladevanshi197@gmail.com">jariwaladevanshi197@gmail.com</a>
+                  </li>
+                  <li>
+                    <i class="fa fa-map-marker"></i> Surat, Gujarat
+                    <br />
+                    India.
+                  </li>
+                </ul>
+                <!-- /.footer-widget__contact-list list-unstyled -->
+              </div>
+              <!-- /.footer-widget footer-widget__contact -->
+            </div>
+            <!-- /.col-lg-2 -->
+
+            <!-- /.col-lg-4 -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container -->
+      </div>
+      <!-- /.site-footer__upper -->
+      <div class="site-footer__bottom">
+        <div class="container">
+          <div class="inner-container">
+            <p>© copyright 2020 by Q-MENU: The Digital Menu System</p>
+            <div class="footer-social">
+              <a href="https://www.facebook.com/surat.best4"><i class="fab fa-facebook-square"></i></a>
+              <a href="https://www.instagram.com/surat.best/"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/channel/UCBmatoqxciRj0z58GJ2aEmQ?view_as=subscriber"><i
+                  class="fab fa-youtube"></i></a>
+              <a href="adminrestro/sign-in.php"><i class="fa fa-user"></i></a>
+            </div>
+            <!-- /.footer-social -->
+          </div>
+          <!-- /.inner-container -->
+        </div>
+        <!-- /.container -->
+      </div>
+      <!-- /.site-footer__bottom -->
+    </footer>
+    <!-- /.site-footer -->
+  </div>
+  <!-- /.page-wrapper -->
+
+  <div class="side-menu__block">
+    <div class="side-menu__block-overlay custom-cursor__overlay">
+      <div class="cursor"></div>
+      <div class="cursor-follower"></div>
+    </div>
+    <!-- /.side-menu__block-overlay -->
+    <div class="side-menu__block-inner">
+      <div class="side-menu__top justify-content-end">
+        <a href="#" class="side-menu__toggler side-menu__close-btn"><i class="fa fa-times"></i></a>
+      </div>
+      <!-- /.side-menu__top -->
+
+      <nav class="mobile-nav__container">
+        <!-- content is inserted via JS -->
+      </nav>
+      <div class="side-menu__sep"></div>
+      <!-- /.side-menu__sep -->
+      <div class="side-menu__content">
+        <p>
+          Q-MENU: The Digital Menu System <br />
+          for Restaurants, Cafes & Hotels.
+        </p>
+        <p>
+          <a href="mailto:jariwaladevanshi197@gmail.com">jariwaladevanshi197@gmail.com</a> <br />
+          <a href="tel:+919714275344">+91 97142 75344</a>
+        </p>
+        <div class="side-menu__social">
+          <a href="https://www.facebook.com/surat.best4"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/surat.best/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/channel/UCBmatoqxciRj0z58GJ2aEmQ?view_as=subscriber"><i
+              class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <!-- /.side-menu__content -->
+    </div>
+    <!-- /.side-menu__block-inner -->
+  </div>
+  <!-- /.side-menu__block -->
+
+  <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+
+  <!-- Plugin scripts -->
+  <script src="assets/js/jquery-3.5.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/bootstrap-datepicker.min.js"></script>
+  <script src="assets/js/bootstrap-select.min.js"></script>
+  <script src="assets/js/isotope.js"></script>
+  <script src="assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="assets/js/jquery.bxslider.min.js"></script>
+  <script src="assets/js/jquery.counterup.min.js"></script>
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="assets/js/jquery.validate.min.js"></script>
+  <script src="assets/js/jquery.waypoints.min.js"></script>
+  <script src="assets/js/owl.carousel.min.js"></script>
+  <script src="assets/js/swiper.min.js"></script>
+  <script src="assets/js/jquery.easing.min.js"></script>
+  <script src="assets/js/TweenMax.min.js"></script>
+  <script src="assets/js/wow.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script>
+    const phoneInputField = document.querySelector("#placeholder-phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+      preferredCountries: ["in", "us", "ae"],
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+  </script>
+</body>
+
+</html>

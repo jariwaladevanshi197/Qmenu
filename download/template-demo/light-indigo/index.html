@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>INDEX | SURAT.BEST</title>
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="css/materialize.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+
+	
+</head>
+<body>
+	
+	<!-- navbar -->
+	<div class="navbar">
+		<div class="container">
+			<div class="row">
+				<div class="col-9">
+					<div class="content-left">
+						<a href="index.html"><h1><span>SURAT.</span>BEST</h1></a>
+					</div>
+				</div>
+				<div class="col-3 src-div">
+					<div class="content-right">
+						<span class="material-icons pointer" onclick="showbox()">search</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 srch-pad">
+					<div class="search-box" id="searchbox">
+						<input id="search" class="search-input" type="text" placeholder="Search" autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end navbar -->
+	
+	<!-- <div class="slide" id="segments">
+		<div class="slide-show owl-carousel owl-theme">
+			<div class="slide-content">
+				<div class="mask"></div>
+				<img src="images/f1.jpg" alt="">
+				<div class="caption text-center">
+					<h2>FRESH & DELICIOUS</h2>
+					<p>Food For Your Health</p>
+					
+				</div>
+			</div>
+			<div class="slide-content">
+				<div class="mask"></div>
+				<img src="images/f4.jpg" alt="">
+				<div class="caption center">
+					<h2>We Believe Good Food</h2>
+					<p>Offer Great Smile</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<!-- end slide -->
+	
+	<!-- accordion -->
+	<div class="segments-page" id="segments" style="margin-top: 50px;">
+		<div class="container">
+			
+			
+			<!--  -->
+			<div class="row row-content align-items-center">
+				<div class="col col-sm-12">
+					<div id="accordion">
+						<div class="card">
+							<div class="card-header" role="tab" id="peterhead" data-toggle="collapse" data-target="#peter">
+								<h5 class="mb-0">
+									<a >
+										<i class="fa fa-cutlery"></i> <span class="category-title">Drinks</span> <i class="fa fa-caret-down down-icon"></i>
+									</a>
+								</h5>
+							</div>
+							<div class="collapse show" id="peter" data-parent="#accordion">
+								<div class="card-body">
+									<table class="table rm-border">
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td class="col-6 item-name">Mango juice</td>
+												<td class="item-price">&#8377;50</td>
+												
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td class="col-6 item-name">Thumbs up</td>
+												<td class="item-price">&#8377;25</td>
+												
+											</tr>
+											<tr>
+												<th scope="row">3</th>
+												<td class="col-6 item-name">Butter milk</td>
+												<td class="item-price">&#8377;20</td>
+												
+											</tr>
+											<tr>
+												<th scope="row">4</th>
+												<td class="col-6 item-name">Lychee drink</td>
+												<td class="item-price">&#8377;50</td>
+												
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-header collapsed" role="tab" id="dannyhead" data-toggle="collapse" data-target="#danny">
+								<h5 class="mb-0">
+									<a class="" >
+										<i class="fa fa-cutlery"></i> <span class="category-title">Appetizer</span> <i class="fa fa-caret-down down-icon"></i>
+									</a>
+								</h5>
+							</div>
+							<div class="collapse" id="danny" data-parent="#accordion">
+								<div class="card-body">
+									<table class="table rm-border">
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td class="col-6 item-name">beef puff</td>
+												<td class="item-price">&#8377;50</td>
+												
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td class="col-6 item-name">chicken puff</td>
+												<td class="item-price">&#8377;25</td>
+												
+											</tr>
+											<tr>
+												<th scope="row">3</th>
+												<td class="col-6 item-name">egg puff</td>
+												<td class="item-price">&#8377;20</td>
+												
+											</tr>
+											<tr>
+												<th scope="row">4</th>
+												<td class="col-6 item-name">chicken cutlet</td>
+												<td class="item-price">&#8377;50</td>
+												
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						<!--  -->
+						<div class="card">
+							<div class="card-header collapsed" role="tab" id="peterhead" data-toggle="collapse" data-target="#peter1">
+								<h5 class="mb-0">
+									<a >
+										<i class="fa fa-cutlery"></i> <span class="category-title">Appetizer</span> <i class="fa fa-caret-down down-icon"></i>
+									</a>
+								</h5>
+							</div>
+							<div class="collapse " id="peter1" data-parent="#accordion">
+								<div class="card-body">
+									<p class="">Our CEO, Peter, credits his hardworking East Asian immigrant parents who undertook the arduous journey to the shores of America with the intention of giving their children the best future. His mother's wizardy in the kitchen whipping up the tastiest dishes with whatever is available inexpensively at the supermarket, was his first inspiration to create the fusion cuisines for which <em>The Frying Pan</em> became well known. He brings his zeal for fusion cuisines to this restaurant, pioneering cross-cultural culinary connections.</p>
+								</div>
+							</div>
+						</div>
+						<!--  -->
+						
+						
+						
+						<div class="card">
+							<div class="card-header collapsed" role="tab" id="agumbehead" data-toggle="collapse" data-target="#agumbe">
+								<h5 class="mb-0">
+									<a class="" >
+										<i class="fa fa-cutlery"></i> <span class="category-title">Appetizer</span> <i class="fa fa-caret-down down-icon"></i>
+									</a>
+								</h5>
+							</div>
+							<div class="collapse" id="agumbe" data-parent="#accordion">
+								<div class="card-body">
+									<p class="">Blessed with the most discerning gustatory sense, Agumbe, our CTO, personally ensures that every dish that we serve meets his exacting tastes. Our chefs dread the tongue lashing that ensues if their dish does not meet his exacting standards. He lives by his motto, <em>You click only if you survive my lick.</em></p>
+								</div>
+							</div>
+						</div>
+						<!--  -->
+						
+					</div>
+				</div>
+			</div>
+			<!--  -->
+			
+			
+		</div>
+	</div>
+	<!-- end accordion -->
+
+	
+	<!--bottom navbar -->
+	<div class="bottom-navbar">
+		<div class="container">
+			<div class="row">
+				<div class="col-10">
+					<button class="button-full z-depth-1" style="font-weight: bolder;"><i class="fa fa-bullhorn" ></i>Call Waiter</button>
+				</div>
+				<div class="col-2" style="padding: 0;">
+					<button class="button-full z-depth-1" data-toggle="modal" data-target="#feedback"><i class="fa fa-commenting"></i></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end bottom navbar -->
+	
+	<!-- select table popup -->
+	
+	<div class="modal fade" id="selecttable" tabindex="-1" role="dialog" aria-labelledby="selecttableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="selecttableTitle">Select Table</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label>Select Table</label>
+							<select class="form-control">
+								<option>Select Here</option>
+								<option value="Table-1">Table 1</option>
+								<option value="Table-2">Table 2</option>
+								<option value="Table-3">Table 3</option>
+								<option value="Table-4">Table 4</option>
+								<option value="Table-5">Table 5</option>
+								<option value="Table-6">Table 6</option>
+								<option value="Table-7">Table 7</option>
+								<option value="Table-8">Table 8</option>
+								
+							</select>
+						</div> <hr>
+						<div class="form-group">
+							<button class="button-full  z-depth-1" style="font-weight: bolder; text-transform: uppercase;"><i class="fa fa-paper-plane"></i>go for menu</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- end select table popup -->
+	
+	<!-- feedback popup -->
+	
+	<div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="feedbackTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="feedbackTitle">FeedBack</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="exampleFormControlInput1">Full Name</label>
+							<input type="text" class="form-control" id="fullname" placeholder="Full Name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="exampleFormControlInput1">Email address</label>
+							<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" autocomplete="off">
+						</div>
+						
+						<div class="form-group">
+							<label for="exampleFormControlTextarea1">Give Your FeedBack</label>
+							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" autocomplete="off"></textarea>
+						</div>
+						<hr>
+						<div class="form-group">
+							<button class="button-full z-depth-1" style="font-weight: bolder; text-transform: uppercase;"><i class="fa fa-paper-plane"></i>send</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- end feedback popup -->
+	
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	
+	<script src="js/main.js"></script>
+	
+	<script type="text/javascript">
+		$(window).on('load',function(){
+			$('#selecttable').modal('show');
+			getLocation();
+		});
+		
+		
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition);
+			} else { 
+				console.log("Geolocation is not supported by this browser.");
+			}
+		}
+		
+		function showPosition(position) {
+			var pos = "Latitude: " + position.coords.latitude + 
+			"Longitude: " + position.coords.longitude;
+			console.log(pos); 
+		}
+	</script>
+	
+</body>
+</html>
