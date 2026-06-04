@@ -19,14 +19,26 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-    methods: ['GET', 'POST'],
+// Allow multiple origins: local dev + Vercel deployment
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:5174',
+].filter(Boolean);
+
+const corsOptions = {
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.some((o) => origin.startsWith(o))) cb(null, true);
+    else cb(new Error(`CORS blocked: ${origin}`));
   },
+  credentials: true,
+};
+
+const io = new Server(httpServer, {
+  cors: { origin: allowedOrigins, methods: ['GET', 'POST'] },
 });
 
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
