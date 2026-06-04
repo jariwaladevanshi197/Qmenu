@@ -147,10 +147,6 @@ export default function RestroLogin() {
               </button>
             </form>
 
-            <p className="text-center text-xs text-gray-400 mt-6">
-              Super Admin?{" "}
-              <a href="/admin/login" className="text-primary-500 hover:underline font-medium">Login here</a>
-            </p>
           </div>
         </div>
       </div>
