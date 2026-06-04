@@ -107,10 +107,6 @@ export default function Landing() {
             style={{ background: 'linear-gradient(135deg,#f97316,#ea580c)' }}>
             Start for free <ArrowRight size={18} />
           </button>
-          <button onClick={() => navigate('/admin/login')}
-            className="flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-gray-700 text-lg bg-gray-100 hover:bg-gray-200 transition-all">
-            Admin Login <ChevronRight size={18} />
-          </button>
         </div>
 
         {/* Hero mock UI */}
