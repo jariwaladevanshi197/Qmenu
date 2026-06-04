@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+﻿import { PrismaClient } from '../generated/client/index.js';
 import { emitOrderUpdate } from '../socket/index.js';
 import { generateOrderCode } from '../utils/helpers.js';
 

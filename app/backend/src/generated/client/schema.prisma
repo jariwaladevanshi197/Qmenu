@@ -62,14 +62,14 @@ model Restaurant {
 }
 
 model Staff {
-  id         Int      @id @default(autoincrement())
-  restroid   Int
-  fullname   String
-  username   String   @unique
-  password   String
-  role       String   @default("staff")  // manager | cashier | staff
-  status     Int      @default(1)
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  restroid  Int
+  fullname  String
+  username  String   @unique
+  password  String
+  role      String   @default("staff") // manager | cashier | staff
+  status    Int      @default(1)
+  createdAt DateTime @default(now())
 
   restaurant Restaurant @relation(fields: [restroid], references: [id], onDelete: Cascade)
 
@@ -97,13 +97,13 @@ model Theme {
 }
 
 model Category {
-  id           Int        @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   restroid     Int
   name_eng     String
   name_guj     String?
   name_hindi   String?
   categorydesc String?
-  sortorder    Int        @default(0)
+  sortorder    Int     @default(0)
 
   restaurant Restaurant @relation(fields: [restroid], references: [id], onDelete: Cascade)
   menuItems  MenuItem[]

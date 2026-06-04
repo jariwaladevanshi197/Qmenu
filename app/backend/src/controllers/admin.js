@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import { PrismaClient } from '@prisma/client';
+﻿import bcrypt from 'bcryptjs';
+import { PrismaClient } from '../generated/client/index.js';
 import { generateSlug } from '../utils/helpers.js';
 import { saveToSupabase } from '../middleware/upload.js';
 

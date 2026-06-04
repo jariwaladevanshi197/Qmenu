@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+﻿import { PrismaClient } from '../generated/client/index.js';
 import { emitNewOrder, emitWaiterCall } from '../socket/index.js';
 import { generateOrderCode } from '../utils/helpers.js';
 
@@ -110,7 +110,7 @@ export const callWaiter = async (req, res) => {
 
     const { tableid } = req.body;
 
-    // No OTP required — anyone on the menu page can call waiter
+    // No OTP required â€” anyone on the menu page can call waiter
     let tableName = null;
     if (tableid) {
       const table = await prisma.table.findFirst({ where: { id: parseInt(tableid), restroid: restro.id } });

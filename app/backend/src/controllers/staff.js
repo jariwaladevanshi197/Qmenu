@@ -1,13 +1,13 @@
-import bcrypt from 'bcryptjs';
+﻿import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../generated/client/index.js';
 
 const prisma = new PrismaClient();
 
 const signToken = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
 
-// ── Super admin: manage staff for any restaurant ─────────────────────────────
+// â”€â”€ Super admin: manage staff for any restaurant â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const getStaffByRestro = async (req, res) => {
   try {
@@ -63,7 +63,7 @@ export const deleteStaff = async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
 
-// ── Restaurant admin: manage own staff ───────────────────────────────────────
+// â”€â”€ Restaurant admin: manage own staff â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const getMyStaff = async (req, res) => {
   try {
@@ -101,7 +101,7 @@ export const createMyStaff = async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
 
-// ── Staff login ───────────────────────────────────────────────────────────────
+// â”€â”€ Staff login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const staffLogin = async (req, res) => {
   try {
