@@ -160,6 +160,7 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   tagline: 'tagline',
   aboutText: 'aboutText',
   bannerImage: 'bannerImage',
+  aboutImage: 'aboutImage',
   openingHours: 'openingHours',
   phone: 'phone',
   whatsapp: 'whatsapp',

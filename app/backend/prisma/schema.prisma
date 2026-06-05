@@ -52,6 +52,7 @@ model Restaurant {
   tagline         String?
   aboutText       String?
   bannerImage     String?
+  aboutImage      String?
   openingHours    String?  @default("{}")
   phone           String?
   whatsapp        String?

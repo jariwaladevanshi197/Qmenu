@@ -3255,6 +3255,7 @@ export namespace Prisma {
     tagline: string | null
     aboutText: string | null
     bannerImage: string | null
+    aboutImage: string | null
     openingHours: string | null
     phone: string | null
     whatsapp: string | null
@@ -3294,6 +3295,7 @@ export namespace Prisma {
     tagline: string | null
     aboutText: string | null
     bannerImage: string | null
+    aboutImage: string | null
     openingHours: string | null
     phone: string | null
     whatsapp: string | null
@@ -3333,6 +3335,7 @@ export namespace Prisma {
     tagline: number
     aboutText: number
     bannerImage: number
+    aboutImage: number
     openingHours: number
     phone: number
     whatsapp: number
@@ -3398,6 +3401,7 @@ export namespace Prisma {
     tagline?: true
     aboutText?: true
     bannerImage?: true
+    aboutImage?: true
     openingHours?: true
     phone?: true
     whatsapp?: true
@@ -3437,6 +3441,7 @@ export namespace Prisma {
     tagline?: true
     aboutText?: true
     bannerImage?: true
+    aboutImage?: true
     openingHours?: true
     phone?: true
     whatsapp?: true
@@ -3476,6 +3481,7 @@ export namespace Prisma {
     tagline?: true
     aboutText?: true
     bannerImage?: true
+    aboutImage?: true
     openingHours?: true
     phone?: true
     whatsapp?: true
@@ -3602,6 +3608,7 @@ export namespace Prisma {
     tagline: string | null
     aboutText: string | null
     bannerImage: string | null
+    aboutImage: string | null
     openingHours: string | null
     phone: string | null
     whatsapp: string | null
@@ -3660,6 +3667,7 @@ export namespace Prisma {
     tagline?: boolean
     aboutText?: boolean
     bannerImage?: boolean
+    aboutImage?: boolean
     openingHours?: boolean
     phone?: boolean
     whatsapp?: boolean
@@ -3710,6 +3718,7 @@ export namespace Prisma {
     tagline?: boolean
     aboutText?: boolean
     bannerImage?: boolean
+    aboutImage?: boolean
     openingHours?: boolean
     phone?: boolean
     whatsapp?: boolean
@@ -3750,6 +3759,7 @@ export namespace Prisma {
     tagline?: boolean
     aboutText?: boolean
     bannerImage?: boolean
+    aboutImage?: boolean
     openingHours?: boolean
     phone?: boolean
     whatsapp?: boolean
@@ -3820,6 +3830,7 @@ export namespace Prisma {
       tagline: string | null
       aboutText: string | null
       bannerImage: string | null
+      aboutImage: string | null
       openingHours: string | null
       phone: string | null
       whatsapp: string | null
@@ -4259,6 +4270,7 @@ export namespace Prisma {
     readonly tagline: FieldRef<"Restaurant", 'String'>
     readonly aboutText: FieldRef<"Restaurant", 'String'>
     readonly bannerImage: FieldRef<"Restaurant", 'String'>
+    readonly aboutImage: FieldRef<"Restaurant", 'String'>
     readonly openingHours: FieldRef<"Restaurant", 'String'>
     readonly phone: FieldRef<"Restaurant", 'String'>
     readonly whatsapp: FieldRef<"Restaurant", 'String'>
@@ -17347,6 +17359,7 @@ export namespace Prisma {
     tagline: 'tagline',
     aboutText: 'aboutText',
     bannerImage: 'bannerImage',
+    aboutImage: 'aboutImage',
     openingHours: 'openingHours',
     phone: 'phone',
     whatsapp: 'whatsapp',
@@ -17731,6 +17744,7 @@ export namespace Prisma {
     tagline?: StringNullableFilter<"Restaurant"> | string | null
     aboutText?: StringNullableFilter<"Restaurant"> | string | null
     bannerImage?: StringNullableFilter<"Restaurant"> | string | null
+    aboutImage?: StringNullableFilter<"Restaurant"> | string | null
     openingHours?: StringNullableFilter<"Restaurant"> | string | null
     phone?: StringNullableFilter<"Restaurant"> | string | null
     whatsapp?: StringNullableFilter<"Restaurant"> | string | null
@@ -17780,6 +17794,7 @@ export namespace Prisma {
     tagline?: SortOrderInput | SortOrder
     aboutText?: SortOrderInput | SortOrder
     bannerImage?: SortOrderInput | SortOrder
+    aboutImage?: SortOrderInput | SortOrder
     openingHours?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     whatsapp?: SortOrderInput | SortOrder
@@ -17832,6 +17847,7 @@ export namespace Prisma {
     tagline?: StringNullableFilter<"Restaurant"> | string | null
     aboutText?: StringNullableFilter<"Restaurant"> | string | null
     bannerImage?: StringNullableFilter<"Restaurant"> | string | null
+    aboutImage?: StringNullableFilter<"Restaurant"> | string | null
     openingHours?: StringNullableFilter<"Restaurant"> | string | null
     phone?: StringNullableFilter<"Restaurant"> | string | null
     whatsapp?: StringNullableFilter<"Restaurant"> | string | null
@@ -17881,6 +17897,7 @@ export namespace Prisma {
     tagline?: SortOrderInput | SortOrder
     aboutText?: SortOrderInput | SortOrder
     bannerImage?: SortOrderInput | SortOrder
+    aboutImage?: SortOrderInput | SortOrder
     openingHours?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     whatsapp?: SortOrderInput | SortOrder
@@ -17928,6 +17945,7 @@ export namespace Prisma {
     tagline?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     aboutText?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     bannerImage?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    aboutImage?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     openingHours?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     whatsapp?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
@@ -18952,6 +18970,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -19001,6 +19020,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -19047,6 +19067,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19096,6 +19117,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19144,6 +19166,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -19181,6 +19204,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19220,6 +19244,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20461,6 +20486,7 @@ export namespace Prisma {
     tagline?: SortOrder
     aboutText?: SortOrder
     bannerImage?: SortOrder
+    aboutImage?: SortOrder
     openingHours?: SortOrder
     phone?: SortOrder
     whatsapp?: SortOrder
@@ -20512,6 +20538,7 @@ export namespace Prisma {
     tagline?: SortOrder
     aboutText?: SortOrder
     bannerImage?: SortOrder
+    aboutImage?: SortOrder
     openingHours?: SortOrder
     phone?: SortOrder
     whatsapp?: SortOrder
@@ -20551,6 +20578,7 @@ export namespace Prisma {
     tagline?: SortOrder
     aboutText?: SortOrder
     bannerImage?: SortOrder
+    aboutImage?: SortOrder
     openingHours?: SortOrder
     phone?: SortOrder
     whatsapp?: SortOrder
@@ -23174,6 +23202,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23222,6 +23251,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23283,6 +23313,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23331,6 +23362,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23376,6 +23408,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23423,6 +23456,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23500,6 +23534,7 @@ export namespace Prisma {
     tagline?: StringNullableFilter<"Restaurant"> | string | null
     aboutText?: StringNullableFilter<"Restaurant"> | string | null
     bannerImage?: StringNullableFilter<"Restaurant"> | string | null
+    aboutImage?: StringNullableFilter<"Restaurant"> | string | null
     openingHours?: StringNullableFilter<"Restaurant"> | string | null
     phone?: StringNullableFilter<"Restaurant"> | string | null
     whatsapp?: StringNullableFilter<"Restaurant"> | string | null
@@ -23537,6 +23572,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23585,6 +23621,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23681,6 +23718,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23729,6 +23767,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23790,6 +23829,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23838,6 +23878,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -23954,6 +23995,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24002,6 +24044,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24108,6 +24151,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -24156,6 +24200,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -24281,6 +24326,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24329,6 +24375,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24406,6 +24453,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -24454,6 +24502,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -24566,6 +24615,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24614,6 +24664,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24845,6 +24896,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -24893,6 +24945,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -24983,6 +25036,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25031,6 +25085,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25176,6 +25231,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -25224,6 +25280,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -25285,6 +25342,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25333,6 +25391,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25378,6 +25437,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -25426,6 +25486,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -25487,6 +25548,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25535,6 +25597,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25580,6 +25643,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -25628,6 +25692,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -25709,6 +25774,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25757,6 +25823,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26196,6 +26263,7 @@ export namespace Prisma {
     tagline?: string | null
     aboutText?: string | null
     bannerImage?: string | null
+    aboutImage?: string | null
     openingHours?: string | null
     phone?: string | null
     whatsapp?: string | null
@@ -26233,6 +26301,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26280,6 +26349,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26327,6 +26397,7 @@ export namespace Prisma {
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
     aboutText?: NullableStringFieldUpdateOperationsInput | string | null
     bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutImage?: NullableStringFieldUpdateOperationsInput | string | null
     openingHours?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null

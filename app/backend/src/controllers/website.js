@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const WEBSITE_FIELDS = {
   id: true, restroname: true, slug: true, email: true, address: true,
   mobileno: true, logo: true, subtype: true, status: true,
-  websiteEnabled: true, tagline: true, aboutText: true, bannerImage: true,
+  websiteEnabled: true, tagline: true, aboutText: true, bannerImage: true, aboutImage: true,
   openingHours: true, phone: true, whatsapp: true, facebookUrl: true,
   instagramUrl: true, galleryImages: true, mapEmbed: true, pdf: true,
   theme: {
@@ -84,6 +84,18 @@ export const uploadBanner = async (req, res) => {
     const url = await saveToSupabase(req.file, 'logos');
     await prisma.restaurant.update({ where: { id: parseInt(req.params.id) }, data: { bannerImage: url } });
     res.json({ bannerImage: url });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+// ── Super admin: upload about image ──────────────────────────────────────────
+export const uploadAboutImage = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const url = await saveToSupabase(req.file, 'images');
+    await prisma.restaurant.update({ where: { id: parseInt(req.params.id) }, data: { aboutImage: url } });
+    res.json({ aboutImage: url });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

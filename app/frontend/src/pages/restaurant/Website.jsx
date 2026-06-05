@@ -185,14 +185,18 @@ export default function RestaurantWebsite() {
               </button>
             </div>
             <div className="relative">
-              {logoSrc ? (
-                <div className="relative">
-                  <div className="absolute -inset-4 rounded-3xl opacity-20" style={{ backgroundColor: th.primary }} />
-                  <img src={logoSrc} alt={data.restroname} className="relative w-full max-w-sm mx-auto rounded-3xl shadow-2xl object-cover aspect-square" />
-                </div>
-              ) : (
-                <div className="w-full aspect-square rounded-3xl flex items-center justify-center text-8xl" style={{ backgroundColor: th.primary + '15' }}>🍽️</div>
-              )}
+              {(() => {
+                const aboutSrc = data.aboutImage?.startsWith('http') ? data.aboutImage : data.aboutImage ? `${API}${data.aboutImage}` : null;
+                const displaySrc = aboutSrc || logoSrc;
+                return displaySrc ? (
+                  <div className="relative">
+                    <div className="absolute -inset-4 rounded-3xl opacity-20" style={{ backgroundColor: th.primary }} />
+                    <img src={displaySrc} alt="About" className="relative w-full max-w-sm mx-auto rounded-3xl shadow-2xl object-cover aspect-square" />
+                  </div>
+                ) : (
+                  <div className="w-full aspect-square rounded-3xl flex items-center justify-center text-8xl" style={{ backgroundColor: th.primary + '15' }}>🍽️</div>
+                );
+              })()}
             </div>
           </div>
         </section>

@@ -122,6 +122,15 @@ export default function SuperAdminRestaurants() {
     } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
   };
 
+  const uploadAboutImg = async (file) => {
+    const fd = new FormData(); fd.append('image', file);
+    try {
+      const { data } = await api.post(`/website/admin/${websiteTarget.id}/about-image`, fd);
+      setWebsiteData((prev) => ({ ...prev, aboutImage: data.aboutImage }));
+      toast.success('About image uploaded!');
+    } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
+  };
+
   const uploadGallery = async (file) => {
     const fd = new FormData(); fd.append('image', file);
     try {
@@ -441,6 +450,29 @@ export default function SuperAdminRestaurants() {
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && uploadBanner(e.target.files[0])} />
                     </label>
                   </div>
+
+                  {/* About Us Image */}
+                  <div>
+                    <label className="label">About Us Image</label>
+                    <p className="text-xs text-gray-400 mb-2">Shown next to the About Us text (restaurant interior, team photo, etc.)</p>
+                    {websiteData.aboutImage && (
+                      <div className="relative group w-40 mb-3">
+                        <img src={websiteData.aboutImage} alt="About" className="w-40 h-28 object-cover rounded-xl border border-gray-100" />
+                        <button
+                          onClick={async () => {
+                            await api.put(`/website/admin/${websiteTarget.id}`, { aboutImage: '' }).catch(() => {});
+                            setWebsiteData((prev) => ({ ...prev, aboutImage: null }));
+                            toast.success('Removed');
+                          }}
+                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full hidden group-hover:flex items-center justify-center text-xs">✕</button>
+                      </div>
+                    )}
+                    <label className="flex items-center gap-2 cursor-pointer btn-secondary btn-sm w-fit">
+                      <Upload size={14} /> {websiteData.aboutImage ? 'Change Image' : 'Upload Image'}
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && uploadAboutImg(e.target.files[0])} />
+                    </label>
+                  </div>
+
                   <div>
                     <label className="label">Gallery Photos</label>
                     <div className="grid grid-cols-3 gap-2 mb-3">
