@@ -28,7 +28,7 @@ export default function RestroDashboard() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
         <div className="flex gap-2">
-          {Number(profile?.subtype) === 2 && (
+          {(Number(profile?.subtype) === 2 || Number(user?.subtype) === 2) && (
             <a href={`/r/${user?.slug || profile?.slug}`} target="_blank" rel="noreferrer"
               style={{ backgroundColor: '#f0fdf4', color: '#16a34a', border: '1px solid #bbf7d0' }}
               className="btn-sm flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold">
