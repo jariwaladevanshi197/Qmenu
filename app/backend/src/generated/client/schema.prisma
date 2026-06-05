@@ -52,6 +52,7 @@ model Restaurant {
   tagline        String?
   aboutText      String?
   bannerImage    String?
+  aboutImage     String?
   openingHours   String? @default("{}")
   phone          String?
   whatsapp       String?
@@ -144,10 +145,11 @@ model MenuItem {
 }
 
 model Table {
-  id       Int     @id @default(autoincrement())
-  restroid Int
-  name     String
-  qrimage  String?
+  id          Int     @id @default(autoincrement())
+  restroid    Int
+  name        String
+  tableNumber Int     @default(0) // sequential per restaurant: 1, 2, 3...
+  qrimage     String?
 
   restaurant     Restaurant      @relation(fields: [restroid], references: [id], onDelete: Cascade)
   orders         Order[]
