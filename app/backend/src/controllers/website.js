@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const WEBSITE_FIELDS = {
   id: true, restroname: true, slug: true, email: true, address: true,
   mobileno: true, logo: true, subtype: true, status: true,
-  websiteEnabled: true, tagline: true, aboutText: true, bannerImage: true, aboutImage: true,
+  websiteEnabled: true, heroTitle: true, tagline: true, aboutText: true, bannerImage: true, aboutImage: true,
   openingHours: true, phone: true, whatsapp: true, facebookUrl: true,
   instagramUrl: true, galleryImages: true, mapEmbed: true, pdf: true,
   theme: {
@@ -47,11 +47,11 @@ export const getWebsite = async (req, res) => {
 export const updateWebsite = async (req, res) => {
   try {
     const { id } = req.params;
-    const { tagline, aboutText, openingHours, phone, whatsapp, facebookUrl, instagramUrl, mapEmbed } = req.body;
+    const { heroTitle, tagline, aboutText, openingHours, phone, whatsapp, facebookUrl, instagramUrl, mapEmbed } = req.body;
 
     const restro = await prisma.restaurant.update({
       where: { id: parseInt(id) },
-      data: { tagline, aboutText, openingHours, phone, whatsapp, facebookUrl, instagramUrl, mapEmbed },
+      data: { heroTitle, tagline, aboutText, openingHours, phone, whatsapp, facebookUrl, instagramUrl, mapEmbed },
       select: WEBSITE_FIELDS,
     });
     res.json(restro);

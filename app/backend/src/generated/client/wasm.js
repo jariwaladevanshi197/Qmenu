@@ -157,6 +157,7 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   servicecharge: 'servicecharge',
   maxStaff: 'maxStaff',
   websiteEnabled: 'websiteEnabled',
+  heroTitle: 'heroTitle',
   tagline: 'tagline',
   aboutText: 'aboutText',
   bannerImage: 'bannerImage',

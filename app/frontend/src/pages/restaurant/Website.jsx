@@ -121,7 +121,7 @@ export default function RestaurantWebsite() {
             <Star size={11} fill="white" /> Premium Dining Experience
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white mb-5 leading-tight tracking-tight drop-shadow-2xl">
-            {data.restroname}
+            {data.heroTitle || data.restroname}
           </h1>
           {data.tagline && (
             <p className="text-lg md:text-xl text-white/75 mb-10 max-w-xl mx-auto leading-relaxed font-light italic">

@@ -49,6 +49,7 @@ model Restaurant {
 
   // Mega+Web website fields
   websiteEnabled  Boolean  @default(false)
+  heroTitle       String?
   tagline         String?
   aboutText       String?
   bannerImage     String?

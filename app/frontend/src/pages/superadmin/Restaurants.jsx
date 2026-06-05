@@ -83,7 +83,7 @@ export default function SuperAdminRestaurants() {
       const { data } = await api.get(`/website/${r.slug}`).catch(() => ({ data: r }));
       setWebsiteData(data);
       setWebsiteForm({
-        tagline: data.tagline || '', aboutText: data.aboutText || '',
+        heroTitle: data.heroTitle || '', tagline: data.tagline || '', aboutText: data.aboutText || '',
         phone: data.phone || '', whatsapp: data.whatsapp || '',
         facebookUrl: data.facebookUrl || '', instagramUrl: data.instagramUrl || '',
         mapEmbed: data.mapEmbed || '',
@@ -421,6 +421,10 @@ export default function SuperAdminRestaurants() {
 
               {websiteTab === 'content' && (
                 <>
+                  <Field label="Hero Title">
+                    <input className="input" value={websiteForm.heroTitle || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, heroTitle: e.target.value })} placeholder={`Default: ${websiteData?.restroname || 'Restaurant Name'}`} />
+                    <p className="text-xs text-gray-400 mt-1">Shown as the big heading in the hero section. Leave empty to use the restaurant name.</p>
+                  </Field>
                   <Field label="Tagline">
                     <input className="input" value={websiteForm.tagline || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, tagline: e.target.value })} placeholder="e.g. Best biryani in Surat" />
                   </Field>
