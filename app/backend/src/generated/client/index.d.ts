@@ -3251,6 +3251,17 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    websiteEnabled: boolean | null
+    tagline: string | null
+    aboutText: string | null
+    bannerImage: string | null
+    openingHours: string | null
+    phone: string | null
+    whatsapp: string | null
+    facebookUrl: string | null
+    instagramUrl: string | null
+    galleryImages: string | null
+    mapEmbed: string | null
   }
 
   export type RestaurantMaxAggregateOutputType = {
@@ -3279,6 +3290,17 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    websiteEnabled: boolean | null
+    tagline: string | null
+    aboutText: string | null
+    bannerImage: string | null
+    openingHours: string | null
+    phone: string | null
+    whatsapp: string | null
+    facebookUrl: string | null
+    instagramUrl: string | null
+    galleryImages: string | null
+    mapEmbed: string | null
   }
 
   export type RestaurantCountAggregateOutputType = {
@@ -3307,6 +3329,17 @@ export namespace Prisma {
     discount: number
     servicecharge: number
     maxStaff: number
+    websiteEnabled: number
+    tagline: number
+    aboutText: number
+    bannerImage: number
+    openingHours: number
+    phone: number
+    whatsapp: number
+    facebookUrl: number
+    instagramUrl: number
+    galleryImages: number
+    mapEmbed: number
     _all: number
   }
 
@@ -3361,6 +3394,17 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    websiteEnabled?: true
+    tagline?: true
+    aboutText?: true
+    bannerImage?: true
+    openingHours?: true
+    phone?: true
+    whatsapp?: true
+    facebookUrl?: true
+    instagramUrl?: true
+    galleryImages?: true
+    mapEmbed?: true
   }
 
   export type RestaurantMaxAggregateInputType = {
@@ -3389,6 +3433,17 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    websiteEnabled?: true
+    tagline?: true
+    aboutText?: true
+    bannerImage?: true
+    openingHours?: true
+    phone?: true
+    whatsapp?: true
+    facebookUrl?: true
+    instagramUrl?: true
+    galleryImages?: true
+    mapEmbed?: true
   }
 
   export type RestaurantCountAggregateInputType = {
@@ -3417,6 +3472,17 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    websiteEnabled?: true
+    tagline?: true
+    aboutText?: true
+    bannerImage?: true
+    openingHours?: true
+    phone?: true
+    whatsapp?: true
+    facebookUrl?: true
+    instagramUrl?: true
+    galleryImages?: true
+    mapEmbed?: true
     _all?: true
   }
 
@@ -3532,6 +3598,17 @@ export namespace Prisma {
     discount: number
     servicecharge: number
     maxStaff: number
+    websiteEnabled: boolean
+    tagline: string | null
+    aboutText: string | null
+    bannerImage: string | null
+    openingHours: string | null
+    phone: string | null
+    whatsapp: string | null
+    facebookUrl: string | null
+    instagramUrl: string | null
+    galleryImages: string | null
+    mapEmbed: string | null
     _count: RestaurantCountAggregateOutputType | null
     _avg: RestaurantAvgAggregateOutputType | null
     _sum: RestaurantSumAggregateOutputType | null
@@ -3579,6 +3656,17 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    websiteEnabled?: boolean
+    tagline?: boolean
+    aboutText?: boolean
+    bannerImage?: boolean
+    openingHours?: boolean
+    phone?: boolean
+    whatsapp?: boolean
+    facebookUrl?: boolean
+    instagramUrl?: boolean
+    galleryImages?: boolean
+    mapEmbed?: boolean
     theme?: boolean | Restaurant$themeArgs<ExtArgs>
     categories?: boolean | Restaurant$categoriesArgs<ExtArgs>
     menuItems?: boolean | Restaurant$menuItemsArgs<ExtArgs>
@@ -3618,6 +3706,17 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    websiteEnabled?: boolean
+    tagline?: boolean
+    aboutText?: boolean
+    bannerImage?: boolean
+    openingHours?: boolean
+    phone?: boolean
+    whatsapp?: boolean
+    facebookUrl?: boolean
+    instagramUrl?: boolean
+    galleryImages?: boolean
+    mapEmbed?: boolean
     theme?: boolean | Restaurant$themeArgs<ExtArgs>
   }, ExtArgs["result"]["restaurant"]>
 
@@ -3647,6 +3746,17 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    websiteEnabled?: boolean
+    tagline?: boolean
+    aboutText?: boolean
+    bannerImage?: boolean
+    openingHours?: boolean
+    phone?: boolean
+    whatsapp?: boolean
+    facebookUrl?: boolean
+    instagramUrl?: boolean
+    galleryImages?: boolean
+    mapEmbed?: boolean
   }
 
   export type RestaurantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3706,6 +3816,17 @@ export namespace Prisma {
       discount: number
       servicecharge: number
       maxStaff: number
+      websiteEnabled: boolean
+      tagline: string | null
+      aboutText: string | null
+      bannerImage: string | null
+      openingHours: string | null
+      phone: string | null
+      whatsapp: string | null
+      facebookUrl: string | null
+      instagramUrl: string | null
+      galleryImages: string | null
+      mapEmbed: string | null
     }, ExtArgs["result"]["restaurant"]>
     composites: {}
   }
@@ -4134,6 +4255,17 @@ export namespace Prisma {
     readonly discount: FieldRef<"Restaurant", 'Float'>
     readonly servicecharge: FieldRef<"Restaurant", 'Float'>
     readonly maxStaff: FieldRef<"Restaurant", 'Int'>
+    readonly websiteEnabled: FieldRef<"Restaurant", 'Boolean'>
+    readonly tagline: FieldRef<"Restaurant", 'String'>
+    readonly aboutText: FieldRef<"Restaurant", 'String'>
+    readonly bannerImage: FieldRef<"Restaurant", 'String'>
+    readonly openingHours: FieldRef<"Restaurant", 'String'>
+    readonly phone: FieldRef<"Restaurant", 'String'>
+    readonly whatsapp: FieldRef<"Restaurant", 'String'>
+    readonly facebookUrl: FieldRef<"Restaurant", 'String'>
+    readonly instagramUrl: FieldRef<"Restaurant", 'String'>
+    readonly galleryImages: FieldRef<"Restaurant", 'String'>
+    readonly mapEmbed: FieldRef<"Restaurant", 'String'>
   }
     
 
@@ -17210,7 +17342,18 @@ export namespace Prisma {
     restrootp: 'restrootp',
     discount: 'discount',
     servicecharge: 'servicecharge',
-    maxStaff: 'maxStaff'
+    maxStaff: 'maxStaff',
+    websiteEnabled: 'websiteEnabled',
+    tagline: 'tagline',
+    aboutText: 'aboutText',
+    bannerImage: 'bannerImage',
+    openingHours: 'openingHours',
+    phone: 'phone',
+    whatsapp: 'whatsapp',
+    facebookUrl: 'facebookUrl',
+    instagramUrl: 'instagramUrl',
+    galleryImages: 'galleryImages',
+    mapEmbed: 'mapEmbed'
   };
 
   export type RestaurantScalarFieldEnum = (typeof RestaurantScalarFieldEnum)[keyof typeof RestaurantScalarFieldEnum]
@@ -17584,6 +17727,17 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    websiteEnabled?: BoolFilter<"Restaurant"> | boolean
+    tagline?: StringNullableFilter<"Restaurant"> | string | null
+    aboutText?: StringNullableFilter<"Restaurant"> | string | null
+    bannerImage?: StringNullableFilter<"Restaurant"> | string | null
+    openingHours?: StringNullableFilter<"Restaurant"> | string | null
+    phone?: StringNullableFilter<"Restaurant"> | string | null
+    whatsapp?: StringNullableFilter<"Restaurant"> | string | null
+    facebookUrl?: StringNullableFilter<"Restaurant"> | string | null
+    instagramUrl?: StringNullableFilter<"Restaurant"> | string | null
+    galleryImages?: StringNullableFilter<"Restaurant"> | string | null
+    mapEmbed?: StringNullableFilter<"Restaurant"> | string | null
     theme?: XOR<ThemeNullableRelationFilter, ThemeWhereInput> | null
     categories?: CategoryListRelationFilter
     menuItems?: MenuItemListRelationFilter
@@ -17622,6 +17776,17 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    websiteEnabled?: SortOrder
+    tagline?: SortOrderInput | SortOrder
+    aboutText?: SortOrderInput | SortOrder
+    bannerImage?: SortOrderInput | SortOrder
+    openingHours?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    whatsapp?: SortOrderInput | SortOrder
+    facebookUrl?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
+    galleryImages?: SortOrderInput | SortOrder
+    mapEmbed?: SortOrderInput | SortOrder
     theme?: ThemeOrderByWithRelationInput
     categories?: CategoryOrderByRelationAggregateInput
     menuItems?: MenuItemOrderByRelationAggregateInput
@@ -17663,6 +17828,17 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    websiteEnabled?: BoolFilter<"Restaurant"> | boolean
+    tagline?: StringNullableFilter<"Restaurant"> | string | null
+    aboutText?: StringNullableFilter<"Restaurant"> | string | null
+    bannerImage?: StringNullableFilter<"Restaurant"> | string | null
+    openingHours?: StringNullableFilter<"Restaurant"> | string | null
+    phone?: StringNullableFilter<"Restaurant"> | string | null
+    whatsapp?: StringNullableFilter<"Restaurant"> | string | null
+    facebookUrl?: StringNullableFilter<"Restaurant"> | string | null
+    instagramUrl?: StringNullableFilter<"Restaurant"> | string | null
+    galleryImages?: StringNullableFilter<"Restaurant"> | string | null
+    mapEmbed?: StringNullableFilter<"Restaurant"> | string | null
     theme?: XOR<ThemeNullableRelationFilter, ThemeWhereInput> | null
     categories?: CategoryListRelationFilter
     menuItems?: MenuItemListRelationFilter
@@ -17701,6 +17877,17 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    websiteEnabled?: SortOrder
+    tagline?: SortOrderInput | SortOrder
+    aboutText?: SortOrderInput | SortOrder
+    bannerImage?: SortOrderInput | SortOrder
+    openingHours?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    whatsapp?: SortOrderInput | SortOrder
+    facebookUrl?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
+    galleryImages?: SortOrderInput | SortOrder
+    mapEmbed?: SortOrderInput | SortOrder
     _count?: RestaurantCountOrderByAggregateInput
     _avg?: RestaurantAvgOrderByAggregateInput
     _max?: RestaurantMaxOrderByAggregateInput
@@ -17737,6 +17924,17 @@ export namespace Prisma {
     discount?: FloatWithAggregatesFilter<"Restaurant"> | number
     servicecharge?: FloatWithAggregatesFilter<"Restaurant"> | number
     maxStaff?: IntWithAggregatesFilter<"Restaurant"> | number
+    websiteEnabled?: BoolWithAggregatesFilter<"Restaurant"> | boolean
+    tagline?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    aboutText?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    bannerImage?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    openingHours?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    whatsapp?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    facebookUrl?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    instagramUrl?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    galleryImages?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    mapEmbed?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
   }
 
   export type StaffWhereInput = {
@@ -18750,6 +18948,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -18788,6 +18997,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -18823,6 +19043,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -18861,6 +19092,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -18898,6 +19140,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
   }
 
   export type RestaurantUpdateManyMutationInput = {
@@ -18924,6 +19177,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RestaurantUncheckedUpdateManyInput = {
@@ -18952,6 +19216,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StaffCreateInput = {
@@ -20051,6 +20326,11 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type ThemeNullableRelationFilter = {
     is?: ThemeWhereInput | null
     isNot?: ThemeWhereInput | null
@@ -20177,6 +20457,17 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    websiteEnabled?: SortOrder
+    tagline?: SortOrder
+    aboutText?: SortOrder
+    bannerImage?: SortOrder
+    openingHours?: SortOrder
+    phone?: SortOrder
+    whatsapp?: SortOrder
+    facebookUrl?: SortOrder
+    instagramUrl?: SortOrder
+    galleryImages?: SortOrder
+    mapEmbed?: SortOrder
   }
 
   export type RestaurantAvgOrderByAggregateInput = {
@@ -20217,6 +20508,17 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    websiteEnabled?: SortOrder
+    tagline?: SortOrder
+    aboutText?: SortOrder
+    bannerImage?: SortOrder
+    openingHours?: SortOrder
+    phone?: SortOrder
+    whatsapp?: SortOrder
+    facebookUrl?: SortOrder
+    instagramUrl?: SortOrder
+    galleryImages?: SortOrder
+    mapEmbed?: SortOrder
   }
 
   export type RestaurantMinOrderByAggregateInput = {
@@ -20245,6 +20547,17 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    websiteEnabled?: SortOrder
+    tagline?: SortOrder
+    aboutText?: SortOrder
+    bannerImage?: SortOrder
+    openingHours?: SortOrder
+    phone?: SortOrder
+    whatsapp?: SortOrder
+    facebookUrl?: SortOrder
+    instagramUrl?: SortOrder
+    galleryImages?: SortOrder
+    mapEmbed?: SortOrder
   }
 
   export type RestaurantSumOrderByAggregateInput = {
@@ -20323,6 +20636,14 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type RestaurantRelationFilter = {
     is?: RestaurantWhereInput
     isNot?: RestaurantWhereInput
@@ -20371,11 +20692,6 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     status?: SortOrder
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type RestaurantListRelationFilter = {
@@ -20445,14 +20761,6 @@ export namespace Prisma {
 
   export type ThemeSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -21186,6 +21494,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type ThemeUpdateOneWithoutRestaurantsNestedInput = {
     create?: XOR<ThemeCreateWithoutRestaurantsInput, ThemeUncheckedCreateWithoutRestaurantsInput>
     connectOrCreate?: ThemeCreateOrConnectWithoutRestaurantsInput
@@ -21482,10 +21794,6 @@ export namespace Prisma {
     connectOrCreate?: RestaurantCreateOrConnectWithoutThemeInput | RestaurantCreateOrConnectWithoutThemeInput[]
     createMany?: RestaurantCreateManyThemeInputEnvelope
     connect?: RestaurantWhereUniqueInput | RestaurantWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type RestaurantUpdateManyWithoutThemeNestedInput = {
@@ -22081,6 +22389,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -22153,11 +22466,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -22862,6 +23170,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -22899,6 +23218,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -22949,6 +23279,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -22986,6 +23327,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -23020,6 +23372,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     tables?: TableCreateNestedManyWithoutRestaurantInput
@@ -23056,6 +23419,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -23122,6 +23496,17 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    websiteEnabled?: BoolFilter<"Restaurant"> | boolean
+    tagline?: StringNullableFilter<"Restaurant"> | string | null
+    aboutText?: StringNullableFilter<"Restaurant"> | string | null
+    bannerImage?: StringNullableFilter<"Restaurant"> | string | null
+    openingHours?: StringNullableFilter<"Restaurant"> | string | null
+    phone?: StringNullableFilter<"Restaurant"> | string | null
+    whatsapp?: StringNullableFilter<"Restaurant"> | string | null
+    facebookUrl?: StringNullableFilter<"Restaurant"> | string | null
+    instagramUrl?: StringNullableFilter<"Restaurant"> | string | null
+    galleryImages?: StringNullableFilter<"Restaurant"> | string | null
+    mapEmbed?: StringNullableFilter<"Restaurant"> | string | null
   }
 
   export type RestaurantCreateWithoutCategoriesInput = {
@@ -23148,6 +23533,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     tables?: TableCreateNestedManyWithoutRestaurantInput
@@ -23185,6 +23581,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
@@ -23270,6 +23677,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     tables?: TableUpdateManyWithoutRestaurantNestedInput
@@ -23307,6 +23725,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -23357,6 +23786,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     tables?: TableCreateNestedManyWithoutRestaurantInput
@@ -23394,6 +23834,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
@@ -23499,6 +23950,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     tables?: TableUpdateManyWithoutRestaurantNestedInput
@@ -23536,6 +23998,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -23631,6 +24104,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -23668,6 +24152,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
@@ -23782,6 +24277,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -23819,6 +24325,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -23885,6 +24402,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -23922,6 +24450,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -24023,6 +24562,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -24060,6 +24610,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -24280,6 +24841,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -24317,6 +24889,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -24396,6 +24979,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -24433,6 +25027,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -24567,6 +25172,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -24604,6 +25220,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -24654,6 +25281,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -24691,6 +25329,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -24725,6 +25374,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -24762,6 +25422,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -24812,6 +25483,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -24849,6 +25531,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -24883,6 +25576,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     theme?: ThemeCreateNestedOneWithoutRestaurantsInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -24920,6 +25624,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
@@ -24990,6 +25705,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     theme?: ThemeUpdateOneWithoutRestaurantsNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -25027,6 +25753,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -25455,6 +26192,17 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    websiteEnabled?: boolean
+    tagline?: string | null
+    aboutText?: string | null
+    bannerImage?: string | null
+    openingHours?: string | null
+    phone?: string | null
+    whatsapp?: string | null
+    facebookUrl?: string | null
+    instagramUrl?: string | null
+    galleryImages?: string | null
+    mapEmbed?: string | null
   }
 
   export type RestaurantUpdateWithoutThemeInput = {
@@ -25481,6 +26229,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     tables?: TableUpdateManyWithoutRestaurantNestedInput
@@ -25517,6 +26276,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -25553,6 +26323,17 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    aboutText?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    openingHours?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    facebookUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    galleryImages?: NullableStringFieldUpdateOperationsInput | string | null
+    mapEmbed?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MenuItemCreateManyCategoryInput = {

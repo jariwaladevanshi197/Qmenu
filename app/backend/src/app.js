@@ -10,6 +10,7 @@ import orderRoutes from './routes/orders.js';
 import customerRoutes from './routes/customer.js';
 import uploadRoutes from './routes/upload.js';
 import staffRoutes from './routes/staff.js';
+import websiteRoutes from './routes/website.js';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/staff', staffRoutes);
+app.use('/api/website', websiteRoutes);
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 

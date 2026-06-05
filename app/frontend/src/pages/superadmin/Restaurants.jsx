@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import Modal from '../../components/ui/Modal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import { PageLoader } from '../../components/ui/Spinner';
-import { Plus, Pencil, Key, CreditCard, Search } from 'lucide-react';
+import { Plus, Pencil, Key, CreditCard, Search, Globe, ToggleLeft, ToggleRight, Image, Clock, Link, Upload, Trash2 } from 'lucide-react';
 
 const SUBTYPE_LABELS = { 0: 'Legacy', 1: 'Mega', 2: 'Mega+Web' };
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -29,6 +29,10 @@ export default function SuperAdminRestaurants() {
   const [editTarget, setEditTarget] = useState(null);
   const [planTarget, setPlanTarget] = useState(null);
   const [passTarget, setPassTarget] = useState(null);
+  const [websiteTarget, setWebsiteTarget] = useState(null); // { id, slug }
+  const [websiteTab, setWebsiteTab] = useState('content');
+  const [websiteForm, setWebsiteForm] = useState({});
+  const [websiteData, setWebsiteData] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [planForm, setPlanForm] = useState({});
   const [newPass, setNewPass] = useState('');
@@ -71,6 +75,69 @@ export default function SuperAdminRestaurants() {
     onSuccess: () => { toast.success('Password updated'); setPassTarget(null); setNewPass(''); },
     onError: (e) => toast.error(e.response?.data?.error || 'Error'),
   });
+
+  const openWebsite = async (r) => {
+    setWebsiteTab('content');
+    setWebsiteTarget({ id: r.id, slug: r.slug });
+    try {
+      const { data } = await api.get(`/website/${r.slug}`).catch(() => ({ data: r }));
+      setWebsiteData(data);
+      setWebsiteForm({
+        tagline: data.tagline || '', aboutText: data.aboutText || '',
+        phone: data.phone || '', whatsapp: data.whatsapp || '',
+        facebookUrl: data.facebookUrl || '', instagramUrl: data.instagramUrl || '',
+        mapEmbed: data.mapEmbed || '',
+        openingHours: (() => { try { return JSON.parse(data.openingHours || '{}'); } catch { return {}; } })(),
+      });
+    } catch {
+      setWebsiteData(r);
+      setWebsiteForm({ tagline:'', aboutText:'', phone:'', whatsapp:'', facebookUrl:'', instagramUrl:'', mapEmbed:'', openingHours:{} });
+    }
+  };
+
+  const saveWebsite = async () => {
+    try {
+      const payload = { ...websiteForm, openingHours: JSON.stringify(websiteForm.openingHours) };
+      await api.put(`/website/admin/${websiteTarget.id}`, payload);
+      qc.invalidateQueries(['restaurants']);
+      toast.success('Website updated!');
+    } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
+  };
+
+  const toggleWebsiteEnabled = async () => {
+    try {
+      const { data } = await api.patch(`/website/admin/${websiteTarget.id}/toggle`);
+      setWebsiteData((prev) => ({ ...prev, websiteEnabled: data.websiteEnabled }));
+      qc.invalidateQueries(['restaurants']);
+      toast.success(data.websiteEnabled ? 'Website enabled!' : 'Website disabled');
+    } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
+  };
+
+  const uploadBanner = async (file) => {
+    const fd = new FormData(); fd.append('banner', file);
+    try {
+      const { data } = await api.post(`/website/admin/${websiteTarget.id}/banner`, fd);
+      setWebsiteData((prev) => ({ ...prev, bannerImage: data.bannerImage }));
+      toast.success('Banner uploaded!');
+    } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
+  };
+
+  const uploadGallery = async (file) => {
+    const fd = new FormData(); fd.append('image', file);
+    try {
+      const { data } = await api.post(`/website/admin/${websiteTarget.id}/gallery`, fd);
+      setWebsiteData((prev) => ({ ...prev, galleryImages: JSON.stringify(data.galleryImages) }));
+      toast.success('Image added!');
+    } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
+  };
+
+  const deleteGallery = async (url) => {
+    try {
+      const { data } = await api.delete(`/website/admin/${websiteTarget.id}/gallery`, { data: { url } });
+      setWebsiteData((prev) => ({ ...prev, galleryImages: JSON.stringify(data.galleryImages) }));
+      toast.success('Removed');
+    } catch (e) { toast.error(e.response?.data?.error || 'Error'); }
+  };
 
   const submitAdd = () => {
     if (form.password !== form.conpassword) return toast.error('Passwords do not match');
@@ -168,6 +235,11 @@ export default function SuperAdminRestaurants() {
                         <button className="btn-ghost btn-sm p-1.5" onClick={() => openEdit(r)} title="Edit"><Pencil size={14} /></button>
                         <button className="btn-ghost btn-sm p-1.5" onClick={() => openPlan(r)} title="Update plan"><CreditCard size={14} /></button>
                         <button className="btn-ghost btn-sm p-1.5" onClick={() => setPassTarget(r.id)} title="Change password"><Key size={14} /></button>
+                        {r.subtype === 2 && (
+                          <button className="btn-ghost btn-sm p-1.5 text-blue-500 hover:bg-blue-50" onClick={() => openWebsite(r)} title="Manage Website">
+                            <Globe size={14} />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -286,6 +358,158 @@ export default function SuperAdminRestaurants() {
           </button>
         </div>
       </Modal>
+
+      {/* ── Website Editor Modal ── */}
+      {websiteTarget && websiteData && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <Globe size={20} className="text-blue-500" />
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Website Manager</h2>
+                  <p className="text-xs text-gray-400">{websiteData.restroname}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {/* Enable/Disable toggle */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-gray-500">Website</span>
+                  <button onClick={toggleWebsiteEnabled}
+                    className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors ${websiteData.websiteEnabled ? 'bg-green-500' : 'bg-gray-300'}`}>
+                    <span className={`w-4 h-4 bg-white rounded-full shadow absolute transition-transform ${websiteData.websiteEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                  </button>
+                  <span className={`text-xs font-semibold ${websiteData.websiteEnabled ? 'text-green-600' : 'text-gray-400'}`}>
+                    {websiteData.websiteEnabled ? 'Live' : 'Off'}
+                  </span>
+                </div>
+                {websiteData.websiteEnabled && (
+                  <a href={`/r/${websiteTarget.slug}`} target="_blank" rel="noreferrer"
+                    className="btn-secondary btn-sm"><Globe size={12} /> Preview</a>
+                )}
+                <button onClick={() => setWebsiteTarget(null)} className="p-2 rounded-lg hover:bg-gray-100">✕</button>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex border-b border-gray-100 px-6">
+              {[
+                { key: 'content', label: '📝 Content' },
+                { key: 'media',   label: '🖼️ Media' },
+                { key: 'hours',   label: '🕐 Hours' },
+                { key: 'social',  label: '🔗 Social & Map' },
+              ].map(({ key, label }) => (
+                <button key={key} onClick={() => setWebsiteTab(key)}
+                  className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${websiteTab === key ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {/* Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+
+              {websiteTab === 'content' && (
+                <>
+                  <Field label="Tagline">
+                    <input className="input" value={websiteForm.tagline || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, tagline: e.target.value })} placeholder="e.g. Best biryani in Surat" />
+                  </Field>
+                  <Field label="About Us">
+                    <textarea className="input" rows={4} value={websiteForm.aboutText || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, aboutText: e.target.value })} placeholder="Tell customers about your restaurant..." />
+                  </Field>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field label="Public Phone">
+                      <input className="input" value={websiteForm.phone || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, phone: e.target.value })} placeholder="Display phone number" />
+                    </Field>
+                    <Field label="WhatsApp Number">
+                      <input className="input" value={websiteForm.whatsapp || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, whatsapp: e.target.value })} placeholder="With country code, e.g. 919408..." />
+                    </Field>
+                  </div>
+                </>
+              )}
+
+              {websiteTab === 'media' && (
+                <>
+                  <div>
+                    <label className="label">Hero Banner Image</label>
+                    {websiteData.bannerImage && (
+                      <img src={websiteData.bannerImage} alt="Banner" className="w-full h-40 object-cover rounded-xl mb-3" />
+                    )}
+                    <label className="flex items-center gap-2 cursor-pointer btn-secondary btn-sm w-fit">
+                      <Upload size={14} /> Upload Banner
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && uploadBanner(e.target.files[0])} />
+                    </label>
+                  </div>
+                  <div>
+                    <label className="label">Gallery Photos</label>
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      {JSON.parse(websiteData.galleryImages || '[]').map((url, i) => (
+                        <div key={i} className="relative group aspect-square">
+                          <img src={url} alt={`Gallery ${i}`} className="w-full h-full object-cover rounded-xl" />
+                          <button onClick={() => deleteGallery(url)}
+                            className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full hidden group-hover:flex items-center justify-center text-xs">✕</button>
+                        </div>
+                      ))}
+                      <label className="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-gray-300 transition-colors">
+                        <Upload size={18} className="text-gray-400 mb-1" />
+                        <span className="text-xs text-gray-400">Add Photo</span>
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && uploadGallery(e.target.files[0])} />
+                      </label>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {websiteTab === 'hours' && (
+                <div className="space-y-2">
+                  {['mon','tue','wed','thu','fri','sat','sun'].map((day) => {
+                    const h = websiteForm.openingHours?.[day] || {};
+                    const setDay = (val) => setWebsiteForm((p) => ({ ...p, openingHours: { ...p.openingHours, [day]: val } }));
+                    return (
+                      <div key={day} className="flex items-center gap-3 py-2 border-b border-gray-50">
+                        <span className="w-24 text-sm font-medium text-gray-700 capitalize">{day}</span>
+                        <label className="flex items-center gap-1.5 text-xs text-gray-500">
+                          <input type="checkbox" checked={!!h.closed} onChange={(e) => setDay({ ...h, closed: e.target.checked })} className="rounded" />
+                          Closed
+                        </label>
+                        {!h.closed && (
+                          <>
+                            <input className="input py-1.5 text-sm w-28" type="time" value={h.open || ''} onChange={(e) => setDay({ ...h, open: e.target.value })} />
+                            <span className="text-gray-400 text-sm">to</span>
+                            <input className="input py-1.5 text-sm w-28" type="time" value={h.close || ''} onChange={(e) => setDay({ ...h, close: e.target.value })} />
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {websiteTab === 'social' && (
+                <>
+                  <Field label="Instagram URL">
+                    <input className="input" value={websiteForm.instagramUrl || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, instagramUrl: e.target.value })} placeholder="https://instagram.com/yourpage" />
+                  </Field>
+                  <Field label="Facebook URL">
+                    <input className="input" value={websiteForm.facebookUrl || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, facebookUrl: e.target.value })} placeholder="https://facebook.com/yourpage" />
+                  </Field>
+                  <Field label="Google Maps Embed URL">
+                    <input className="input" value={websiteForm.mapEmbed || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, mapEmbed: e.target.value })} placeholder="Paste the src URL from Google Maps embed code" />
+                    <p className="text-xs text-gray-400 mt-1">In Google Maps → Share → Embed a map → copy the src="..." URL</p>
+                  </Field>
+                </>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-100">
+              <button className="btn-secondary" onClick={() => setWebsiteTarget(null)}>Close</button>
+              <button className="btn-primary" onClick={saveWebsite}>Save Changes</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { useAuthStore } from '../../store/auth';
 import api from '../../lib/api';
 import StatCard from '../../components/ui/StatCard';
 import { PageLoader } from '../../components/ui/Spinner';
-import { ShoppingBag, TrendingUp, Clock, Tag, BookOpen, Table2, MessageSquare, Bell, ExternalLink } from 'lucide-react';
+import { ShoppingBag, TrendingUp, Clock, Tag, BookOpen, Table2, MessageSquare, Bell, ExternalLink, Globe } from 'lucide-react';
 
 export default function RestroDashboard() {
   const { user } = useAuthStore();
@@ -27,9 +27,16 @@ export default function RestroDashboard() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <a href={menuUrl} target="_blank" rel="noreferrer" className="btn-secondary btn-sm">
-          <ExternalLink size={13} /> Preview Menu
-        </a>
+        <div className="flex gap-2">
+          {profile?.subtype === 2 && (
+            <a href={`/r/${user?.slug || profile?.slug}`} target="_blank" rel="noreferrer" className="btn-secondary btn-sm">
+              <Globe size={13} /> Our Website
+            </a>
+          )}
+          <a href={menuUrl} target="_blank" rel="noreferrer" className="btn-secondary btn-sm">
+            <ExternalLink size={13} /> Preview Menu
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

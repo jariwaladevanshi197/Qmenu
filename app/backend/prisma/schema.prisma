@@ -47,6 +47,19 @@ model Restaurant {
   servicecharge Float    @default(0)
   maxStaff      Int      @default(5)
 
+  // Mega+Web website fields
+  websiteEnabled  Boolean  @default(false)
+  tagline         String?
+  aboutText       String?
+  bannerImage     String?
+  openingHours    String?  @default("{}")
+  phone           String?
+  whatsapp        String?
+  facebookUrl     String?
+  instagramUrl    String?
+  galleryImages   String?  @default("[]")
+  mapEmbed        String?
+
   theme          Theme?           @relation(fields: [themecode], references: [id])
   categories     Category[]
   menuItems      MenuItem[]

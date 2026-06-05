@@ -155,7 +155,18 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   restrootp: 'restrootp',
   discount: 'discount',
   servicecharge: 'servicecharge',
-  maxStaff: 'maxStaff'
+  maxStaff: 'maxStaff',
+  websiteEnabled: 'websiteEnabled',
+  tagline: 'tagline',
+  aboutText: 'aboutText',
+  bannerImage: 'bannerImage',
+  openingHours: 'openingHours',
+  phone: 'phone',
+  whatsapp: 'whatsapp',
+  facebookUrl: 'facebookUrl',
+  instagramUrl: 'instagramUrl',
+  galleryImages: 'galleryImages',
+  mapEmbed: 'mapEmbed'
 };
 
 exports.Prisma.StaffScalarFieldEnum = {

@@ -24,6 +24,7 @@ import CustomerCart from "./pages/customer/Cart";
 import CustomerMyOrder from "./pages/customer/MyOrder";
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
+import RestaurantWebsite from "./pages/restaurant/Website";
 
 const ProtectedSuperAdmin = ({ children }) => {
   const { user } = useAuthStore();
@@ -66,6 +67,7 @@ export default function App() {
       <Route path="/menu/:slug" element={<CustomerMenu />} />
       <Route path="/menu/:slug/cart" element={<CustomerCart />} />
       <Route path="/menu/:slug/order/:ordercode" element={<CustomerMyOrder />} />
+      <Route path="/r/:slug" element={<RestaurantWebsite />} />
       <Route path="/" element={<Landing />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
