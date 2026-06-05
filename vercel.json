@@ -1,8 +1,19 @@
-{
-  "buildCommand": "cd app/frontend && npm install && npm run build",
+﻿{
+  "buildCommand": "cd app/backend && npm install && npx prisma generate && cd ../frontend && npm install && npm run build",
   "outputDirectory": "app/frontend/dist",
-  "installCommand": "echo 'skip root install'",
+  "installCommand": "npm install",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/api/(.*)", "destination": "/api/index" },
+    { "source": "/(.*)",     "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,PATCH,DELETE,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" }
+      ]
+    }
   ]
 }

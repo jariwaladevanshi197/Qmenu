@@ -1,12 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
 import { useAuthStore } from '../../store/auth';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
 import { CheckCircle, XCircle, Check, Merge, Plus, X } from 'lucide-react';
 import Modal from '../../components/ui/Modal';
+import { subscribeToOrders } from '../../lib/realtime';
 
 const STATUS_BADGE = {
   PENDING:   'badge-yellow',
@@ -43,11 +43,12 @@ export default function RestroOrders() {
   });
 
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000');
-    socket.emit('join:restro', user?.id);
-    socket.on('order:new', () => qc.invalidateQueries(['active-orders']));
-    socket.on('order:updated', () => qc.invalidateQueries(['active-orders']));
-    return () => socket.disconnect();
+    if (!user?.id) return;
+    return subscribeToOrders(
+      user.id,
+      () => qc.invalidateQueries(['active-orders']),
+      () => qc.invalidateQueries(['active-orders'])
+    );
   }, [user?.id, qc]);
 
   const confirmMutation = useMutation({

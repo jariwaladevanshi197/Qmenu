@@ -1,5 +1,5 @@
 ﻿import { PrismaClient } from '../generated/client/index.js';
-import { emitNewOrder, emitWaiterCall } from '../socket/index.js';
+import { emitNewOrder, emitWaiterCall } from '../utils/realtime.js';
 import { generateOrderCode } from '../utils/helpers.js';
 
 const prisma = new PrismaClient();

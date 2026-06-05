@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api' });
+// In production (Vercel) API is on same domain at /api
+// In local dev it proxies through Vite to localhost:5000
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || '/api' });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('qmenu_token');

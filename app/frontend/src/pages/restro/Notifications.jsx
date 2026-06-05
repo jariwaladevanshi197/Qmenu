@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { io } from 'socket.io-client';
 import { useAuthStore } from '../../store/auth';
+import { subscribeToWaiterCalls } from '../../lib/realtime';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
@@ -17,15 +17,13 @@ export default function RestroNotifications() {
     refetchInterval: 15000,
   });
 
-  // Real-time: refresh list when new waiter call comes in
+  // Supabase Realtime: refresh when new waiter call comes in
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000');
-    socket.emit('join:restro', user?.id);
-    socket.on('waiter:called', () => {
+    if (!user?.id) return;
+    return subscribeToWaiterCalls(user.id, () => {
       qc.invalidateQueries(['waiter-requests']);
       qc.invalidateQueries(['restro-stats']);
     });
-    return () => socket.disconnect();
   }, [user?.id, qc]);
 
   const dismissMutation = useMutation({

@@ -2,8 +2,8 @@
 import { useAuthStore } from "../../store/auth";
 import { useEffect, useState, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { io } from "socket.io-client";
 import api from "../../lib/api";
+import { subscribeToOrders, subscribeToWaiterCalls } from "../../lib/realtime";
 import toast from "react-hot-toast";
 import {
   LayoutDashboard, BookOpen, Table2, ClipboardList,
@@ -101,22 +101,26 @@ export default function RestroLayout() {
   });
   const pendingCount = waiterRequests.length;
 
-  // Socket: real-time notifications
+  // Supabase Realtime — live order + waiter call notifications
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000");
-    socket.emit("join:restro", user?.id);
-    socket.on("order:new", (order) => {
-      toast.success(`New order from ${order.customername || "a customer"} — Table ${order.table?.name || "-"}`, { duration: 6000, icon: "🍽️" });
-      qc.invalidateQueries(["active-orders"]);
-      qc.invalidateQueries(["restro-stats"]);
-    });
-    socket.on("waiter:called", ({ tableid, tableName }) => {
-      const location = tableName || (tableid ? `Table #${tableid}` : "Walk-in customer");
-      toast(`🔔 Waiter needed — ${location}`, { duration: 10000 });
+    if (!user?.id) return;
+    const unsubOrders = subscribeToOrders(
+      user.id,
+      (newOrder) => {
+        toast.success(`New order — Table ${newOrder.tableid || '-'}`, { duration: 6000, icon: "🍽️" });
+        qc.invalidateQueries(["active-orders"]);
+        qc.invalidateQueries(["restro-stats"]);
+      },
+      () => {
+        qc.invalidateQueries(["active-orders"]);
+      }
+    );
+    const unsubWaiter = subscribeToWaiterCalls(user.id, (req) => {
+      toast(`🔔 Waiter needed — Table #${req.tableid || 'Unknown'}`, { duration: 10000 });
       qc.invalidateQueries(["waiter-requests"]);
       qc.invalidateQueries(["restro-stats"]);
     });
-    return () => socket.disconnect();
+    return () => { unsubOrders(); unsubWaiter(); };
   }, [user?.id, qc]);
 
   const handleLogout = () => { logout(); navigate("/restro/login"); };
