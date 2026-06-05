@@ -9017,17 +9017,20 @@ export namespace Prisma {
   export type TableAvgAggregateOutputType = {
     id: number | null
     restroid: number | null
+    tableNumber: number | null
   }
 
   export type TableSumAggregateOutputType = {
     id: number | null
     restroid: number | null
+    tableNumber: number | null
   }
 
   export type TableMinAggregateOutputType = {
     id: number | null
     restroid: number | null
     name: string | null
+    tableNumber: number | null
     qrimage: string | null
   }
 
@@ -9035,6 +9038,7 @@ export namespace Prisma {
     id: number | null
     restroid: number | null
     name: string | null
+    tableNumber: number | null
     qrimage: string | null
   }
 
@@ -9042,6 +9046,7 @@ export namespace Prisma {
     id: number
     restroid: number
     name: number
+    tableNumber: number
     qrimage: number
     _all: number
   }
@@ -9050,17 +9055,20 @@ export namespace Prisma {
   export type TableAvgAggregateInputType = {
     id?: true
     restroid?: true
+    tableNumber?: true
   }
 
   export type TableSumAggregateInputType = {
     id?: true
     restroid?: true
+    tableNumber?: true
   }
 
   export type TableMinAggregateInputType = {
     id?: true
     restroid?: true
     name?: true
+    tableNumber?: true
     qrimage?: true
   }
 
@@ -9068,6 +9076,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     name?: true
+    tableNumber?: true
     qrimage?: true
   }
 
@@ -9075,6 +9084,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     name?: true
+    tableNumber?: true
     qrimage?: true
     _all?: true
   }
@@ -9169,6 +9179,7 @@ export namespace Prisma {
     id: number
     restroid: number
     name: string
+    tableNumber: number
     qrimage: string | null
     _count: TableCountAggregateOutputType | null
     _avg: TableAvgAggregateOutputType | null
@@ -9195,6 +9206,7 @@ export namespace Prisma {
     id?: boolean
     restroid?: boolean
     name?: boolean
+    tableNumber?: boolean
     qrimage?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
     orders?: boolean | Table$ordersArgs<ExtArgs>
@@ -9206,6 +9218,7 @@ export namespace Prisma {
     id?: boolean
     restroid?: boolean
     name?: boolean
+    tableNumber?: boolean
     qrimage?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["table"]>
@@ -9214,6 +9227,7 @@ export namespace Prisma {
     id?: boolean
     restroid?: boolean
     name?: boolean
+    tableNumber?: boolean
     qrimage?: boolean
   }
 
@@ -9238,6 +9252,7 @@ export namespace Prisma {
       id: number
       restroid: number
       name: string
+      tableNumber: number
       qrimage: string | null
     }, ExtArgs["result"]["table"]>
     composites: {}
@@ -9638,6 +9653,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Table", 'Int'>
     readonly restroid: FieldRef<"Table", 'Int'>
     readonly name: FieldRef<"Table", 'String'>
+    readonly tableNumber: FieldRef<"Table", 'Int'>
     readonly qrimage: FieldRef<"Table", 'String'>
   }
     
@@ -17439,6 +17455,7 @@ export namespace Prisma {
     id: 'id',
     restroid: 'restroid',
     name: 'name',
+    tableNumber: 'tableNumber',
     qrimage: 'qrimage'
   };
 
@@ -18294,6 +18311,7 @@ export namespace Prisma {
     id?: IntFilter<"Table"> | number
     restroid?: IntFilter<"Table"> | number
     name?: StringFilter<"Table"> | string
+    tableNumber?: IntFilter<"Table"> | number
     qrimage?: StringNullableFilter<"Table"> | string | null
     restaurant?: XOR<RestaurantRelationFilter, RestaurantWhereInput>
     orders?: OrderListRelationFilter
@@ -18304,6 +18322,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     name?: SortOrder
+    tableNumber?: SortOrder
     qrimage?: SortOrderInput | SortOrder
     restaurant?: RestaurantOrderByWithRelationInput
     orders?: OrderOrderByRelationAggregateInput
@@ -18317,6 +18336,7 @@ export namespace Prisma {
     NOT?: TableWhereInput | TableWhereInput[]
     restroid?: IntFilter<"Table"> | number
     name?: StringFilter<"Table"> | string
+    tableNumber?: IntFilter<"Table"> | number
     qrimage?: StringNullableFilter<"Table"> | string | null
     restaurant?: XOR<RestaurantRelationFilter, RestaurantWhereInput>
     orders?: OrderListRelationFilter
@@ -18327,6 +18347,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     name?: SortOrder
+    tableNumber?: SortOrder
     qrimage?: SortOrderInput | SortOrder
     _count?: TableCountOrderByAggregateInput
     _avg?: TableAvgOrderByAggregateInput
@@ -18342,6 +18363,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Table"> | number
     restroid?: IntWithAggregatesFilter<"Table"> | number
     name?: StringWithAggregatesFilter<"Table"> | string
+    tableNumber?: IntWithAggregatesFilter<"Table"> | number
     qrimage?: StringNullableWithAggregatesFilter<"Table"> | string | null
   }
 
@@ -19609,6 +19631,7 @@ export namespace Prisma {
 
   export type TableCreateInput = {
     name: string
+    tableNumber?: number
     qrimage?: string | null
     restaurant: RestaurantCreateNestedOneWithoutTablesInput
     orders?: OrderCreateNestedManyWithoutTableInput
@@ -19619,6 +19642,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     name: string
+    tableNumber?: number
     qrimage?: string | null
     orders?: OrderUncheckedCreateNestedManyWithoutTableInput
     waiterRequests?: WaiterRequestUncheckedCreateNestedManyWithoutTableInput
@@ -19626,6 +19650,7 @@ export namespace Prisma {
 
   export type TableUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     restaurant?: RestaurantUpdateOneRequiredWithoutTablesNestedInput
     orders?: OrderUpdateManyWithoutTableNestedInput
@@ -19636,6 +19661,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
     waiterRequests?: WaiterRequestUncheckedUpdateManyWithoutTableNestedInput
@@ -19645,11 +19671,13 @@ export namespace Prisma {
     id?: number
     restroid: number
     name: string
+    tableNumber?: number
     qrimage?: string | null
   }
 
   export type TableUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -19657,6 +19685,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -20905,18 +20934,21 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     name?: SortOrder
+    tableNumber?: SortOrder
     qrimage?: SortOrder
   }
 
   export type TableAvgOrderByAggregateInput = {
     id?: SortOrder
     restroid?: SortOrder
+    tableNumber?: SortOrder
   }
 
   export type TableMaxOrderByAggregateInput = {
     id?: SortOrder
     restroid?: SortOrder
     name?: SortOrder
+    tableNumber?: SortOrder
     qrimage?: SortOrder
   }
 
@@ -20924,12 +20956,14 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     name?: SortOrder
+    tableNumber?: SortOrder
     qrimage?: SortOrder
   }
 
   export type TableSumOrderByAggregateInput = {
     id?: SortOrder
     restroid?: SortOrder
+    tableNumber?: SortOrder
   }
 
   export type EnumOrderStatusFilter<$PrismaModel = never> = {
@@ -22650,6 +22684,7 @@ export namespace Prisma {
 
   export type TableCreateWithoutRestaurantInput = {
     name: string
+    tableNumber?: number
     qrimage?: string | null
     orders?: OrderCreateNestedManyWithoutTableInput
     waiterRequests?: WaiterRequestCreateNestedManyWithoutTableInput
@@ -22658,6 +22693,7 @@ export namespace Prisma {
   export type TableUncheckedCreateWithoutRestaurantInput = {
     id?: number
     name: string
+    tableNumber?: number
     qrimage?: string | null
     orders?: OrderUncheckedCreateNestedManyWithoutTableInput
     waiterRequests?: WaiterRequestUncheckedCreateNestedManyWithoutTableInput
@@ -22987,6 +23023,7 @@ export namespace Prisma {
     id?: IntFilter<"Table"> | number
     restroid?: IntFilter<"Table"> | number
     name?: StringFilter<"Table"> | string
+    tableNumber?: IntFilter<"Table"> | number
     qrimage?: StringNullableFilter<"Table"> | string | null
   }
 
@@ -24527,6 +24564,7 @@ export namespace Prisma {
 
   export type TableCreateWithoutOrdersInput = {
     name: string
+    tableNumber?: number
     qrimage?: string | null
     restaurant: RestaurantCreateNestedOneWithoutTablesInput
     waiterRequests?: WaiterRequestCreateNestedManyWithoutTableInput
@@ -24536,6 +24574,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     name: string
+    tableNumber?: number
     qrimage?: string | null
     waiterRequests?: WaiterRequestUncheckedCreateNestedManyWithoutTableInput
   }
@@ -24695,6 +24734,7 @@ export namespace Prisma {
 
   export type TableUpdateWithoutOrdersInput = {
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     restaurant?: RestaurantUpdateOneRequiredWithoutTablesNestedInput
     waiterRequests?: WaiterRequestUpdateManyWithoutTableNestedInput
@@ -24704,6 +24744,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     waiterRequests?: WaiterRequestUncheckedUpdateManyWithoutTableNestedInput
   }
@@ -25717,6 +25758,7 @@ export namespace Prisma {
 
   export type TableCreateWithoutWaiterRequestsInput = {
     name: string
+    tableNumber?: number
     qrimage?: string | null
     restaurant: RestaurantCreateNestedOneWithoutTablesInput
     orders?: OrderCreateNestedManyWithoutTableInput
@@ -25726,6 +25768,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     name: string
+    tableNumber?: number
     qrimage?: string | null
     orders?: OrderUncheckedCreateNestedManyWithoutTableInput
   }
@@ -25854,6 +25897,7 @@ export namespace Prisma {
 
   export type TableUpdateWithoutWaiterRequestsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     restaurant?: RestaurantUpdateOneRequiredWithoutTablesNestedInput
     orders?: OrderUpdateManyWithoutTableNestedInput
@@ -25863,6 +25907,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
   }
@@ -25891,6 +25936,7 @@ export namespace Prisma {
   export type TableCreateManyRestaurantInput = {
     id?: number
     name: string
+    tableNumber?: number
     qrimage?: string | null
   }
 
@@ -26025,6 +26071,7 @@ export namespace Prisma {
 
   export type TableUpdateWithoutRestaurantInput = {
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     orders?: OrderUpdateManyWithoutTableNestedInput
     waiterRequests?: WaiterRequestUpdateManyWithoutTableNestedInput
@@ -26033,6 +26080,7 @@ export namespace Prisma {
   export type TableUncheckedUpdateWithoutRestaurantInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
     orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
     waiterRequests?: WaiterRequestUncheckedUpdateManyWithoutTableNestedInput
@@ -26041,6 +26089,7 @@ export namespace Prisma {
   export type TableUncheckedUpdateManyWithoutRestaurantInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    tableNumber?: IntFieldUpdateOperationsInput | number
     qrimage?: NullableStringFieldUpdateOperationsInput | string | null
   }
 

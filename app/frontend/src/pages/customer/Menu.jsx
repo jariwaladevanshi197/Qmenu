@@ -47,9 +47,16 @@ export default function CustomerMenu() {
     if (categories.length && activecat === null) setActivecat('all');
   }, [categories]);
 
+  // Ordering is only allowed when customer scanned a table QR
+  const canOrder = !!tableid;
+
   const getQty = (id) => cartItems.find((i) => i.menuitemid === id)?.quantity || 0;
 
   const handleAdd = (item) => {
+    if (!canOrder) {
+      toast('📱 Please scan your table QR code to place an order', { icon: 'ℹ️', duration: 3000 });
+      return;
+    }
     addItem({ menuitemid: item.id, name_eng: item.name_eng, price: item.price });
     toast.success(`${item.name_eng} added`, { duration: 1500 });
   };
@@ -168,6 +175,15 @@ export default function CustomerMenu() {
             </button>
           </div>
         </div>
+
+        {/* No-table banner */}
+        {!canOrder && (
+          <div className="mx-0 mb-3 px-4 py-3 flex items-center gap-3 text-sm font-medium"
+            style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
+            <span className="text-lg">📱</span>
+            <span>Browse our menu below. <strong>Scan the QR code at your table</strong> to place an order.</span>
+          </div>
+        )}
 
         {/* Category tabs */}
         {!search && (
@@ -305,8 +321,8 @@ export default function CustomerMenu() {
         </div>
       </Modal>
 
-      {/* Fixed cart bar */}
-      {count() > 0 && (
+      {/* Fixed cart bar — only when ordered via QR */}
+      {canOrder && count() > 0 && (
         <div className="fixed bottom-0 left-0 right-0 p-3 z-10" style={{ backgroundColor: th.navBg, borderTop: `1px solid ${th.primary}20` }}>
           <div className="max-w-2xl mx-auto">
             <button className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold shadow-lg"

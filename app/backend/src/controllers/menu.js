@@ -141,7 +141,9 @@ export const getTables = async (req, res) => {
 export const createTable = async (req, res) => {
   try {
     const { name } = req.body;
-    const table = await prisma.table.create({ data: { restroid: req.user.id, name } });
+    // Get next sequential number for this restaurant
+    const count = await prisma.table.count({ where: { restroid: req.user.id } });
+    const table = await prisma.table.create({ data: { restroid: req.user.id, name, tableNumber: count + 1 } });
     res.status(201).json(table);
   } catch (e) {
     res.status(500).json({ error: e.message });

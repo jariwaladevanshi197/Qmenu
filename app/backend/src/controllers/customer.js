@@ -54,6 +54,12 @@ export const placeOrder = async (req, res) => {
 
     const { tableid, customername, customermob, items } = req.body;
     if (!items?.length) return res.status(400).json({ error: 'No items provided' });
+    // tableid from QR = tableNumber (restaurant-specific). Must provide a valid table.
+    if (!tableid) return res.status(400).json({ error: 'Table QR is required to place an order. Please scan your table QR code.' });
+
+    // Resolve tableNumber → actual table DB id
+    const table = await prisma.table.findFirst({ where: { tableNumber: parseInt(tableid), restroid: restro.id } });
+    if (!table) return res.status(400).json({ error: 'Invalid table. Please scan your table QR code.' });
 
     const menuItems = await prisma.menuItem.findMany({ where: { id: { in: items.map((i) => i.menuitemid) }, restroid: restro.id } });
 
@@ -70,7 +76,7 @@ export const placeOrder = async (req, res) => {
     const order = await prisma.order.create({
       data: {
         restroid: restro.id,
-        tableid: tableid ? parseInt(tableid) : null,
+        tableid: table.id,
         ordercode: generateOrderCode(),
         customername,
         customermob,
@@ -112,14 +118,16 @@ export const callWaiter = async (req, res) => {
 
     // No OTP required â€” anyone on the menu page can call waiter
     let tableName = null;
+    let tableDbId = null;
     if (tableid) {
-      const table = await prisma.table.findFirst({ where: { id: parseInt(tableid), restroid: restro.id } });
+      const table = await prisma.table.findFirst({ where: { tableNumber: parseInt(tableid), restroid: restro.id } });
       if (!table) return res.status(400).json({ error: 'Invalid table' });
       tableName = table.name;
+      tableDbId = table.id;
     }
 
     const request = await prisma.waiterRequest.create({
-      data: { restroid: restro.id, tableid: tableid ? parseInt(tableid) : null },
+      data: { restroid: restro.id, tableid: tableDbId },
       include: { table: true },
     });
     emitWaiterCall(req.app.get('io'), restro.id, tableid, tableName);

@@ -5,7 +5,8 @@ import { useAuthStore } from '../../store/auth';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
-import { CheckCircle, XCircle, Check, Merge, Filter } from 'lucide-react';
+import { CheckCircle, XCircle, Check, Merge, Plus, X } from 'lucide-react';
+import Modal from '../../components/ui/Modal';
 
 const STATUS_BADGE = {
   PENDING:   'badge-yellow',
@@ -25,6 +26,9 @@ export default function RestroOrders() {
   const { user } = useAuthStore();
   const [selected, setSelected] = useState([]);
   const [tab, setTab] = useState('ALL');
+  const [newOrderOpen, setNewOrderOpen] = useState(false);
+  const [newOrderForm, setNewOrderForm] = useState({ tableid: '', customername: '', customermob: '', items: [] });
+  const [itemSearch, setItemSearch] = useState('');
   const [tableFilter, setTableFilter] = useState('');
 
   const { data: orders = [], isLoading } = useQuery({
@@ -71,6 +75,51 @@ export default function RestroOrders() {
     onError: (e) => toast.error(e.response?.data?.error || 'Merge failed'),
   });
 
+  const staffOrderMutation = useMutation({
+    mutationFn: (data) => api.post('/staff-order', data),
+    onSuccess: () => {
+      qc.invalidateQueries(['active-orders']);
+      toast.success('Order placed!');
+      setNewOrderOpen(false);
+      setNewOrderForm({ tableid: '', customername: '', customermob: '', items: [] });
+      setItemSearch('');
+    },
+    onError: (e) => toast.error(e.response?.data?.error || 'Error'),
+  });
+
+  const { data: allMenuItems = [] } = useQuery({
+    queryKey: ['items'],
+    queryFn: () => api.get('/menu/items').then((r) => r.data),
+    enabled: newOrderOpen,
+  });
+
+  const addToNewOrder = (item) => {
+    setNewOrderForm((prev) => {
+      const exists = prev.items.find((i) => i.menuitemid === item.id);
+      if (exists) return { ...prev, items: prev.items.map((i) => i.menuitemid === item.id ? { ...i, quantity: i.quantity + 1 } : i) };
+      return { ...prev, items: [...prev.items, { menuitemid: item.id, name_eng: item.name_eng, price: item.price, quantity: 1 }] };
+    });
+  };
+
+  const removeFromNewOrder = (menuitemid) =>
+    setNewOrderForm((prev) => ({ ...prev, items: prev.items.filter((i) => i.menuitemid !== menuitemid) }));
+
+  const newOrderTotal = newOrderForm.items.reduce((s, i) => s + i.price * i.quantity, 0);
+
+  const submitNewOrder = () => {
+    if (!newOrderForm.items.length) return toast.error('Add at least one item');
+    staffOrderMutation.mutate({
+      tableid: newOrderForm.tableid || null,
+      customername: newOrderForm.customername,
+      customermob: newOrderForm.customermob,
+      items: newOrderForm.items.map(({ menuitemid, quantity }) => ({ menuitemid, quantity })),
+    });
+  };
+
+  const filteredMenuItems = allMenuItems.filter((i) =>
+    !itemSearch || i.name_eng.toLowerCase().includes(itemSearch.toLowerCase())
+  );
+
   // Filter orders
   const filtered = orders.filter((o) => {
     if (tab !== 'ALL' && o.status !== tab) return false;
@@ -99,11 +148,16 @@ export default function RestroOrders() {
             {pendingCount} pending · {confirmedCount} in progress
           </p>
         </div>
-        {selected.length >= 2 && (
-          <button className="btn-primary" onClick={() => mergeMutation.mutate(selected)} disabled={mergeMutation.isPending}>
-            <Merge size={15} /> Merge {selected.length} Orders
+        <div className="flex gap-2">
+          {selected.length >= 2 && (
+            <button className="btn-secondary" onClick={() => mergeMutation.mutate(selected)} disabled={mergeMutation.isPending}>
+              <Merge size={15} /> Merge {selected.length}
+            </button>
+          )}
+          <button className="btn-primary" onClick={() => setNewOrderOpen(true)}>
+            <Plus size={15} /> New Order
           </button>
-        )}
+        </div>
       </div>
 
       {/* Filters row */}
@@ -221,6 +275,82 @@ export default function RestroOrders() {
           );
         })}
       </div>
+
+      {/* ── New Order Modal (Staff) ── */}
+      <Modal open={newOrderOpen} onClose={() => setNewOrderOpen(false)} title="New Order — Staff" size="lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          {/* Left: Customer + Table */}
+          <div className="space-y-4">
+            <div>
+              <label className="label">Table</label>
+              <select className="input" value={newOrderForm.tableid} onChange={(e) => setNewOrderForm({ ...newOrderForm, tableid: e.target.value })}>
+                <option value="">No Table / Walk-in</option>
+                {tables.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="label">Customer Name <span className="text-gray-400 text-xs">(optional)</span></label>
+              <input className="input" placeholder="e.g. Rahul" value={newOrderForm.customername} onChange={(e) => setNewOrderForm({ ...newOrderForm, customername: e.target.value })} />
+            </div>
+            <div>
+              <label className="label">Phone <span className="text-gray-400 text-xs">(optional)</span></label>
+              <input className="input" placeholder="10-digit number" value={newOrderForm.customermob} onChange={(e) => setNewOrderForm({ ...newOrderForm, customermob: e.target.value })} />
+            </div>
+
+            {/* Order summary */}
+            {newOrderForm.items.length > 0 && (
+              <div className="bg-gray-50 rounded-xl p-3 space-y-2">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Summary</p>
+                {newOrderForm.items.map((item) => (
+                  <div key={item.menuitemid} className="flex items-center justify-between text-sm">
+                    <span className="text-gray-700">{item.name_eng} × {item.quantity}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">₹{item.price * item.quantity}</span>
+                      <button onClick={() => removeFromNewOrder(item.menuitemid)} className="text-red-400 hover:text-red-600"><X size={13} /></button>
+                    </div>
+                  </div>
+                ))}
+                <div className="border-t border-gray-200 pt-2 flex justify-between font-bold">
+                  <span>Total</span>
+                  <span className="text-primary-600">₹{newOrderTotal}</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right: Item picker */}
+          <div>
+            <label className="label">Add Items</label>
+            <input className="input mb-3" placeholder="Search items..." value={itemSearch} onChange={(e) => setItemSearch(e.target.value)} />
+            <div className="space-y-1.5 max-h-72 overflow-y-auto pr-1">
+              {filteredMenuItems.map((item) => {
+                const inOrder = newOrderForm.items.find((i) => i.menuitemid === item.id);
+                return (
+                  <div key={item.id} className="flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-50 border border-gray-100">
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">{item.name_eng}</p>
+                      <p className="text-xs text-primary-600 font-semibold">₹{item.price}</p>
+                    </div>
+                    <button onClick={() => addToNewOrder(item)}
+                      className="btn-primary btn-sm text-xs px-3">
+                      {inOrder ? `+1 (${inOrder.quantity})` : '+ Add'}
+                    </button>
+                  </div>
+                );
+              })}
+              {!filteredMenuItems.length && <p className="text-center text-gray-400 py-6 text-sm">No items found</p>}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-3 mt-5 border-t border-gray-100 pt-4">
+          <button className="btn-secondary" onClick={() => setNewOrderOpen(false)}>Cancel</button>
+          <button className="btn-primary" onClick={submitNewOrder} disabled={staffOrderMutation.isPending || !newOrderForm.items.length}>
+            {staffOrderMutation.isPending ? 'Placing...' : `Place Order · ₹${newOrderTotal}`}
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

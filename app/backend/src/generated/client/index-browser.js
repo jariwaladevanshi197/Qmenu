@@ -225,6 +225,7 @@ exports.Prisma.TableScalarFieldEnum = {
   id: 'id',
   restroid: 'restroid',
   name: 'name',
+  tableNumber: 'tableNumber',
   qrimage: 'qrimage'
 };
 

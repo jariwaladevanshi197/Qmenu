@@ -112,32 +112,31 @@ export default function RestaurantWebsite() {
           <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${th.primary}dd, ${th.secondary}ff)` }} />
         )}
 
-        <div className="relative z-10 text-center px-6 pt-24 pb-32 max-w-4xl mx-auto">
+        <div className="relative z-10 text-center px-6 pt-28 pb-28 max-w-4xl mx-auto">
           {logoSrc && (
-            <div className="mb-8 inline-block">
-              <img src={logoSrc} alt={data.restroname} className="w-24 h-24 rounded-3xl object-cover shadow-2xl border-4 border-white/20 mx-auto" />
-            </div>
+            <img src={logoSrc} alt={data.restroname}
+              className="w-20 h-20 rounded-2xl object-cover shadow-2xl border-2 border-white/30 mx-auto mb-6" />
           )}
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-            <Star size={12} fill="white" /> Premium Restaurant Experience
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/25 text-white/90 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 tracking-wide">
+            <Star size={11} fill="white" /> Premium Dining Experience
           </div>
-          <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-none tracking-tight drop-shadow-2xl">
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-5 leading-tight tracking-tight drop-shadow-2xl">
             {data.restroname}
           </h1>
           {data.tagline && (
-            <p className="text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
-              {data.tagline}
+            <p className="text-lg md:text-xl text-white/75 mb-10 max-w-xl mx-auto leading-relaxed font-light italic">
+              "{data.tagline}"
             </p>
           )}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button onClick={() => navigate(menuUrl)}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <a href={`#menu`}
               className="flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:scale-105 transition-transform"
               style={{ backgroundColor: th.primary, color: th.btnText }}>
-              Explore Menu <ArrowRight size={18} />
-            </button>
+              View Menu <ArrowRight size={18} />
+            </a>
             {data.whatsapp && (
               <a href={`https://wa.me/${data.whatsapp.replace(/\D/g,'')}`} target="_blank" rel="noreferrer"
-                className="flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-lg bg-white/15 backdrop-blur-sm border border-white/20 text-white hover:bg-white/25 transition-all">
+                className="flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-lg bg-white/15 backdrop-blur-sm border border-white/25 text-white hover:bg-white/25 transition-all">
                 <MessageCircle size={18} /> Reserve a Table
               </a>
             )}
@@ -206,10 +205,10 @@ export default function RestaurantWebsite() {
       {menuItems.length > 0 && (
         <section className="py-24 px-6" style={{ backgroundColor: th.cardColor }}>
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16" id="menu">
               <span className="text-xs font-bold uppercase tracking-[0.2em] mb-4 block" style={{ color: th.primary }}>What We Serve</span>
               <h2 className="text-4xl md:text-5xl font-black mb-4" style={{ color: th.text }}>Our Specialities</h2>
-              <p className="opacity-60 max-w-lg mx-auto" style={{ color: th.text }}>Handpicked favourites from our kitchen</p>
+              <p className="opacity-60 max-w-lg mx-auto" style={{ color: th.text }}>Visit us or scan the table QR to place your order</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {menuItems.slice(0, 6).map((item) => {
@@ -234,11 +233,6 @@ export default function RestaurantWebsite() {
                       {item.name_guj && <p className="text-xs opacity-50 mb-3" style={{ color: th.text }}>{item.name_guj}</p>}
                       <div className="flex items-center justify-between">
                         <span className="text-xl font-black" style={{ color: th.primary }}>₹{item.price}</span>
-                        <button onClick={() => navigate(menuUrl)}
-                          className="text-xs font-bold px-4 py-2 rounded-xl transition-all hover:opacity-90"
-                          style={{ backgroundColor: th.primary + '15', color: th.primary }}>
-                          Order Now
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -404,13 +398,15 @@ export default function RestaurantWebsite() {
           <div className="absolute top-[-40px] right-[-40px] w-40 h-40 rounded-full bg-white/10" />
           <div className="absolute bottom-[-30px] left-[-30px] w-28 h-28 rounded-full bg-white/10" />
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Ready to order?</h2>
-            <p className="text-white/80 text-lg mb-8">Scan our QR code at your table or browse the menu online</p>
-            <button onClick={() => navigate(menuUrl)}
-              className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-lg bg-white hover:scale-105 transition-transform shadow-2xl"
-              style={{ color: th.primary }}>
-              <UtensilsCrossed size={20} /> View Full Menu
-            </button>
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Come dine with us!</h2>
+            <p className="text-white/80 text-lg mb-8">Visit us and scan the QR code at your table to browse our full menu and place your order</p>
+            {data.whatsapp && (
+              <a href={`https://wa.me/${data.whatsapp.replace(/\D/g,'')}`} target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-lg bg-white hover:scale-105 transition-transform shadow-2xl"
+                style={{ color: th.primary }}>
+                <MessageCircle size={20} /> Reserve via WhatsApp
+              </a>
+            )}
           </div>
         </div>
       </section>

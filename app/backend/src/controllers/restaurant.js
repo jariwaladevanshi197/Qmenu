@@ -56,7 +56,7 @@ export const generateTableQR = async (req, res) => {
     if (!table) return res.status(404).json({ error: 'Table not found' });
 
     const restro = await prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { slug: true } });
-    const menuUrl = `${process.env.CLIENT_URL}/menu/${restro.slug}?table=${table.id}`;
+    const menuUrl = `${process.env.CLIENT_URL}/menu/${restro.slug}?table=${table.tableNumber}`;
 
     // Generate QR as a Buffer and upload directly to Supabase Storage
     const qrBuffer = await QRCode.toBuffer(menuUrl, { width: 400, margin: 2 });
