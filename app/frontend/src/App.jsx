@@ -8,6 +8,7 @@ import SuperAdminPayments from "./pages/superadmin/Payments";
 import SuperAdminThemes from "./pages/superadmin/Themes";
 import SuperAdminAdmins from "./pages/superadmin/Admins";
 import RestroLogin from "./pages/restro/Login";
+import KitchenDisplay from "./pages/restro/KitchenDisplay";
 import RestroLayout from "./pages/restro/Layout";
 import RestroDashboard from "./pages/restro/Dashboard";
 import RestroMenu from "./pages/restro/Menu";
@@ -54,6 +55,7 @@ export default function App() {
         <Route path="admins" element={<SuperAdminAdmins />} />
       </Route>
       <Route path="/restro/login" element={<RestroLogin />} />
+      <Route path="/restro/kitchen" element={<ProtectedRestro><KitchenDisplay /></ProtectedRestro>} />
       <Route path="/restro" element={<ProtectedRestro><RestroLayout /></ProtectedRestro>}>
         <Route index element={<Navigate to="/restro/dashboard" replace />} />
         <Route path="dashboard" element={<RestroDashboard />} />

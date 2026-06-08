@@ -1,4 +1,4 @@
-﻿import { Outlet, NavLink, useNavigate } from "react-router-dom";
+﻿import { Outlet, NavLink, useNavigate, Navigate } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
 import { useEffect, useState, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -124,6 +124,9 @@ export default function RestroLayout() {
   }, [user?.id, qc]);
 
   const handleLogout = () => { logout(); navigate("/restro/login"); };
+
+  // Kitchen staff get their own dedicated screen — send them there
+  if (user?.staffRole === "kitchen") return <Navigate to="/restro/kitchen" replace />;
 
   const isStaff = !!user?.staffId || !!user?.staffRole;
   const staffPerms = user?.staffPermissions || null;

@@ -69,6 +69,7 @@ const ROLE_PAGE_DEFAULTS = {
   manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'staff'],
   cashier:  ['orders', 'notifications', 'history'],
   staff:    ['orders', 'notifications'],
+  kitchen:  ['kitchen'],  // dedicated KDS screen only
 };
 
 // ── Restaurant admin: manage own staff ───────────────────────────────────────

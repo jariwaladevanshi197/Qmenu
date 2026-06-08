@@ -8,9 +8,10 @@ import { PageLoader } from '../../components/ui/Spinner';
 import { Plus, Eye, EyeOff, Users, Shield, ChefHat, CreditCard, Pencil } from 'lucide-react';
 
 const ROLES = [
-  { value: 'manager', label: 'Manager',  icon: Shield,     color: 'badge-blue',  desc: 'Full access' },
-  { value: 'cashier', label: 'Cashier',  icon: CreditCard, color: 'badge-green', desc: 'Orders & billing' },
-  { value: 'staff',   label: 'Staff',    icon: ChefHat,    color: 'badge-gray',  desc: 'View orders' },
+  { value: 'manager', label: 'Manager',  icon: Shield,     color: 'badge-blue',   desc: 'Full access' },
+  { value: 'cashier', label: 'Cashier',  icon: CreditCard, color: 'badge-green',  desc: 'Orders & billing' },
+  { value: 'staff',   label: 'Staff',    icon: ChefHat,    color: 'badge-gray',   desc: 'View orders' },
+  { value: 'kitchen', label: 'Kitchen',  icon: ChefHat,    color: 'badge-orange', desc: 'KDS screen only' },
 ];
 
 // All pages that can be toggled per staff member
@@ -31,6 +32,7 @@ const ROLE_DEFAULTS = {
   manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'staff'],
   cashier: ['orders', 'notifications', 'history'],
   staff:   ['orders', 'notifications'],
+  kitchen: [],  // kitchen role gets the dedicated KDS screen — no regular pages
 };
 
 const Field = ({ label, children }) => <div><label className="label">{label}</label>{children}</div>;
@@ -258,28 +260,34 @@ export default function RestroStaff() {
             </div>
           </Field>
 
-          {/* Page Access */}
-          <div>
-            <label className="label">Page Access</label>
-            <p className="text-xs text-gray-400 mb-2">Choose which pages this staff member can see after login</p>
-            <div className="grid grid-cols-2 gap-2">
-              {ALL_PAGES.map(({ key, label, desc }) => {
-                const checked = form.permissions.includes(key);
-                return (
-                  <button key={key} type="button" onClick={() => togglePage(key)}
-                    className={`flex items-start gap-2 p-2.5 rounded-lg border text-left transition-all ${checked ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
-                    <div className={`w-4 h-4 rounded shrink-0 mt-0.5 border-2 flex items-center justify-center ${checked ? 'bg-primary-500 border-primary-500' : 'border-gray-300'}`}>
-                      {checked && <span className="text-white text-[10px] leading-none">✓</span>}
-                    </div>
-                    <div>
-                      <p className={`text-xs font-semibold ${checked ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
-                      <p className="text-[10px] text-gray-400">{desc}</p>
-                    </div>
-                  </button>
-                );
-              })}
+          {/* Page Access — hidden for kitchen role */}
+          {form.role !== 'kitchen' ? (
+            <div>
+              <label className="label">Page Access</label>
+              <p className="text-xs text-gray-400 mb-2">Choose which pages this staff member can see after login</p>
+              <div className="grid grid-cols-2 gap-2">
+                {ALL_PAGES.map(({ key, label, desc }) => {
+                  const checked = form.permissions.includes(key);
+                  return (
+                    <button key={key} type="button" onClick={() => togglePage(key)}
+                      className={`flex items-start gap-2 p-2.5 rounded-lg border text-left transition-all ${checked ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
+                      <div className={`w-4 h-4 rounded shrink-0 mt-0.5 border-2 flex items-center justify-center ${checked ? 'bg-primary-500 border-primary-500' : 'border-gray-300'}`}>
+                        {checked && <span className="text-white text-[10px] leading-none">✓</span>}
+                      </div>
+                      <div>
+                        <p className={`text-xs font-semibold ${checked ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
+                        <p className="text-[10px] text-gray-400">{desc}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 text-sm text-orange-700">
+              🍳 Kitchen staff will see a dedicated <strong>Kitchen Display Screen</strong> after login — showing live orders and a "Mark Ready" button. No other pages are needed.
+            </div>
+          )}
         </div>
         <div className="flex gap-3 mt-5">
           <button className="btn-secondary flex-1" onClick={() => setModal(false)}>Cancel</button>
@@ -317,34 +325,40 @@ export default function RestroStaff() {
             </div>
           </Field>
 
-          {/* Page Access */}
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="label mb-0">Page Access</label>
-              <button type="button" className="text-xs text-primary-600 hover:underline"
-                onClick={() => setEditForm({ ...editForm, permissions: [...(ROLE_DEFAULTS[editForm.role] || [])] })}>
-                Reset to role defaults
-              </button>
+          {/* Page Access — hidden for kitchen role */}
+          {editForm.role !== 'kitchen' ? (
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <label className="label mb-0">Page Access</label>
+                <button type="button" className="text-xs text-primary-600 hover:underline"
+                  onClick={() => setEditForm({ ...editForm, permissions: [...(ROLE_DEFAULTS[editForm.role] || [])] })}>
+                  Reset to role defaults
+                </button>
+              </div>
+              <p className="text-xs text-gray-400 mb-2">Choose which pages this staff member can see after login</p>
+              <div className="grid grid-cols-2 gap-2">
+                {ALL_PAGES.map(({ key, label, desc }) => {
+                  const checked = (editForm.permissions || []).includes(key);
+                  return (
+                    <button key={key} type="button" onClick={() => toggleEditPage(key)}
+                      className={`flex items-start gap-2 p-2.5 rounded-lg border text-left transition-all ${checked ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
+                      <div className={`w-4 h-4 rounded shrink-0 mt-0.5 border-2 flex items-center justify-center ${checked ? 'bg-primary-500 border-primary-500' : 'border-gray-300'}`}>
+                        {checked && <span className="text-white text-[10px] leading-none">✓</span>}
+                      </div>
+                      <div>
+                        <p className={`text-xs font-semibold ${checked ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
+                        <p className="text-[10px] text-gray-400">{desc}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <p className="text-xs text-gray-400 mb-2">Choose which pages this staff member can see after login</p>
-            <div className="grid grid-cols-2 gap-2">
-              {ALL_PAGES.map(({ key, label, desc }) => {
-                const checked = (editForm.permissions || []).includes(key);
-                return (
-                  <button key={key} type="button" onClick={() => toggleEditPage(key)}
-                    className={`flex items-start gap-2 p-2.5 rounded-lg border text-left transition-all ${checked ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
-                    <div className={`w-4 h-4 rounded shrink-0 mt-0.5 border-2 flex items-center justify-center ${checked ? 'bg-primary-500 border-primary-500' : 'border-gray-300'}`}>
-                      {checked && <span className="text-white text-[10px] leading-none">✓</span>}
-                    </div>
-                    <div>
-                      <p className={`text-xs font-semibold ${checked ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
-                      <p className="text-[10px] text-gray-400">{desc}</p>
-                    </div>
-                  </button>
-                );
-              })}
+          ) : (
+            <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 text-sm text-orange-700">
+              🍳 Kitchen staff will see a dedicated <strong>Kitchen Display Screen</strong> after login — showing live orders and a "Mark Ready" button.
             </div>
-          </div>
+          )}
         </div>
         <div className="flex gap-3 mt-5">
           <button className="btn-secondary flex-1" onClick={() => setEditTarget(null)}>Cancel</button>

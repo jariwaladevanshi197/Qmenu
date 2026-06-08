@@ -26,7 +26,7 @@ export default function RestroLogin() {
         data = res.data;
       }
       setAuth(data.token, data.user);
-      navigate("/restro/dashboard");
+      navigate(data.user?.staffRole === "kitchen" ? "/restro/kitchen" : "/restro/dashboard");
     } catch (err) {
       toast.error(err.response?.data?.error || "Login failed");
     } finally { setLoading(false); }
