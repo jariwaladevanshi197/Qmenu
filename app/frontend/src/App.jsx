@@ -6,6 +6,7 @@ import SuperAdminDashboard from "./pages/superadmin/Dashboard";
 import SuperAdminRestaurants from "./pages/superadmin/Restaurants";
 import SuperAdminPayments from "./pages/superadmin/Payments";
 import SuperAdminThemes from "./pages/superadmin/Themes";
+import SuperAdminAdmins from "./pages/superadmin/Admins";
 import RestroLogin from "./pages/restro/Login";
 import RestroLayout from "./pages/restro/Layout";
 import RestroDashboard from "./pages/restro/Dashboard";
@@ -26,9 +27,11 @@ import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
 import RestaurantWebsite from "./pages/restaurant/Website";
 
+const ADMIN_ROLES = ["super_admin", "manager", "viewer", "superadmin"];
+
 const ProtectedSuperAdmin = ({ children }) => {
   const { user } = useAuthStore();
-  if (!user || user.role !== "superadmin") return <Navigate to="/admin/login" replace />;
+  if (!user || !ADMIN_ROLES.includes(user.role)) return <Navigate to="/admin/login" replace />;
   return children;
 };
 
@@ -48,6 +51,7 @@ export default function App() {
         <Route path="restaurants" element={<SuperAdminRestaurants />} />
         <Route path="payments" element={<SuperAdminPayments />} />
         <Route path="themes" element={<SuperAdminThemes />} />
+        <Route path="admins" element={<SuperAdminAdmins />} />
       </Route>
       <Route path="/restro/login" element={<RestroLogin />} />
       <Route path="/restro" element={<ProtectedRestro><RestroLayout /></ProtectedRestro>}>

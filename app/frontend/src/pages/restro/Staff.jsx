@@ -5,23 +5,45 @@ import toast from 'react-hot-toast';
 import Modal from '../../components/ui/Modal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import { PageLoader } from '../../components/ui/Spinner';
-import { Plus, Eye, EyeOff, Users, Shield, ChefHat, CreditCard } from 'lucide-react';
+import { Plus, Eye, EyeOff, Users, Shield, ChefHat, CreditCard, Pencil } from 'lucide-react';
 
 const ROLES = [
-  { value: 'manager',  label: 'Manager',  icon: Shield,    color: 'badge-blue',   desc: 'Full access' },
-  { value: 'cashier',  label: 'Cashier',  icon: CreditCard,color: 'badge-green',  desc: 'Orders & billing' },
-  { value: 'staff',    label: 'Staff',    icon: ChefHat,   color: 'badge-gray',   desc: 'View orders' },
+  { value: 'manager', label: 'Manager',  icon: Shield,     color: 'badge-blue',  desc: 'Full access' },
+  { value: 'cashier', label: 'Cashier',  icon: CreditCard, color: 'badge-green', desc: 'Orders & billing' },
+  { value: 'staff',   label: 'Staff',    icon: ChefHat,    color: 'badge-gray',  desc: 'View orders' },
 ];
+
+// All pages that can be toggled per staff member
+const ALL_PAGES = [
+  { key: 'dashboard',     label: 'Dashboard',    desc: 'Stats overview' },
+  { key: 'orders',        label: 'Live Orders',  desc: 'Manage active orders' },
+  { key: 'notifications', label: 'Waiter Calls', desc: 'Handle waiter requests' },
+  { key: 'menu',          label: 'Menu',         desc: 'Edit menu & categories' },
+  { key: 'tables',        label: 'Tables',       desc: 'Manage tables & QR codes' },
+  { key: 'history',       label: 'History',      desc: 'Past completed orders' },
+  { key: 'report',        label: 'Report',       desc: 'Sales analytics' },
+  { key: 'feedback',      label: 'Feedback',     desc: 'Customer feedback' },
+  { key: 'staff',         label: 'Staff',        desc: 'Manage staff members' },
+];
+
+// Default page access by role
+const ROLE_DEFAULTS = {
+  manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'staff'],
+  cashier: ['orders', 'notifications', 'history'],
+  staff:   ['orders', 'notifications'],
+};
 
 const Field = ({ label, children }) => <div><label className="label">{label}</label>{children}</div>;
 
-const emptyForm = { fullname: '', username: '', password: '', role: 'staff' };
+const emptyForm = { fullname: '', username: '', password: '', role: 'staff', permissions: ROLE_DEFAULTS['staff'] };
 
 export default function RestroStaff() {
   const qc = useQueryClient();
   const [modal, setModal] = useState(false);
+  const [editTarget, setEditTarget] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [form, setForm] = useState(emptyForm);
+  const [editForm, setEditForm] = useState({});
   const [showPw, setShowPw] = useState(false);
 
   const { data: staffData = {}, isLoading } = useQuery({
@@ -40,6 +62,12 @@ export default function RestroStaff() {
     onError: (e) => toast.error(e.response?.data?.error || 'Error'),
   });
 
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }) => api.put(`/staff/my/${id}`, data),
+    onSuccess: () => { qc.invalidateQueries(['my-staff']); toast.success('Staff updated!'); setEditTarget(null); },
+    onError: (e) => toast.error(e.response?.data?.error || 'Error'),
+  });
+
   const deleteMutation = useMutation({
     mutationFn: (id) => api.delete(`/staff/${id}`),
     onSuccess: () => { qc.invalidateQueries(['my-staff']); toast.success('Removed'); setDeleteTarget(null); },
@@ -48,6 +76,48 @@ export default function RestroStaff() {
   if (isLoading) return <PageLoader />;
 
   const getRoleBadge = (role) => ROLES.find((r) => r.value === role) || ROLES[2];
+
+  // When role changes in the add form, auto-fill permissions with role defaults
+  const handleRoleChange = (role) => {
+    setForm({ ...form, role, permissions: [...(ROLE_DEFAULTS[role] || [])] });
+  };
+
+  const togglePage = (key) => {
+    setForm((prev) => ({
+      ...prev,
+      permissions: prev.permissions.includes(key)
+        ? prev.permissions.filter((k) => k !== key)
+        : [...prev.permissions, key],
+    }));
+  };
+
+  const toggleEditPage = (key) => {
+    setEditForm((prev) => ({
+      ...prev,
+      permissions: prev.permissions.includes(key)
+        ? prev.permissions.filter((k) => k !== key)
+        : [...prev.permissions, key],
+    }));
+  };
+
+  const openEdit = (s) => {
+    const perms = Array.isArray(s.permissions) && s.permissions.length > 0
+      ? s.permissions
+      : (ROLE_DEFAULTS[s.role] || []);
+    setEditForm({ role: s.role, status: s.status, permissions: [...perms] });
+    setEditTarget(s);
+  };
+
+  const handleEditRoleChange = (role) => {
+    setEditForm((prev) => ({ ...prev, role, permissions: [...(ROLE_DEFAULTS[role] || [])] }));
+  };
+
+  const getPageCount = (s) => {
+    const perms = Array.isArray(s.permissions) && s.permissions.length > 0
+      ? s.permissions
+      : (ROLE_DEFAULTS[s.role] || []);
+    return perms.length;
+  };
 
   return (
     <div>
@@ -78,10 +148,7 @@ export default function RestroStaff() {
         </div>
         <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
           <div className="h-full rounded-full transition-all duration-500"
-            style={{
-              width: `${pct}%`,
-              backgroundColor: pct >= 100 ? '#ef4444' : pct >= 80 ? '#f59e0b' : '#22c55e',
-            }} />
+            style={{ width: `${pct}%`, backgroundColor: pct >= 100 ? '#ef4444' : pct >= 80 ? '#f59e0b' : '#22c55e' }} />
         </div>
         {remaining === 0 && (
           <p className="text-xs text-red-500 mt-2 font-medium">⚠️ Staff limit reached. Contact your admin to increase your plan.</p>
@@ -106,6 +173,7 @@ export default function RestroStaff() {
               <th className="px-5 py-3 text-left font-medium text-gray-500">Name</th>
               <th className="px-5 py-3 text-left font-medium text-gray-500">Username</th>
               <th className="px-5 py-3 text-left font-medium text-gray-500">Role</th>
+              <th className="px-5 py-3 text-left font-medium text-gray-500">Pages Access</th>
               <th className="px-5 py-3 text-left font-medium text-gray-500">Status</th>
               <th className="px-5 py-3 text-left font-medium text-gray-500">Added</th>
               <th className="px-5 py-3 text-center font-medium text-gray-500">Action</th>
@@ -129,11 +197,21 @@ export default function RestroStaff() {
                     <span className={roleInfo.color}>{roleInfo.label}</span>
                   </td>
                   <td className="px-5 py-3">
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">
+                      {getPageCount(s)} pages
+                    </span>
+                  </td>
+                  <td className="px-5 py-3">
                     <span className={s.status ? 'badge-green' : 'badge-red'}>{s.status ? 'Active' : 'Inactive'}</span>
                   </td>
                   <td className="px-5 py-3 text-gray-400 text-xs">{new Date(s.createdAt).toLocaleDateString()}</td>
                   <td className="px-5 py-3 text-center">
-                    <button className="btn-danger btn-sm" onClick={() => setDeleteTarget(s.id)}>Remove</button>
+                    <div className="flex items-center justify-center gap-1">
+                      <button className="btn-secondary btn-sm" onClick={() => openEdit(s)}>
+                        <Pencil size={12} /> Edit
+                      </button>
+                      <button className="btn-danger btn-sm" onClick={() => setDeleteTarget(s.id)}>Remove</button>
+                    </div>
                   </td>
                 </tr>
               );
@@ -149,8 +227,8 @@ export default function RestroStaff() {
         )}
       </div>
 
-      {/* Add Modal */}
-      <Modal open={modal} onClose={() => setModal(false)} title="Add Staff Member" size="sm">
+      {/* ── Add Staff Modal ──────────────────────────────────────────────── */}
+      <Modal open={modal} onClose={() => setModal(false)} title="Add Staff Member" size="md">
         <div className="space-y-4">
           <Field label="Full Name">
             <input className="input" value={form.fullname} onChange={(e) => setForm({ ...form, fullname: e.target.value })} placeholder="e.g. Rahul Sharma" />
@@ -162,8 +240,7 @@ export default function RestroStaff() {
             <div className="relative">
               <input className="input pr-10" type={showPw ? 'text' : 'password'} value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Min 6 characters" />
-              <button type="button" onClick={() => setShowPw(!showPw)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                 {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
@@ -171,7 +248,7 @@ export default function RestroStaff() {
           <Field label="Role">
             <div className="grid grid-cols-3 gap-2 mt-1">
               {ROLES.map(({ value, label, icon: Icon, desc }) => (
-                <button key={value} type="button" onClick={() => setForm({ ...form, role: value })}
+                <button key={value} type="button" onClick={() => handleRoleChange(value)}
                   className={`p-3 rounded-xl border-2 text-left transition-all ${form.role === value ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}`}>
                   <Icon size={16} className={form.role === value ? 'text-primary-500' : 'text-gray-400'} />
                   <p className={`text-xs font-semibold mt-1 ${form.role === value ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
@@ -180,12 +257,101 @@ export default function RestroStaff() {
               ))}
             </div>
           </Field>
+
+          {/* Page Access */}
+          <div>
+            <label className="label">Page Access</label>
+            <p className="text-xs text-gray-400 mb-2">Choose which pages this staff member can see after login</p>
+            <div className="grid grid-cols-2 gap-2">
+              {ALL_PAGES.map(({ key, label, desc }) => {
+                const checked = form.permissions.includes(key);
+                return (
+                  <button key={key} type="button" onClick={() => togglePage(key)}
+                    className={`flex items-start gap-2 p-2.5 rounded-lg border text-left transition-all ${checked ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
+                    <div className={`w-4 h-4 rounded shrink-0 mt-0.5 border-2 flex items-center justify-center ${checked ? 'bg-primary-500 border-primary-500' : 'border-gray-300'}`}>
+                      {checked && <span className="text-white text-[10px] leading-none">✓</span>}
+                    </div>
+                    <div>
+                      <p className={`text-xs font-semibold ${checked ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
+                      <p className="text-[10px] text-gray-400">{desc}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
         <div className="flex gap-3 mt-5">
           <button className="btn-secondary flex-1" onClick={() => setModal(false)}>Cancel</button>
           <button className="btn-primary flex-1" onClick={() => createMutation.mutate(form)}
             disabled={createMutation.isPending || !form.fullname || !form.username || !form.password}>
             {createMutation.isPending ? 'Adding...' : 'Add Staff'}
+          </button>
+        </div>
+      </Modal>
+
+      {/* ── Edit Staff Modal ─────────────────────────────────────────────── */}
+      <Modal open={!!editTarget} onClose={() => setEditTarget(null)} title={`Edit: ${editTarget?.fullname}`} size="md">
+        <div className="space-y-4">
+          <Field label="Role">
+            <div className="grid grid-cols-3 gap-2 mt-1">
+              {ROLES.map(({ value, label, icon: Icon, desc }) => (
+                <button key={value} type="button" onClick={() => handleEditRoleChange(value)}
+                  className={`p-3 rounded-xl border-2 text-left transition-all ${editForm.role === value ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}`}>
+                  <Icon size={16} className={editForm.role === value ? 'text-primary-500' : 'text-gray-400'} />
+                  <p className={`text-xs font-semibold mt-1 ${editForm.role === value ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
+                  <p className="text-[10px] text-gray-400">{desc}</p>
+                </button>
+              ))}
+            </div>
+          </Field>
+
+          <Field label="Status">
+            <div className="flex items-center gap-3 mt-1">
+              <button
+                onClick={() => setEditForm({ ...editForm, status: editForm.status ? 0 : 1 })}
+                className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200 focus:outline-none ${editForm.status ? 'bg-green-500' : 'bg-gray-300'}`}>
+                <span className={`inline-block w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 ${editForm.status ? 'translate-x-6' : 'translate-x-1'}`} />
+              </button>
+              <span className="text-sm text-gray-600">{editForm.status ? 'Active' : 'Inactive'}</span>
+            </div>
+          </Field>
+
+          {/* Page Access */}
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <label className="label mb-0">Page Access</label>
+              <button type="button" className="text-xs text-primary-600 hover:underline"
+                onClick={() => setEditForm({ ...editForm, permissions: [...(ROLE_DEFAULTS[editForm.role] || [])] })}>
+                Reset to role defaults
+              </button>
+            </div>
+            <p className="text-xs text-gray-400 mb-2">Choose which pages this staff member can see after login</p>
+            <div className="grid grid-cols-2 gap-2">
+              {ALL_PAGES.map(({ key, label, desc }) => {
+                const checked = (editForm.permissions || []).includes(key);
+                return (
+                  <button key={key} type="button" onClick={() => toggleEditPage(key)}
+                    className={`flex items-start gap-2 p-2.5 rounded-lg border text-left transition-all ${checked ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
+                    <div className={`w-4 h-4 rounded shrink-0 mt-0.5 border-2 flex items-center justify-center ${checked ? 'bg-primary-500 border-primary-500' : 'border-gray-300'}`}>
+                      {checked && <span className="text-white text-[10px] leading-none">✓</span>}
+                    </div>
+                    <div>
+                      <p className={`text-xs font-semibold ${checked ? 'text-primary-700' : 'text-gray-700'}`}>{label}</p>
+                      <p className="text-[10px] text-gray-400">{desc}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-3 mt-5">
+          <button className="btn-secondary flex-1" onClick={() => setEditTarget(null)}>Cancel</button>
+          <button className="btn-primary flex-1"
+            onClick={() => updateMutation.mutate({ id: editTarget.id, data: editForm })}
+            disabled={updateMutation.isPending}>
+            {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </Modal>

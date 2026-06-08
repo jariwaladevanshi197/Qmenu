@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import Modal from '../../components/ui/Modal';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import { PageLoader } from '../../components/ui/Spinner';
+import { usePermission } from '../../hooks/usePermission';
 import { Plus, Pencil, Key, CreditCard, Search, Globe, ToggleLeft, ToggleRight, Image, Clock, Link, Upload, Trash2 } from 'lucide-react';
 
 const SUBTYPE_LABELS = { 0: 'Legacy', 1: 'Mega', 2: 'Mega+Web' };
@@ -23,6 +24,7 @@ const emptyForm = {
 
 export default function SuperAdminRestaurants() {
   const qc = useQueryClient();
+  const can = usePermission();
   const [search, setSearch] = useState('');
   const [subtypeFilter, setSubtypeFilter] = useState('');
   const [addOpen, setAddOpen] = useState(false);
@@ -179,7 +181,9 @@ export default function SuperAdminRestaurants() {
     <div>
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <h1 className="text-2xl font-bold text-gray-900">Restaurants</h1>
-        <button className="btn-primary" onClick={() => setAddOpen(true)}><Plus size={16} /> Add Restaurant</button>
+        {can('restaurants', 'create') && (
+          <button className="btn-primary" onClick={() => setAddOpen(true)}><Plus size={16} /> Add Restaurant</button>
+        )}
       </div>
 
       <div className="card p-4 mb-4 flex flex-wrap gap-3">
@@ -232,19 +236,29 @@ export default function SuperAdminRestaurants() {
                     </td>
                     {/* Active toggle — separate column */}
                     <td className="px-4 py-3 text-center">
-                      <button
-                        onClick={() => toggleMutation.mutate(r.id)}
-                        title={r.status ? 'Click to deactivate' : 'Click to activate'}
-                        className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200 focus:outline-none ${r.status ? 'bg-green-500' : 'bg-gray-300'}`}>
-                        <span className={`inline-block w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 ${r.status ? 'translate-x-6' : 'translate-x-1'}`} />
-                      </button>
+                      {can('restaurants', 'toggleStatus') ? (
+                        <button
+                          onClick={() => toggleMutation.mutate(r.id)}
+                          title={r.status ? 'Click to deactivate' : 'Click to activate'}
+                          className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200 focus:outline-none ${r.status ? 'bg-green-500' : 'bg-gray-300'}`}>
+                          <span className={`inline-block w-4 h-4 bg-white rounded-full shadow transform transition-transform duration-200 ${r.status ? 'translate-x-6' : 'translate-x-1'}`} />
+                        </button>
+                      ) : (
+                        <span className={`inline-block w-2 h-2 rounded-full ${r.status ? 'bg-green-500' : 'bg-gray-300'}`} />
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1">
-                        <button className="btn-ghost btn-sm p-1.5" onClick={() => openEdit(r)} title="Edit"><Pencil size={14} /></button>
-                        <button className="btn-ghost btn-sm p-1.5" onClick={() => openPlan(r)} title="Update plan"><CreditCard size={14} /></button>
-                        <button className="btn-ghost btn-sm p-1.5" onClick={() => setPassTarget(r.id)} title="Change password"><Key size={14} /></button>
-                        {r.subtype === 2 && (
+                        {can('restaurants', 'edit') && (
+                          <button className="btn-ghost btn-sm p-1.5" onClick={() => openEdit(r)} title="Edit"><Pencil size={14} /></button>
+                        )}
+                        {can('restaurants', 'managePlan') && (
+                          <button className="btn-ghost btn-sm p-1.5" onClick={() => openPlan(r)} title="Update plan"><CreditCard size={14} /></button>
+                        )}
+                        {can('restaurants', 'resetPassword') && (
+                          <button className="btn-ghost btn-sm p-1.5" onClick={() => setPassTarget(r.id)} title="Change password"><Key size={14} /></button>
+                        )}
+                        {r.subtype === 2 && can('restaurants', 'manageWebsite') && (
                           <button className="btn-ghost btn-sm p-1.5 text-blue-500 hover:bg-blue-50" onClick={() => openWebsite(r)} title="Manage Website">
                             <Globe size={14} />
                           </button>

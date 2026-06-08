@@ -125,18 +125,26 @@ export default function RestroLayout() {
 
   const handleLogout = () => { logout(); navigate("/restro/login"); };
 
-  const links = [
-    { to: "/restro/dashboard",     label: "Dashboard",    icon: LayoutDashboard },
-    { to: "/restro/orders",        label: "Live Orders",  icon: ClipboardList },
-    { to: "/restro/notifications", label: "Waiter Calls", icon: Bell, badge: pendingCount },
-    { to: "/restro/menu",          label: "Menu",         icon: BookOpen },
-    { to: "/restro/tables",        label: "Tables",       icon: Table2 },
-    { to: "/restro/history",       label: "History",      icon: History },
-    { to: "/restro/report",        label: "Report",       icon: BarChart2 },
-    { to: "/restro/feedback",      label: "Feedback",     icon: MessageSquare },
-    { to: "/restro/staff",         label: "Staff",        icon: Users },
-    { to: "/restro/settings",      label: "Settings",     icon: Settings },
+  const isStaff = !!user?.staffId || !!user?.staffRole;
+  const staffPerms = user?.staffPermissions || null;
+
+  const allLinks = [
+    { to: "/restro/dashboard",     label: "Dashboard",    icon: LayoutDashboard, key: "dashboard" },
+    { to: "/restro/orders",        label: "Live Orders",  icon: ClipboardList,   key: "orders",        badge: 0 },
+    { to: "/restro/notifications", label: "Waiter Calls", icon: Bell,            key: "notifications", badge: pendingCount },
+    { to: "/restro/menu",          label: "Menu",         icon: BookOpen,        key: "menu" },
+    { to: "/restro/tables",        label: "Tables",       icon: Table2,          key: "tables" },
+    { to: "/restro/history",       label: "History",      icon: History,         key: "history" },
+    { to: "/restro/report",        label: "Report",       icon: BarChart2,       key: "report" },
+    { to: "/restro/feedback",      label: "Feedback",     icon: MessageSquare,   key: "feedback" },
+    { to: "/restro/staff",         label: "Staff",        icon: Users,           key: "staff" },
+    { to: "/restro/settings",      label: "Settings",     icon: Settings,        key: "settings" },
   ];
+
+  // Staff members only see pages they have permission for; owners see all
+  const links = isStaff && staffPerms
+    ? allLinks.filter((l) => staffPerms.includes(l.key))
+    : allLinks;
 
   const Sidebar = () => (
     <div className="flex flex-col h-full" style={{ backgroundColor: th.navBg, fontFamily: th.font + ", sans-serif" }}>
@@ -183,8 +191,12 @@ export default function RestroLayout() {
       {/* Footer */}
       <div className="px-3 py-4 border-t" style={{ borderColor: th.primary + "20" }}>
         <div className="px-3 py-2 mb-1">
-          <p className="text-sm font-medium truncate" style={{ color: th.text }}>{user?.restroname}</p>
-          <p className="text-xs opacity-40" style={{ color: th.text }}>{user?.slug}</p>
+          <p className="text-sm font-medium truncate" style={{ color: th.text }}>
+            {isStaff ? user?.staffName : user?.restroname}
+          </p>
+          <p className="text-xs opacity-40 capitalize" style={{ color: th.text }}>
+            {isStaff ? user?.staffRole : user?.slug}
+          </p>
         </div>
         <button onClick={handleLogout}
           className="flex items-center gap-3 w-full px-3 py-2.5 text-sm transition-all rounded-lg hover:bg-red-50 hover:text-red-600"

@@ -1,19 +1,26 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth';
-import { LayoutDashboard, Store, CreditCard, Palette, LogOut, UtensilsCrossed, Menu, X } from 'lucide-react';
+import { usePermission } from '../../hooks/usePermission';
+import { LayoutDashboard, Store, CreditCard, Palette, Users, LogOut, UtensilsCrossed, Menu } from 'lucide-react';
 import { useState } from 'react';
 
-const links = [
-  { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/admin/restaurants', label: 'Restaurants', icon: Store },
-  { to: '/admin/payments', label: 'Payments', icon: CreditCard },
-  { to: '/admin/themes', label: 'Themes', icon: Palette },
+const ALL_LINKS = [
+  { to: '/admin/dashboard',   label: 'Dashboard',   icon: LayoutDashboard, section: 'dashboard',   action: 'view' },
+  { to: '/admin/restaurants', label: 'Restaurants', icon: Store,           section: 'restaurants', action: 'view' },
+  { to: '/admin/payments',    label: 'Payments',    icon: CreditCard,      section: 'payments',    action: 'view' },
+  { to: '/admin/themes',      label: 'Themes',      icon: Palette,         section: 'themes',      action: 'view' },
+  { to: '/admin/admins',      label: 'Admins',      icon: Users,           section: 'admins',      action: 'view' },
 ];
+
+const ROLE_LABELS = { super_admin: 'Super Admin', manager: 'Manager', viewer: 'Viewer', superadmin: 'Super Admin' };
 
 export default function SuperAdminLayout() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const can = usePermission();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const links = ALL_LINKS.filter((l) => can(l.section, l.action));
 
   const handleLogout = () => { logout(); navigate('/admin/login'); };
 
@@ -45,6 +52,9 @@ export default function SuperAdminLayout() {
         <div className="px-3 py-2 mb-2">
           <p className="text-sm font-medium text-gray-700">{user?.fullname}</p>
           <p className="text-xs text-gray-400">{user?.username}</p>
+          <span className="inline-block mt-1 text-[10px] font-medium px-1.5 py-0.5 rounded bg-primary-50 text-primary-600 capitalize">
+            {ROLE_LABELS[user?.role] || user?.role}
+          </span>
         </div>
         <button onClick={handleLogout} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all">
           <LogOut size={18} /> Logout

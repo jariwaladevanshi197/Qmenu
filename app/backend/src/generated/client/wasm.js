@@ -127,7 +127,12 @@ exports.Prisma.AdminScalarFieldEnum = {
   fullname: 'fullname',
   username: 'username',
   email: 'email',
-  password: 'password'
+  password: 'password',
+  role: 'role',
+  isRoot: 'isRoot',
+  isActive: 'isActive',
+  permissions: 'permissions',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.RestaurantScalarFieldEnum = {
@@ -179,6 +184,7 @@ exports.Prisma.StaffScalarFieldEnum = {
   password: 'password',
   role: 'role',
   status: 'status',
+  permissions: 'permissions',
   createdAt: 'createdAt'
 };
 
@@ -317,9 +323,20 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {

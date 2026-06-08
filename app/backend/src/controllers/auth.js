@@ -1,25 +1,30 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '../generated/client/index.js';
+import { resolvePermissions } from '../utils/permissions.js';
 
 const prisma = new PrismaClient();
 
 const signToken = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
 
+const ADMIN_SELECT = { id: true, fullname: true, username: true, email: true, role: true, isRoot: true, isActive: true, permissions: true };
+
 export const superAdminLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
 
-    const admin = await prisma.admin.findUnique({ where: { username } });
+    const admin = await prisma.admin.findUnique({ where: { username }, select: { ...ADMIN_SELECT, password: true } });
     if (!admin) return res.status(401).json({ error: 'Invalid credentials' });
+    if (!admin.isActive) return res.status(403).json({ error: 'Account is deactivated. Contact the root admin.' });
 
     const valid = await bcrypt.compare(password, admin.password);
     if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
 
-    const token = signToken({ id: admin.id, role: 'superadmin', username: admin.username });
-    res.json({ token, user: { id: admin.id, fullname: admin.fullname, username: admin.username, role: 'superadmin' } });
+    const perms = resolvePermissions(admin);
+    const token = signToken({ id: admin.id, role: admin.role, username: admin.username, isRoot: admin.isRoot, permissions: perms });
+    res.json({ token, user: { id: admin.id, fullname: admin.fullname, username: admin.username, email: admin.email, role: admin.role, isRoot: admin.isRoot, permissions: perms } });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -50,9 +55,12 @@ export const restroLogin = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
-    if (req.user.role === 'superadmin') {
-      const admin = await prisma.admin.findUnique({ where: { id: req.user.id }, select: { id: true, fullname: true, username: true, email: true } });
-      return res.json({ ...admin, role: 'superadmin' });
+    const adminRoles = ['super_admin', 'manager', 'viewer', 'superadmin'];
+    if (adminRoles.includes(req.user.role)) {
+      const admin = await prisma.admin.findUnique({ where: { id: req.user.id }, select: ADMIN_SELECT });
+      if (!admin) return res.status(404).json({ error: 'Not found' });
+      const perms = resolvePermissions(admin);
+      return res.json({ id: admin.id, fullname: admin.fullname, username: admin.username, email: admin.email, role: admin.role, isRoot: admin.isRoot, permissions: perms });
     }
     const restro = await prisma.restaurant.findUnique({
       where: { id: req.user.id },

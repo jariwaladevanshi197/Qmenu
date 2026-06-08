@@ -4,6 +4,7 @@ import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import { PageLoader } from '../../components/ui/Spinner';
+import { usePermission } from '../../hooks/usePermission';
 import { Plus, Pencil, Trash2, ShoppingCart, Leaf, X, Check, Copy, Zap } from 'lucide-react';
 
 // ── Preset themes ────────────────────────────────────────────────────────────
@@ -316,6 +317,7 @@ const ThemeBuilder = ({ initial, onSave, onCancel, saving }) => {
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function SuperAdminThemes() {
   const qc = useQueryClient();
+  const can = usePermission();
   const [builderOpen, setBuilderOpen] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -351,9 +353,11 @@ export default function SuperAdminThemes() {
           <h1 className="text-2xl font-bold text-gray-900">Themes</h1>
           <p className="text-sm text-gray-500 mt-0.5">Design color themes and assign to restaurants</p>
         </div>
-        <button className="btn-primary" onClick={() => setBuilderOpen(true)}>
-          <Plus size={16} /> Create Theme
-        </button>
+        {can('themes', 'create') && (
+          <button className="btn-primary" onClick={() => setBuilderOpen(true)}>
+            <Plus size={16} /> Create Theme
+          </button>
+        )}
       </div>
 
       {/* Theme cards */}
@@ -385,12 +389,16 @@ export default function SuperAdminThemes() {
               </div>
 
               <div className="flex gap-2">
-                <button className="btn-secondary btn-sm flex-1" onClick={() => setEditTarget(theme)}>
-                  <Pencil size={12} /> Edit
-                </button>
-                <button className="btn-ghost btn-sm p-2 text-red-400 hover:bg-red-50" onClick={() => setDeleteTarget(theme.id)}>
-                  <Trash2 size={13} />
-                </button>
+                {can('themes', 'edit') && (
+                  <button className="btn-secondary btn-sm flex-1" onClick={() => setEditTarget(theme)}>
+                    <Pencil size={12} /> Edit
+                  </button>
+                )}
+                {can('themes', 'delete') && (
+                  <button className="btn-ghost btn-sm p-2 text-red-400 hover:bg-red-50" onClick={() => setDeleteTarget(theme.id)}>
+                    <Trash2 size={13} />
+                  </button>
+                )}
               </div>
             </div>
           </div>

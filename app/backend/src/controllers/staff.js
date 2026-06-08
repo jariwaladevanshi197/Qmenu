@@ -63,14 +63,22 @@ export const deleteStaff = async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
 
-// â”€â”€ Restaurant admin: manage own staff â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Page permission defaults per role ────────────────────────────────────────
+
+const ROLE_PAGE_DEFAULTS = {
+  manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'staff'],
+  cashier:  ['orders', 'notifications', 'history'],
+  staff:    ['orders', 'notifications'],
+};
+
+// ── Restaurant admin: manage own staff ───────────────────────────────────────
 
 export const getMyStaff = async (req, res) => {
   try {
     const [staff, restro] = await Promise.all([
       prisma.staff.findMany({
         where: { restroid: req.user.id },
-        select: { id: true, fullname: true, username: true, role: true, status: true, createdAt: true },
+        select: { id: true, fullname: true, username: true, role: true, status: true, permissions: true, createdAt: true },
         orderBy: { createdAt: 'desc' },
       }),
       prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { maxStaff: true } }),
@@ -81,7 +89,7 @@ export const getMyStaff = async (req, res) => {
 
 export const createMyStaff = async (req, res) => {
   try {
-    const { fullname, username, password, role } = req.body;
+    const { fullname, username, password, role, permissions } = req.body;
     if (!fullname || !username || !password) return res.status(400).json({ error: 'All fields required' });
 
     // Check license limit
@@ -94,10 +102,35 @@ export const createMyStaff = async (req, res) => {
     const exists = await prisma.staff.findUnique({ where: { username } });
     if (exists) return res.status(400).json({ error: 'Username already taken' });
     const hashed = await bcrypt.hash(password, 10);
+    const staffRole = role || 'staff';
+    // Use provided permissions or fall back to role defaults
+    const resolvedPermissions = Array.isArray(permissions) ? permissions : ROLE_PAGE_DEFAULTS[staffRole] || [];
     const staff = await prisma.staff.create({
-      data: { restroid: req.user.id, fullname, username, password: hashed, role: role || 'staff' },
+      data: { restroid: req.user.id, fullname, username, password: hashed, role: staffRole, permissions: resolvedPermissions },
     });
-    res.status(201).json({ id: staff.id, fullname: staff.fullname, username: staff.username, role: staff.role });
+    res.status(201).json({ id: staff.id, fullname: staff.fullname, username: staff.username, role: staff.role, permissions: staff.permissions });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+};
+
+export const updateMyStaff = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    // Ensure this staff belongs to the restaurant making the request
+    const existing = await prisma.staff.findUnique({ where: { id }, select: { restroid: true } });
+    if (!existing) return res.status(404).json({ error: 'Staff not found' });
+    if (existing.restroid !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
+
+    const { role, status, permissions } = req.body;
+    const staff = await prisma.staff.update({
+      where: { id },
+      data: {
+        ...(role !== undefined && { role }),
+        ...(status !== undefined && { status: parseInt(status) }),
+        ...(permissions !== undefined && { permissions: Array.isArray(permissions) ? permissions : null }),
+      },
+      select: { id: true, fullname: true, username: true, role: true, status: true, permissions: true },
+    });
+    res.json(staff);
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
 
@@ -115,10 +148,24 @@ export const staffLogin = async (req, res) => {
     if (!staff.restaurant.status) return res.status(403).json({ error: 'Restaurant inactive' });
     const valid = await bcrypt.compare(password, staff.password);
     if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
-    const token = signToken({ id: staff.restaurant.id, role: 'restro', slug: staff.restaurant.slug, subtype: staff.restaurant.subtype, staffId: staff.id, staffRole: staff.role });
+
+    // Resolve effective page permissions
+    const staffPermissions = Array.isArray(staff.permissions) && staff.permissions.length > 0
+      ? staff.permissions
+      : (ROLE_PAGE_DEFAULTS[staff.role] || ['orders', 'notifications']);
+
+    const token = signToken({
+      id: staff.restaurant.id, role: 'restro', slug: staff.restaurant.slug,
+      subtype: staff.restaurant.subtype, staffId: staff.id, staffRole: staff.role,
+      staffPermissions,
+    });
     res.json({
       token,
-      user: { id: staff.restaurant.id, restroname: staff.restaurant.restroname, slug: staff.restaurant.slug, subtype: staff.restaurant.subtype, role: 'restro', staffName: staff.fullname, staffRole: staff.role },
+      user: {
+        id: staff.restaurant.id, restroname: staff.restaurant.restroname,
+        slug: staff.restaurant.slug, subtype: staff.restaurant.subtype, role: 'restro',
+        staffName: staff.fullname, staffRole: staff.role, staffPermissions,
+      },
     });
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
