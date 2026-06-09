@@ -6,9 +6,12 @@
  */
 import { supabase } from './supabase';
 
+let _seq = 0;
+
 export const subscribeToOrders = (restroid, onNew, onUpdate) => {
+  const id = ++_seq;
   const channel = supabase
-    .channel(`orders:${restroid}`)
+    .channel(`orders:${restroid}:${id}`)
     .on('postgres_changes', {
       event: 'INSERT',
       schema: 'public',
@@ -27,8 +30,9 @@ export const subscribeToOrders = (restroid, onNew, onUpdate) => {
 };
 
 export const subscribeToWaiterCalls = (restroid, onNew) => {
+  const id = ++_seq;
   const channel = supabase
-    .channel(`waiter:${restroid}`)
+    .channel(`waiter:${restroid}:${id}`)
     .on('postgres_changes', {
       event: 'INSERT',
       schema: 'public',

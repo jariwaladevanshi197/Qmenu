@@ -19,7 +19,7 @@ export default function RestroDashboard() {
     queryFn: () => api.get('/restaurant/profile').then((r) => r.data),
   });
 
-  if (isLoading) return <PageLoader />;
+  if (isLoading || !stats) return <PageLoader />;
 
   const menuUrl = `/menu/${user?.slug || profile?.slug}`;
 

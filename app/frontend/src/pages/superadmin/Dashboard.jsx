@@ -10,7 +10,7 @@ export default function SuperAdminDashboard() {
     queryFn: () => api.get('/admin/stats').then((r) => r.data),
   });
 
-  if (isLoading) return <PageLoader />;
+  if (isLoading || !stats) return <PageLoader />;
 
   return (
     <div>
