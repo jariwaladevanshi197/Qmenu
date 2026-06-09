@@ -1,6 +1,7 @@
 ﻿import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import multer from "multer";
 
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
@@ -48,5 +49,20 @@ app.use("/api/website", websiteRoutes);
 app.use("/api/staff-order", staffOrderRoutes);
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok", env: "vercel" }));
+
+// Global error handler — must be defined AFTER all routes
+// Catches multer errors (file too large, unexpected field, etc.) and any other unhandled errors
+// eslint-disable-next-line no-unused-vars
+app.use((err, _req, res, _next) => {
+  if (err instanceof multer.MulterError) {
+    const messages = {
+      LIMIT_FILE_SIZE: 'File is too large. Maximum allowed size is 2MB for logos and 5MB for images.',
+      LIMIT_UNEXPECTED_FILE: 'Unexpected file field.',
+    };
+    return res.status(400).json({ error: messages[err.code] || `Upload error: ${err.message}` });
+  }
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: err.message || 'Internal server error' });
+});
 
 export default app;

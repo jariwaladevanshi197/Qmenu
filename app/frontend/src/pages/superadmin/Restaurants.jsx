@@ -152,6 +152,7 @@ export default function SuperAdminRestaurants() {
 
   const submitAdd = () => {
     if (form.password !== form.conpassword) return toast.error('Passwords do not match');
+    if (form.logo && form.logo.size > 2 * 1024 * 1024) return toast.error('Logo file is too large. Maximum size is 2MB.');
     const fd = new FormData();
     Object.entries(form).forEach(([k, v]) => { if (k !== 'conpassword' && v !== null) fd.append(k, v); });
     addMutation.mutate(fd);
@@ -163,6 +164,7 @@ export default function SuperAdminRestaurants() {
   };
 
   const submitEdit = () => {
+    if (form.logo && form.logo.size > 2 * 1024 * 1024) return toast.error('Logo file is too large. Maximum size is 2MB.');
     const fd = new FormData();
     Object.entries(form).forEach(([k, v]) => { if (k !== 'conpassword' && k !== 'password' && v !== null) fd.append(k, v); });
     editMutation.mutate({ id: editTarget, fd });
