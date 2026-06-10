@@ -3307,6 +3307,8 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    printNodeApiKey: string | null
+    printNodePrinterId: string | null
     websiteEnabled: boolean | null
     heroTitle: string | null
     tagline: string | null
@@ -3348,6 +3350,8 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    printNodeApiKey: string | null
+    printNodePrinterId: string | null
     websiteEnabled: boolean | null
     heroTitle: string | null
     tagline: string | null
@@ -3389,6 +3393,8 @@ export namespace Prisma {
     discount: number
     servicecharge: number
     maxStaff: number
+    printNodeApiKey: number
+    printNodePrinterId: number
     websiteEnabled: number
     heroTitle: number
     tagline: number
@@ -3456,6 +3462,8 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    printNodeApiKey?: true
+    printNodePrinterId?: true
     websiteEnabled?: true
     heroTitle?: true
     tagline?: true
@@ -3497,6 +3505,8 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    printNodeApiKey?: true
+    printNodePrinterId?: true
     websiteEnabled?: true
     heroTitle?: true
     tagline?: true
@@ -3538,6 +3548,8 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    printNodeApiKey?: true
+    printNodePrinterId?: true
     websiteEnabled?: true
     heroTitle?: true
     tagline?: true
@@ -3666,6 +3678,8 @@ export namespace Prisma {
     discount: number
     servicecharge: number
     maxStaff: number
+    printNodeApiKey: string | null
+    printNodePrinterId: string | null
     websiteEnabled: boolean
     heroTitle: string | null
     tagline: string | null
@@ -3726,6 +3740,8 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    printNodeApiKey?: boolean
+    printNodePrinterId?: boolean
     websiteEnabled?: boolean
     heroTitle?: boolean
     tagline?: boolean
@@ -3778,6 +3794,8 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    printNodeApiKey?: boolean
+    printNodePrinterId?: boolean
     websiteEnabled?: boolean
     heroTitle?: boolean
     tagline?: boolean
@@ -3820,6 +3838,8 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    printNodeApiKey?: boolean
+    printNodePrinterId?: boolean
     websiteEnabled?: boolean
     heroTitle?: boolean
     tagline?: boolean
@@ -3892,6 +3912,8 @@ export namespace Prisma {
       discount: number
       servicecharge: number
       maxStaff: number
+      printNodeApiKey: string | null
+      printNodePrinterId: string | null
       websiteEnabled: boolean
       heroTitle: string | null
       tagline: string | null
@@ -4333,6 +4355,8 @@ export namespace Prisma {
     readonly discount: FieldRef<"Restaurant", 'Float'>
     readonly servicecharge: FieldRef<"Restaurant", 'Float'>
     readonly maxStaff: FieldRef<"Restaurant", 'Int'>
+    readonly printNodeApiKey: FieldRef<"Restaurant", 'String'>
+    readonly printNodePrinterId: FieldRef<"Restaurant", 'String'>
     readonly websiteEnabled: FieldRef<"Restaurant", 'Boolean'>
     readonly heroTitle: FieldRef<"Restaurant", 'String'>
     readonly tagline: FieldRef<"Restaurant", 'String'>
@@ -17452,6 +17476,8 @@ export namespace Prisma {
     discount: 'discount',
     servicecharge: 'servicecharge',
     maxStaff: 'maxStaff',
+    printNodeApiKey: 'printNodeApiKey',
+    printNodePrinterId: 'printNodePrinterId',
     websiteEnabled: 'websiteEnabled',
     heroTitle: 'heroTitle',
     tagline: 'tagline',
@@ -17889,6 +17915,8 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
+    printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableFilter<"Restaurant"> | string | null
     tagline?: StringNullableFilter<"Restaurant"> | string | null
@@ -17940,6 +17968,8 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    printNodeApiKey?: SortOrderInput | SortOrder
+    printNodePrinterId?: SortOrderInput | SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrderInput | SortOrder
     tagline?: SortOrderInput | SortOrder
@@ -17994,6 +18024,8 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
+    printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableFilter<"Restaurant"> | string | null
     tagline?: StringNullableFilter<"Restaurant"> | string | null
@@ -18045,6 +18077,8 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    printNodeApiKey?: SortOrderInput | SortOrder
+    printNodePrinterId?: SortOrderInput | SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrderInput | SortOrder
     tagline?: SortOrderInput | SortOrder
@@ -18094,6 +18128,8 @@ export namespace Prisma {
     discount?: FloatWithAggregatesFilter<"Restaurant"> | number
     servicecharge?: FloatWithAggregatesFilter<"Restaurant"> | number
     maxStaff?: IntWithAggregatesFilter<"Restaurant"> | number
+    printNodeApiKey?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    printNodePrinterId?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolWithAggregatesFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     tagline?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
@@ -19165,6 +19201,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -19216,6 +19254,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -19264,6 +19304,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19315,6 +19357,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19365,6 +19409,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -19404,6 +19450,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19445,6 +19493,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20784,6 +20834,8 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    printNodeApiKey?: SortOrder
+    printNodePrinterId?: SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrder
     tagline?: SortOrder
@@ -20837,6 +20889,8 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    printNodeApiKey?: SortOrder
+    printNodePrinterId?: SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrder
     tagline?: SortOrder
@@ -20878,6 +20932,8 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    printNodeApiKey?: SortOrder
+    printNodePrinterId?: SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrder
     tagline?: SortOrder
@@ -23515,6 +23571,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23565,6 +23623,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23628,6 +23688,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23678,6 +23740,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23725,6 +23789,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23774,6 +23840,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23853,6 +23921,8 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
+    printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableFilter<"Restaurant"> | string | null
     tagline?: StringNullableFilter<"Restaurant"> | string | null
@@ -23892,6 +23962,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23942,6 +24014,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24040,6 +24114,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24090,6 +24166,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24153,6 +24231,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24203,6 +24283,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24321,6 +24403,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24371,6 +24455,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24479,6 +24565,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24529,6 +24617,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24656,6 +24746,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24706,6 +24798,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24785,6 +24879,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24835,6 +24931,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24951,6 +25049,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25001,6 +25101,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25236,6 +25338,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25286,6 +25390,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25378,6 +25484,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25428,6 +25536,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25575,6 +25685,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25625,6 +25737,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25688,6 +25802,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25738,6 +25854,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25785,6 +25903,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25835,6 +25955,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25898,6 +26020,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25948,6 +26072,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25995,6 +26121,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26045,6 +26173,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26130,6 +26260,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26180,6 +26312,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26631,6 +26765,8 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    printNodeApiKey?: string | null
+    printNodePrinterId?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26670,6 +26806,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26719,6 +26857,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26768,6 +26908,8 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null

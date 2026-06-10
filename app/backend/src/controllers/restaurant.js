@@ -29,8 +29,10 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { restroname, mobileno, email, address, gstno, discount, servicecharge } = req.body;
+    const { restroname, mobileno, email, address, gstno, discount, servicecharge, printNodeApiKey, printNodePrinterId } = req.body;
     const data = { restroname, mobileno, email, address, gstno, discount: parseFloat(discount || 0), servicecharge: parseFloat(servicecharge || 0) };
+    if (printNodeApiKey !== undefined) data.printNodeApiKey = printNodeApiKey || null;
+    if (printNodePrinterId !== undefined) data.printNodePrinterId = printNodePrinterId || null;
     if (req.file) data.logo = await saveToSupabase(req.file, 'logos');
 
     const restro = await prisma.restaurant.update({ where: { id: req.user.id }, data });

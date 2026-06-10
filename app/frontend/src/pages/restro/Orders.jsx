@@ -4,9 +4,10 @@ import { useAuthStore } from '../../store/auth';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
-import { CheckCircle, XCircle, Check, Merge, Plus, X } from 'lucide-react';
+import { CheckCircle, XCircle, Check, Merge, Plus, X, Printer } from 'lucide-react';
 import Modal from '../../components/ui/Modal';
 import { subscribeToOrders } from '../../lib/realtime';
+import { printKitchenTicket } from '../../lib/printKitchenTicket';
 
 const STATUS_BADGE = {
   PENDING:   'badge-yellow',
@@ -265,6 +266,11 @@ export default function RestroOrders() {
                     <Check size={13} /> Complete
                   </button>
                 )}
+                <button className="btn-secondary btn-sm px-3"
+                  onClick={() => printKitchenTicket(order, user?.restroname)}
+                  title="Print kitchen ticket">
+                  <Printer size={14} />
+                </button>
                 <button className="btn-danger btn-sm px-3"
                   onClick={() => cancelMutation.mutate(order.id)}
                   disabled={cancelMutation.isPending}

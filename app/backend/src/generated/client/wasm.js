@@ -161,6 +161,8 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   discount: 'discount',
   servicecharge: 'servicecharge',
   maxStaff: 'maxStaff',
+  printNodeApiKey: 'printNodeApiKey',
+  printNodePrinterId: 'printNodePrinterId',
   websiteEnabled: 'websiteEnabled',
   heroTitle: 'heroTitle',
   tagline: 'tagline',

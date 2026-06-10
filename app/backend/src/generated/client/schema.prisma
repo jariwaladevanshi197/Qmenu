@@ -52,6 +52,10 @@ model Restaurant {
   servicecharge Float    @default(0)
   maxStaff      Int      @default(5)
 
+  // Kitchen auto-print (PrintNode)
+  printNodeApiKey    String?
+  printNodePrinterId String?
+
   // Mega+Web website fields
   websiteEnabled Boolean @default(false)
   heroTitle      String?

@@ -2,9 +2,9 @@
 // Set PRINTNODE_API_KEY and PRINTNODE_PRINTER_ID in backend .env to activate.
 // If not set, silently skips — system works normally without a printer.
 
-export async function printKitchenOrder(order) {
-  const apiKey    = process.env.PRINTNODE_API_KEY;
-  const printerId = process.env.PRINTNODE_PRINTER_ID;
+export async function printKitchenOrder(order, restro = {}) {
+  const apiKey    = restro.printNodeApiKey    || process.env.PRINTNODE_API_KEY;
+  const printerId = restro.printNodePrinterId || process.env.PRINTNODE_PRINTER_ID;
   if (!apiKey || !printerId) return;
 
   const divider = '================================';

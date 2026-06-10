@@ -40,7 +40,10 @@ export const placeStaffOrder = async (req, res) => {
     });
 
     emitNewOrder(req.app.get('io'), req.user.id, order);
-    printKitchenOrder(order);
+    prisma.restaurant.findUnique({
+      where: { id: req.user.id },
+      select: { printNodeApiKey: true, printNodePrinterId: true },
+    }).then((restro) => printKitchenOrder(order, restro || {}));
     res.status(201).json(order);
   } catch (e) {
     res.status(500).json({ error: e.message });

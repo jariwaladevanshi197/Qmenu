@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { useAuthStore } from '../../store/auth';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Copy, ExternalLink, Printer, Monitor } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
 const Field = ({ label, children }) => <div><label className="label">{label}</label>{children}</div>;
 
 export default function RestroSettings() {
+  const { user } = useAuthStore();
   const [form, setForm] = useState({ restroname: '', mobileno: '', email: '', address: '', gstno: '', discount: '', servicecharge: '', logo: null });
+  const [printForm, setPrintForm] = useState({ printNodeApiKey: '', printNodePrinterId: '' });
   const [otpVisible, setOtpVisible] = useState(false);
 
   const { data: profile, isLoading } = useQuery({
@@ -21,6 +24,7 @@ export default function RestroSettings() {
   useEffect(() => {
     if (profile) {
       setForm({ restroname: profile.restroname || '', mobileno: profile.mobileno || '', email: profile.email || '', address: profile.address || '', gstno: profile.gstno || '', discount: String(profile.discount || 0), servicecharge: String(profile.servicecharge || 0), logo: null });
+      setPrintForm({ printNodeApiKey: profile.printNodeApiKey || '', printNodePrinterId: profile.printNodePrinterId || '' });
     }
   }, [profile]);
 
@@ -40,6 +44,27 @@ export default function RestroSettings() {
     onSuccess: () => toast.success('PDF uploaded'),
     onError: (e) => toast.error(e.response?.data?.error || 'Error'),
   });
+
+  const printMutation = useMutation({
+    mutationFn: (fd) => api.put('/restaurant/profile', fd),
+    onSuccess: () => toast.success('Printing settings saved'),
+    onError: (e) => toast.error(e.response?.data?.error || 'Error'),
+  });
+
+  const savePrintSettings = () => {
+    const fd = new FormData();
+    fd.append('printNodeApiKey', printForm.printNodeApiKey);
+    fd.append('printNodePrinterId', printForm.printNodePrinterId);
+    printMutation.mutate(fd);
+  };
+
+  const displayUrl = `${window.location.origin}/display/${profile?.slug || user?.slug}`;
+  const kitchenUrl = `${window.location.origin}/restro/kitchen`;
+
+  const copyLink = (url, label) => {
+    navigator.clipboard.writeText(url);
+    toast.success(`${label} link copied`);
+  };
 
   if (isLoading) return <PageLoader />;
 
@@ -128,6 +153,60 @@ export default function RestroSettings() {
           <code className="bg-gray-100 px-4 py-2 rounded-lg text-lg font-bold tracking-widest">{otpVisible ? profile?.restrootp : '••••'}</code>
           <button className="btn-secondary btn-sm" onClick={() => setOtpVisible(!otpVisible)}>{otpVisible ? 'Hide' : 'Show'}</button>
           <button className="btn-secondary btn-sm" onClick={() => otpMutation.mutate()} disabled={otpMutation.isPending}><RefreshCw size={13} /> Regenerate</button>
+        </div>
+      </div>
+
+      {/* ── Kitchen Printing & Customer Display ── */}
+      <div className="card p-6 mb-5">
+        <h2 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <Printer size={16} /> Kitchen Printing
+        </h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Connect PrintNode to auto-print a kitchen ticket for every new order. Leave blank to use the
+          manual "Print Ticket" button on the Kitchen Display / Live Orders pages instead.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <Field label="PrintNode API Key">
+            <input className="input" type="password" placeholder="Paste your PrintNode API key"
+              value={printForm.printNodeApiKey}
+              onChange={(e) => setPrintForm({ ...printForm, printNodeApiKey: e.target.value })} />
+          </Field>
+          <Field label="PrintNode Printer ID">
+            <input className="input" placeholder="e.g. 123456"
+              value={printForm.printNodePrinterId}
+              onChange={(e) => setPrintForm({ ...printForm, printNodePrinterId: e.target.value })} />
+          </Field>
+        </div>
+        <div className="flex justify-end">
+          <button className="btn-primary btn-sm" onClick={savePrintSettings} disabled={printMutation.isPending}>
+            {printMutation.isPending ? 'Saving...' : 'Save Printing Settings'}
+          </button>
+        </div>
+      </div>
+
+      <div className="card p-6 mb-5">
+        <h2 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <Monitor size={16} /> Order Ready Display
+        </h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Open this link on a TV or tablet at your counter. It shows order numbers that are ready
+          for customers to collect.
+        </p>
+        <div className="flex items-center gap-2 mb-3">
+          <code className="flex-1 bg-gray-100 px-3 py-2 rounded-lg text-xs sm:text-sm truncate">{displayUrl}</code>
+          <button className="btn-secondary btn-sm" onClick={() => copyLink(displayUrl, 'Display')}><Copy size={13} /></button>
+          <a className="btn-secondary btn-sm" href={displayUrl} target="_blank" rel="noreferrer"><ExternalLink size={13} /></a>
+        </div>
+
+        <h3 className="text-sm font-semibold text-gray-700 mt-5 mb-1">Kitchen Display (KDS)</h3>
+        <p className="text-sm text-gray-500 mb-3">
+          Login here from a kitchen tablet/phone for the live order board with auto-print and a
+          manual "Print Ticket" button per order — useful as a backup if the power goes out.
+        </p>
+        <div className="flex items-center gap-2">
+          <code className="flex-1 bg-gray-100 px-3 py-2 rounded-lg text-xs sm:text-sm truncate">{kitchenUrl}</code>
+          <button className="btn-secondary btn-sm" onClick={() => copyLink(kitchenUrl, 'Kitchen')}><Copy size={13} /></button>
+          <a className="btn-secondary btn-sm" href={kitchenUrl} target="_blank" rel="noreferrer"><ExternalLink size={13} /></a>
         </div>
       </div>
 

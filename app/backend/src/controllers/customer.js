@@ -50,7 +50,7 @@ export const getMenu = async (req, res) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const restro = await prisma.restaurant.findUnique({ where: { slug: req.params.slug }, select: { id: true, status: true } });
+    const restro = await prisma.restaurant.findUnique({ where: { slug: req.params.slug }, select: { id: true, status: true, printNodeApiKey: true, printNodePrinterId: true } });
     if (!restro || !restro.status) return res.status(404).json({ error: 'Restaurant not found' });
 
     const { tableid, customername, customermob, items } = req.body;
@@ -88,7 +88,7 @@ export const placeOrder = async (req, res) => {
     });
 
     emitNewOrder(req.app.get('io'), restro.id, order);
-    printKitchenOrder(order); // fire-and-forget — does not block response
+    printKitchenOrder(order, restro); // fire-and-forget — does not block response
     res.status(201).json({ ordercode: order.ordercode });
   } catch (e) {
     res.status(500).json({ error: e.message });
