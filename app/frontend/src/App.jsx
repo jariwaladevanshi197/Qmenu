@@ -27,6 +27,7 @@ import CustomerMyOrder from "./pages/customer/MyOrder";
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
 import RestaurantWebsite from "./pages/restaurant/Website";
+import CustomerDisplay from "./pages/restro/CustomerDisplay";
 
 const ADMIN_ROLES = ["super_admin", "manager", "viewer", "superadmin"];
 
@@ -73,6 +74,7 @@ export default function App() {
       <Route path="/menu/:slug" element={<CustomerMenu />} />
       <Route path="/menu/:slug/cart" element={<CustomerCart />} />
       <Route path="/menu/:slug/order/:ordercode" element={<CustomerMyOrder />} />
+      <Route path="/display/:slug" element={<CustomerDisplay />} />
       <Route path="/r/:slug" element={<RestaurantWebsite />} />
       <Route path="/" element={<Landing />} />
       <Route path="*" element={<NotFound />} />

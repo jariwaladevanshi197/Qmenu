@@ -1,6 +1,7 @@
 ﻿import { PrismaClient } from '../generated/client/index.js';
 import { emitNewOrder, emitWaiterCall } from '../utils/realtime.js';
 import { generateOrderCode } from '../utils/helpers.js';
+import { printKitchenOrder } from '../utils/printOrder.js';
 
 const prisma = new PrismaClient();
 
@@ -87,7 +88,29 @@ export const placeOrder = async (req, res) => {
     });
 
     emitNewOrder(req.app.get('io'), restro.id, order);
+    printKitchenOrder(order); // fire-and-forget — does not block response
     res.status(201).json({ ordercode: order.ordercode });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const getReadyOrders = async (req, res) => {
+  try {
+    const restro = await prisma.restaurant.findUnique({
+      where: { slug: req.params.slug },
+      select: { id: true },
+    });
+    if (!restro) return res.status(404).json({ error: 'Restaurant not found' });
+
+    const since = new Date(Date.now() - 30 * 60 * 1000); // last 30 minutes
+    const orders = await prisma.orderHistory.findMany({
+      where: { restroid: restro.id, timestamp: { gte: since } },
+      select: { ordercode: true, tablename: true, timestamp: true },
+      orderBy: { timestamp: 'desc' },
+      take: 20,
+    });
+    res.json(orders);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

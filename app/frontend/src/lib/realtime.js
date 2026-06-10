@@ -29,6 +29,22 @@ export const subscribeToOrders = (restroid, onNew, onUpdate) => {
   return () => supabase.removeChannel(channel);
 };
 
+// Listens for newly completed orders (for the counter display board)
+export const subscribeToReadyOrders = (restroid, onNew) => {
+  const id = ++_seq;
+  const channel = supabase
+    .channel(`ready:${restroid}:${id}`)
+    .on('postgres_changes', {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'orderhistory',
+      filter: `restroid=eq.${restroid}`,
+    }, (payload) => onNew?.(payload.new))
+    .subscribe();
+
+  return () => supabase.removeChannel(channel);
+};
+
 export const subscribeToWaiterCalls = (restroid, onNew) => {
   const id = ++_seq;
   const channel = supabase

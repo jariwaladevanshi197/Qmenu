@@ -1,6 +1,7 @@
 import { PrismaClient } from '../generated/client/index.js';
 import { emitNewOrder } from '../utils/realtime.js';
 import { generateOrderCode } from '../utils/helpers.js';
+import { printKitchenOrder } from '../utils/printOrder.js';
 
 const prisma = new PrismaClient();
 
@@ -39,6 +40,7 @@ export const placeStaffOrder = async (req, res) => {
     });
 
     emitNewOrder(req.app.get('io'), req.user.id, order);
+    printKitchenOrder(order);
     res.status(201).json(order);
   } catch (e) {
     res.status(500).json({ error: e.message });

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   getRestaurantBySlug, getMenu, placeOrder, getMyOrder,
-  callWaiter, sendFeedback, verifyOtp,
+  callWaiter, sendFeedback, verifyOtp, getReadyOrders,
 } from '../controllers/customer.js';
 
 const router = Router();
@@ -13,5 +13,6 @@ router.get('/restro/:slug/order/:ordercode', getMyOrder);
 router.post('/restro/:slug/waiter', callWaiter);
 router.post('/restro/:slug/feedback', sendFeedback);
 router.post('/restro/:slug/verify-otp', verifyOtp);
+router.get('/restro/:slug/ready', getReadyOrders);
 
 export default router;

@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '../../store/auth';
 import { subscribeToOrders } from '../../lib/realtime';
+import { printKitchenTicket } from '../../lib/printKitchenTicket';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
-import { LogOut, ChefHat, Clock, Utensils } from 'lucide-react';
+import { LogOut, ChefHat, Clock, Utensils, Printer } from 'lucide-react';
 
-// How long ago was the order placed?
 const timeAgo = (dateStr) => {
   const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
   if (diff < 60) return `${diff}s ago`;
@@ -15,7 +15,6 @@ const timeAgo = (dateStr) => {
   return `${Math.floor(diff / 3600)}h ago`;
 };
 
-// Live clock
 function useClock() {
   const [time, setTime] = useState(new Date());
   useEffect(() => {
@@ -31,7 +30,21 @@ export default function KitchenDisplay() {
   const qc = useQueryClient();
   const clock = useClock();
 
-  // Redirect non-kitchen users back to normal portal
+  // Auto-print toggle — persisted in localStorage
+  const [autoPrint, setAutoPrint] = useState(() => {
+    try { return localStorage.getItem('kds_autoprint') !== 'off'; } catch { return true; }
+  });
+  const seenOrders = useRef(new Set());
+
+  const toggleAutoPrint = () => {
+    setAutoPrint((prev) => {
+      const next = !prev;
+      localStorage.setItem('kds_autoprint', next ? 'on' : 'off');
+      toast(next ? 'Auto-print ON' : 'Auto-print OFF', { icon: '🖨️' });
+      return next;
+    });
+  };
+
   useEffect(() => {
     if (user && user.staffRole && user.staffRole !== 'kitchen') {
       navigate('/restro/dashboard', { replace: true });
@@ -42,18 +55,33 @@ export default function KitchenDisplay() {
     queryKey: ['kitchen-orders'],
     queryFn: () => api.get('/orders/active').then((r) => r.data),
     refetchInterval: 10000,
+    onSuccess: (data) => {
+      // Seed seen set on first load so existing orders don't trigger print
+      data.forEach((o) => seenOrders.current.add(o.id));
+    },
   });
 
-  // Real-time updates via Supabase
+  // Real-time: new order → auto-print if enabled
   useEffect(() => {
     if (!user?.id) return;
     const unsub = subscribeToOrders(
       user.id,
-      () => qc.invalidateQueries(['kitchen-orders']),
+      (newOrder) => {
+        qc.invalidateQueries(['kitchen-orders']);
+        if (autoPrint && !seenOrders.current.has(newOrder.id)) {
+          seenOrders.current.add(newOrder.id);
+          // Fetch full order (realtime payload may lack items/table)
+          api.get('/orders/active').then((r) => {
+            const full = r.data.find((o) => o.id === newOrder.id);
+            if (full) printKitchenTicket(full, user.restroname);
+          });
+          toast('New order — printing ticket', { icon: '🖨️' });
+        }
+      },
       () => qc.invalidateQueries(['kitchen-orders']),
     );
     return unsub;
-  }, [user?.id, qc]);
+  }, [user?.id, user?.restroname, autoPrint, qc]);
 
   const confirmMutation = useMutation({
     mutationFn: (id) => api.patch(`/orders/${id}/confirm`),
@@ -72,13 +100,12 @@ export default function KitchenDisplay() {
     navigate('/restro/login');
   }, [logout, navigate]);
 
-  // Sort: PENDING first, then CONFIRMED; oldest first within each group
   const sorted = [...orders].sort((a, b) => {
     if (a.status === b.status) return new Date(a.createdAt) - new Date(b.createdAt);
     return a.status === 'PENDING' ? -1 : 1;
   });
 
-  const pendingCount = orders.filter((o) => o.status === 'PENDING').length;
+  const pendingCount  = orders.filter((o) => o.status === 'PENDING').length;
   const preparingCount = orders.filter((o) => o.status === 'CONFIRMED').length;
 
   return (
@@ -96,8 +123,7 @@ export default function KitchenDisplay() {
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
-          {/* Order counts */}
+        <div className="flex items-center gap-4">
           <div className="flex items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-pulse" />
@@ -109,13 +135,24 @@ export default function KitchenDisplay() {
             </div>
           </div>
 
-          {/* Clock */}
           <div className="flex items-center gap-1.5 text-gray-300 font-mono text-sm">
             <Clock size={14} className="text-gray-500" />
             {clock}
           </div>
 
-          {/* Logout */}
+          {/* Auto-print toggle */}
+          <button
+            onClick={toggleAutoPrint}
+            title={autoPrint ? 'Auto-print ON — click to disable' : 'Auto-print OFF — click to enable'}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${
+              autoPrint
+                ? 'bg-green-700/60 text-green-300 hover:bg-green-700'
+                : 'bg-gray-800 text-gray-500 hover:bg-gray-700'
+            }`}>
+            <Printer size={14} />
+            <span className="hidden sm:inline">{autoPrint ? 'Auto Print' : 'Print Off'}</span>
+          </button>
+
           <button onClick={handleLogout}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-red-900/60 hover:text-red-400 text-gray-400 text-sm transition-all">
             <LogOut size={14} /> Logout
@@ -145,7 +182,7 @@ export default function KitchenDisplay() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {sorted.map((order) => {
-              const isPending = order.status === 'PENDING';
+              const isPending  = order.status === 'PENDING';
               const isConfirmed = order.status === 'CONFIRMED';
 
               return (
@@ -199,8 +236,8 @@ export default function KitchenDisplay() {
                     )}
                   </div>
 
-                  {/* Action button */}
-                  <div className="px-4 pb-4">
+                  {/* Action buttons */}
+                  <div className="px-4 pb-4 flex flex-col gap-2">
                     {isPending && (
                       <button
                         onClick={() => confirmMutation.mutate(order.id)}
@@ -217,6 +254,12 @@ export default function KitchenDisplay() {
                         ✓ Mark Ready
                       </button>
                     )}
+                    {/* Manual print button — useful on mobile with Bluetooth printer */}
+                    <button
+                      onClick={() => printKitchenTicket(order, user?.restroname)}
+                      className="w-full py-2 rounded-xl text-xs font-medium bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white transition-all active:scale-95 flex items-center justify-center gap-1.5">
+                      <Printer size={12} /> Print Ticket
+                    </button>
                   </div>
                 </div>
               );

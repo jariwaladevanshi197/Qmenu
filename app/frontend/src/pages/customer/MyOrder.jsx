@@ -8,7 +8,7 @@ import { CheckCircle, Clock, XCircle, ArrowLeft } from 'lucide-react';
 const STATUS = {
   PENDING:   { label: 'Order Received',  icon: Clock,        color: '#d97706', bg: '#fef3c7' },
   CONFIRMED: { label: 'Being Prepared',  icon: CheckCircle,  color: '#2563eb', bg: '#dbeafe' },
-  COMPLETED: { label: 'Ready / Served',  icon: CheckCircle,  color: '#16a34a', bg: '#dcfce7' },
+  COMPLETED: { label: '🎉 Order Ready!', icon: CheckCircle,  color: '#16a34a', bg: '#dcfce7' },
   CANCELLED: { label: 'Cancelled',       icon: XCircle,      color: '#dc2626', bg: '#fee2e2' },
 };
 
@@ -54,6 +54,12 @@ export default function CustomerMyOrder() {
           <Icon size={44} className="mx-auto mb-3" style={{ color: s.color }} />
           <p className="text-lg font-bold" style={{ color: s.color }}>{s.label}</p>
           {order.table?.name && <p className="text-sm mt-1 opacity-70" style={{ color: s.color }}>Table: {order.table.name}</p>}
+          {order.status === 'COMPLETED' && (
+            <div className="mt-4 p-4 rounded-xl bg-green-600 text-white">
+              <p className="text-xl font-black">#{order.ordercode}</p>
+              <p className="text-sm font-semibold mt-1">Please collect your order from the counter</p>
+            </div>
+          )}
         </div>
 
         {/* Order details */}
