@@ -5,7 +5,7 @@ import QRCode from 'qrcode';
 import api from '../../lib/api';
 import { useTheme } from '../../hooks/useTheme';
 import { PageLoader } from '../../components/ui/Spinner';
-import { buildUpiLink } from '../../lib/upi';
+import { buildUpiLink, buildUpiAppLinks } from '../../lib/upi';
 import toast from 'react-hot-toast';
 import { CheckCircle, Clock, XCircle, ArrowLeft, Copy } from 'lucide-react';
 
@@ -41,6 +41,15 @@ export default function CustomerMyOrder() {
         note: `Order ${order.ordercode}`,
       })
     : null;
+
+  const upiAppLinks = (order && restro?.upiId)
+    ? buildUpiAppLinks({
+        upiId: restro.upiId,
+        payeeName: restro.restroname,
+        amount: order.grandtotal,
+        note: `Order ${order.ordercode}`,
+      })
+    : [];
 
   const [qrDataUrl, setQrDataUrl] = useState(null);
   useEffect(() => {
@@ -109,9 +118,26 @@ export default function CustomerMyOrder() {
                 <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
                   Pay ₹{order.grandtotal?.toFixed(2)} via UPI. Staff will confirm once received.
                 </p>
+
+                {/* Choose UPI app */}
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {upiAppLinks.map((app) => (
+                    <a key={app.name} href={app.href}
+                      className="py-2.5 text-sm font-semibold border text-center"
+                      style={{
+                        borderRadius: th.radius,
+                        borderColor: `${th.text}15`,
+                        backgroundColor: app.color,
+                        color: app.textColor,
+                      }}>
+                      {app.name}
+                    </a>
+                  ))}
+                </div>
+
                 {qrDataUrl && <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />}
                 <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
-                  Scan the QR with any UPI app, or pay manually using the details below.
+                  Tap an app above, scan the QR, or pay manually using the details below.
                 </p>
                 <div className="space-y-2 mb-3">
                   <div className="flex items-center justify-between gap-2 px-3 py-2"
@@ -137,12 +163,6 @@ export default function CustomerMyOrder() {
                     </button>
                   </div>
                 </div>
-                {upiLink && (
-                  <a href={upiLink} className="block w-full py-3 text-sm font-bold"
-                    style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}>
-                    Pay ₹{order.grandtotal?.toFixed(2)} via UPI
-                  </a>
-                )}
                 <p className="text-xs mt-2 font-semibold" style={{ color: '#d97706' }}>Payment Pending</p>
               </>
             )}
