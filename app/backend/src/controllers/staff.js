@@ -1,8 +1,6 @@
 ﻿import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '../generated/client/index.js';
-
-const prisma = new PrismaClient();
+import { prisma } from '../lib/prisma.js';
 
 const signToken = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });

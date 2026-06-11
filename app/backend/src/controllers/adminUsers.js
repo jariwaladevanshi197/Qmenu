@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs';
-import { PrismaClient } from '../generated/client/index.js';
+import { prisma } from '../lib/prisma.js';
 import { ALL_PERMISSIONS, resolvePermissions } from '../utils/permissions.js';
 
-const prisma = new PrismaClient();
 const VALID_ROLES = ['super_admin', 'manager', 'viewer'];
 
 const formatAdmin = (admin) => ({

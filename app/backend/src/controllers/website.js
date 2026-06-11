@@ -1,7 +1,5 @@
-import { PrismaClient } from '../generated/client/index.js';
+import { prisma } from '../lib/prisma.js';
 import { saveToSupabase } from '../middleware/upload.js';
-
-const prisma = new PrismaClient();
 
 const WEBSITE_FIELDS = {
   id: true, restroname: true, slug: true, email: true, address: true,

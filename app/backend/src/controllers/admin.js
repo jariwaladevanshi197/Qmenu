@@ -1,9 +1,7 @@
 ﻿import bcrypt from 'bcryptjs';
-import { PrismaClient } from '../generated/client/index.js';
+import { prisma } from '../lib/prisma.js';
 import { generateSlug } from '../utils/helpers.js';
 import { saveToSupabase } from '../middleware/upload.js';
-
-const prisma = new PrismaClient();
 
 export const getDashboardStats = async (_req, res) => {
   try {

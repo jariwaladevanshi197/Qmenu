@@ -1,8 +1,6 @@
-﻿import { PrismaClient } from '../generated/client/index.js';
+﻿import { prisma } from '../lib/prisma.js';
 import { emitOrderUpdate } from '../utils/realtime.js';
 import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
-
-const prisma = new PrismaClient();
 
 export const getActiveOrders = async (req, res) => {
   try {

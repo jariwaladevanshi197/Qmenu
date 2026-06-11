@@ -1,8 +1,6 @@
-﻿import { PrismaClient } from '../generated/client/index.js';
+﻿import { prisma } from '../lib/prisma.js';
 import QRCode from 'qrcode';
 import { saveToSupabase } from '../middleware/upload.js';
-
-const prisma = new PrismaClient();
 
 export const getProfile = async (req, res) => {
   try {

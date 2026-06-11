@@ -1,7 +1,5 @@
-﻿import { PrismaClient } from '../generated/client/index.js';
+﻿import { prisma } from '../lib/prisma.js';
 import crypto from 'crypto';
-
-const prisma = new PrismaClient();
 
 export const generateSlug = async (name) => {
   const base = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

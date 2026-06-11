@@ -1,9 +1,7 @@
-﻿import { PrismaClient } from '../generated/client/index.js';
+﻿import { prisma } from '../lib/prisma.js';
 import { emitNewOrder, emitWaiterCall } from '../utils/realtime.js';
 import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
 import { printKitchenOrder } from '../utils/printOrder.js';
-
-const prisma = new PrismaClient();
 
 export const getRestaurantBySlug = async (req, res) => {
   try {
