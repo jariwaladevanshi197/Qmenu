@@ -6,6 +6,7 @@ import { subscribeToOrders } from '../../lib/realtime';
 import { printKitchenTicket } from '../../lib/printKitchenTicket';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
+import { formatOrderToken } from '../../lib/orderToken';
 import { LogOut, ChefHat, Clock, Utensils, Printer } from 'lucide-react';
 
 const timeAgo = (dateStr) => {
@@ -204,7 +205,7 @@ export default function KitchenDisplay() {
                         {isPending ? '🟡 New Order' : '🔵 Preparing'}
                       </span>
                       <p className="font-bold text-white text-sm mt-0.5">
-                        #{order.orderNumber}
+                        #{formatOrderToken(order)}
                       </p>
                     </div>
                     <div className="text-right">

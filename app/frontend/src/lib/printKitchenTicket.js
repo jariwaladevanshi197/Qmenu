@@ -2,6 +2,8 @@
 // Works on both desktop and mobile — mobile uses the OS print dialog
 // which can send to any paired Bluetooth/WiFi thermal printer.
 
+import { formatOrderToken } from './orderToken';
+
 function buildReceiptHtml(order, restroName) {
   const items = (order.items || [])
     .map((i) => `<tr><td>${i.quantity} x</td><td>${i.name_eng}</td></tr>`)
@@ -28,7 +30,7 @@ function buildReceiptHtml(order, restroName) {
 </style></head><body>
 <p class="center bold">${restroName || 'KITCHEN TICKET'}</p>
 <div class="divider"></div>
-<p class="center big">#${order.orderNumber}</p>
+<p class="center big">#${formatOrderToken(order)}</p>
 <p class="center">Table: ${order.table?.name || 'Walk-in'}</p>
 <p class="center" style="font-size:11px;color:#555">${time}</p>
 <div class="divider"></div>

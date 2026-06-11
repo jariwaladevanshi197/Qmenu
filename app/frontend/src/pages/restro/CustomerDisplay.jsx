@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../../lib/api';
 import { subscribeToReadyOrders } from '../../lib/realtime';
 import { supabase } from '../../lib/supabase';
+import { formatOrderToken } from '../../lib/orderToken';
 
 // Public page — no auth needed. Open on a TV / tablet at the counter.
 // URL: /display/:slug
@@ -77,7 +78,7 @@ export default function CustomerDisplay() {
                       : 'bg-gray-800 border border-gray-700'
                   }`}>
                   <p className={`text-3xl 2xl:text-4xl font-black tracking-wide ${isNew ? 'text-white' : 'text-green-400'}`}>
-                    #{order.orderNumber}
+                    #{formatOrderToken(order)}
                   </p>
                   {order.tablename && (
                     <p className={`text-sm 2xl:text-base mt-1 ${isNew ? 'text-green-100' : 'text-gray-400'}`}>

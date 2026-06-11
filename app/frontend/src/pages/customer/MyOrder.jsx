@@ -6,6 +6,7 @@ import api from '../../lib/api';
 import { useTheme } from '../../hooks/useTheme';
 import { PageLoader } from '../../components/ui/Spinner';
 import { buildUpiLink, buildUpiAppLinks } from '../../lib/upi';
+import { formatOrderToken } from '../../lib/orderToken';
 import toast from 'react-hot-toast';
 import { CheckCircle, Clock, XCircle, ArrowLeft, Copy } from 'lucide-react';
 
@@ -84,7 +85,7 @@ export default function CustomerMyOrder() {
           {order.table?.name && <p className="text-sm mt-1 opacity-70" style={{ color: s.color }}>Table: {order.table.name}</p>}
           {order.status === 'COMPLETED' && (
             <div className="mt-4 p-4 rounded-xl bg-green-600 text-white">
-              <p className="text-xl font-black">#{order.orderNumber}</p>
+              <p className="text-xl font-black">#{formatOrderToken(order)}</p>
               <p className="text-sm font-semibold mt-1">Please collect your order from the counter</p>
             </div>
           )}
@@ -92,7 +93,7 @@ export default function CustomerMyOrder() {
 
         {/* Order details */}
         <div className="p-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
-          <p className="text-xs opacity-50 mb-3 font-mono" style={{ color: th.text }}>#{order.orderNumber}</p>
+          <p className="text-xs opacity-50 mb-3 font-mono" style={{ color: th.text }}>#{formatOrderToken(order)}</p>
           <div className="space-y-2">
             {order.items.map((item) => (
               <div key={item.id} className="flex justify-between text-sm">
