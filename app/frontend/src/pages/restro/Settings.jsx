@@ -5,6 +5,7 @@ import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
 import { RefreshCw, Copy, ExternalLink, Printer, Monitor, Wallet } from 'lucide-react';
+import jsQR from 'jsqr';
 
 const API = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
@@ -78,11 +79,42 @@ export default function RestroSettings() {
     onError: (e) => toast.error(e.response?.data?.error || 'Error'),
   });
 
-  const uploadQrImage = (file) => {
+  const decodeUpiIdFromImage = (file) => new Promise((resolve) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        const query = code?.data?.split('?')[1] || '';
+        resolve(new URLSearchParams(query).get('pa'));
+      };
+      img.onerror = () => resolve(null);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(null);
+    reader.readAsDataURL(file);
+  });
+
+  const uploadQrImage = async (file) => {
     if (!file) return;
     const fd = new FormData();
     fd.append('qrImage', file);
     qrMutation.mutate(fd);
+
+    const pa = await decodeUpiIdFromImage(file);
+    if (pa) {
+      setUpiForm({ upiId: pa });
+      toast.success(`Detected UPI ID from QR: ${pa}`);
+      const idFd = new FormData();
+      idFd.append('upiId', pa);
+      upiMutation.mutate(idFd);
+    }
   };
 
   const displayUrl = `${window.location.origin}/display/${profile?.slug || user?.slug}`;
@@ -238,8 +270,9 @@ export default function RestroSettings() {
           <h3 className="text-sm font-semibold text-gray-700 mb-1">UPI QR Code (optional)</h3>
           <p className="text-sm text-gray-500 mb-3">
             Already have a UPI QR code from your bank's app (GPay/PhonePe/Paytm merchant QR)? Upload
-            it here — customers will see this exact image on their order page instead of a
-            generated QR, which can be more reliable for receiving payments.
+            it here — we'll automatically read your UPI ID from it and fill in the field above.
+            Customers will then get a QR that opens their UPI app with the order amount pre-filled
+            (auto pay), generated from your verified UPI ID.
           </p>
           <div className="flex items-center gap-4">
             {profile?.upiQrImage && (
