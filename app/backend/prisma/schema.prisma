@@ -56,6 +56,9 @@ model Restaurant {
   printNodeApiKey    String?
   printNodePrinterId String?
 
+  // UPI payments
+  upiId String?
+
   // Mega+Web website fields
   websiteEnabled  Boolean  @default(false)
   heroTitle       String?
@@ -181,6 +184,8 @@ model Order {
   discount      Float       @default(0)
   servicecharge Float       @default(0)
   grandtotal    Float       @default(0)
+  paymentmethod PaymentMethod @default(COUNTER)
+  paymentstatus PaymentStatus @default(UNPAID)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
@@ -219,6 +224,8 @@ model OrderHistory {
   discount      Float    @default(0)
   servicecharge Float    @default(0)
   grandtotal    Float    @default(0)
+  paymentmethod PaymentMethod @default(COUNTER)
+  paymentstatus PaymentStatus @default(UNPAID)
   timestamp     DateTime @default(now())
 
   restaurant Restaurant    @relation(fields: [restroid], references: [id], onDelete: Cascade)
@@ -289,4 +296,14 @@ enum OrderStatus {
   CONFIRMED
   COMPLETED
   CANCELLED
+}
+
+enum PaymentMethod {
+  COUNTER
+  UPI
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
 }

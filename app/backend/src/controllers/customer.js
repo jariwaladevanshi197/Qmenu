@@ -11,7 +11,7 @@ export const getRestaurantBySlug = async (req, res) => {
       where: { slug: req.params.slug },
       select: {
         id: true, restroname: true, slug: true, logo: true, status: true,
-        subtype: true, pdf: true, discount: true, servicecharge: true,
+        subtype: true, pdf: true, discount: true, servicecharge: true, upiId: true,
         theme: {
           select: {
             id: true, title: true, primaryColor: true, secondaryColor: true,
@@ -50,10 +50,10 @@ export const getMenu = async (req, res) => {
 
 export const placeOrder = async (req, res) => {
   try {
-    const restro = await prisma.restaurant.findUnique({ where: { slug: req.params.slug }, select: { id: true, status: true, printNodeApiKey: true, printNodePrinterId: true } });
+    const restro = await prisma.restaurant.findUnique({ where: { slug: req.params.slug }, select: { id: true, status: true, printNodeApiKey: true, printNodePrinterId: true, discount: true, servicecharge: true } });
     if (!restro || !restro.status) return res.status(404).json({ error: 'Restaurant not found' });
 
-    const { tableid, customername, customermob, items } = req.body;
+    const { tableid, customername, customermob, items, paymentmethod } = req.body;
     if (!items?.length) return res.status(400).json({ error: 'No items provided' });
     // tableid from QR = tableNumber (restaurant-specific). Must provide a valid table.
     if (!tableid) return res.status(400).json({ error: 'Table QR is required to place an order. Please scan your table QR code.' });
@@ -74,6 +74,11 @@ export const placeOrder = async (req, res) => {
       };
     });
 
+    const subtotal = enriched.reduce((s, i) => s + i.totalprice, 0);
+    const discountAmt = restro.discount ? (subtotal * restro.discount) / 100 : 0;
+    const scAmt = restro.servicecharge ? ((subtotal - discountAmt) * restro.servicecharge) / 100 : 0;
+    const grandtotal = subtotal - discountAmt + scAmt;
+
     const order = await prisma.order.create({
       data: {
         restroid: restro.id,
@@ -82,6 +87,11 @@ export const placeOrder = async (req, res) => {
         customername,
         customermob,
         status: 'PENDING',
+        subtotal,
+        discount: discountAmt,
+        servicecharge: scAmt,
+        grandtotal,
+        paymentmethod: paymentmethod === 'UPI' ? 'UPI' : 'COUNTER',
         items: { create: enriched },
       },
       include: { items: true, table: true },

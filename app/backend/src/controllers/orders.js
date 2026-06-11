@@ -58,6 +58,7 @@ export const completeOrder = async (req, res) => {
         customername: order.customername,
         customermob: order.customermob,
         subtotal, discount: discountAmt, servicecharge: scAmt, grandtotal,
+        paymentmethod: order.paymentmethod, paymentstatus: order.paymentstatus,
         items: {
           create: order.items.map((i) => ({
             name_eng: i.name_eng, name_guj: i.name_guj, name_hindi: i.name_hindi,
@@ -70,6 +71,20 @@ export const completeOrder = async (req, res) => {
 
     emitOrderUpdate(req.app.get('io'), req.user.id, { ...order, status: 'COMPLETED' });
     res.json(history);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
+export const markOrderPaid = async (req, res) => {
+  try {
+    await prisma.order.updateMany({
+      where: { id: parseInt(req.params.id), restroid: req.user.id },
+      data: { paymentstatus: 'PAID' },
+    });
+    const updated = await prisma.order.findUnique({ where: { id: parseInt(req.params.id) }, include: { items: true, table: true } });
+    emitOrderUpdate(req.app.get('io'), req.user.id, updated);
+    res.json(updated);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

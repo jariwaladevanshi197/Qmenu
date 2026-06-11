@@ -163,6 +163,7 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   maxStaff: 'maxStaff',
   printNodeApiKey: 'printNodeApiKey',
   printNodePrinterId: 'printNodePrinterId',
+  upiId: 'upiId',
   websiteEnabled: 'websiteEnabled',
   heroTitle: 'heroTitle',
   tagline: 'tagline',
@@ -250,6 +251,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   discount: 'discount',
   servicecharge: 'servicecharge',
   grandtotal: 'grandtotal',
+  paymentmethod: 'paymentmethod',
+  paymentstatus: 'paymentstatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -277,6 +280,8 @@ exports.Prisma.OrderHistoryScalarFieldEnum = {
   discount: 'discount',
   servicecharge: 'servicecharge',
   grandtotal: 'grandtotal',
+  paymentmethod: 'paymentmethod',
+  paymentstatus: 'paymentstatus',
   timestamp: 'timestamp'
 };
 
@@ -350,6 +355,16 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   CONFIRMED: 'CONFIRMED',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  COUNTER: 'COUNTER',
+  UPI: 'UPI'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  UNPAID: 'UNPAID',
+  PAID: 'PAID'
 };
 
 exports.Prisma.ModelName = {

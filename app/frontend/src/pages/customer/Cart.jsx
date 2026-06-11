@@ -15,6 +15,7 @@ export default function CustomerCart() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ customername: '', customermob: '' });
   const [placing, setPlacing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('COUNTER');
   const { items, updateQty, removeItem, clearCart, total } = useCartStore();
 
   const { data: restro } = useQuery({
@@ -34,6 +35,7 @@ export default function CustomerCart() {
         customername: form.customername,
         customermob: form.customermob,
         items: items.map((i) => ({ menuitemid: i.menuitemid, quantity: i.quantity })),
+        paymentmethod: paymentMethod,
       });
       clearCart();
       toast.success('Order placed!');
@@ -117,6 +119,35 @@ export default function CustomerCart() {
                 </div>
               </div>
             </div>
+
+            {/* Payment method */}
+            {restro.upiId && (
+              <div className="p-4 mb-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+                <p className="font-bold mb-3" style={{ color: th.text }}>Payment</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <button type="button" onClick={() => setPaymentMethod('COUNTER')}
+                    className="py-2.5 text-sm font-semibold border"
+                    style={{
+                      borderRadius: th.radius,
+                      borderColor: paymentMethod === 'COUNTER' ? th.primary : `${th.text}15`,
+                      backgroundColor: paymentMethod === 'COUNTER' ? `${th.primary}15` : 'transparent',
+                      color: th.text,
+                    }}>
+                    Pay at Counter
+                  </button>
+                  <button type="button" onClick={() => setPaymentMethod('UPI')}
+                    className="py-2.5 text-sm font-semibold border"
+                    style={{
+                      borderRadius: th.radius,
+                      borderColor: paymentMethod === 'UPI' ? th.primary : `${th.text}15`,
+                      backgroundColor: paymentMethod === 'UPI' ? `${th.primary}15` : 'transparent',
+                      color: th.text,
+                    }}>
+                    Pay via UPI
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Customer details */}
             <div className="p-4 mb-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>

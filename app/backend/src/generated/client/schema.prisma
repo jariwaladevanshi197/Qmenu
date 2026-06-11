@@ -56,6 +56,9 @@ model Restaurant {
   printNodeApiKey    String?
   printNodePrinterId String?
 
+  // UPI payments
+  upiId String?
+
   // Mega+Web website fields
   websiteEnabled Boolean @default(false)
   heroTitle      String?
@@ -170,19 +173,21 @@ model Table {
 }
 
 model Order {
-  id            Int         @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   restroid      Int
   tableid       Int?
-  ordercode     String      @unique
+  ordercode     String        @unique
   customername  String?
   customermob   String?
-  status        OrderStatus @default(PENDING)
-  subtotal      Float       @default(0)
-  discount      Float       @default(0)
-  servicecharge Float       @default(0)
-  grandtotal    Float       @default(0)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  status        OrderStatus   @default(PENDING)
+  subtotal      Float         @default(0)
+  discount      Float         @default(0)
+  servicecharge Float         @default(0)
+  grandtotal    Float         @default(0)
+  paymentmethod PaymentMethod @default(COUNTER)
+  paymentstatus PaymentStatus @default(UNPAID)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   restaurant Restaurant  @relation(fields: [restroid], references: [id], onDelete: Cascade)
   table      Table?      @relation(fields: [tableid], references: [id])
@@ -209,17 +214,19 @@ model OrderItem {
 }
 
 model OrderHistory {
-  id            Int      @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   restroid      Int
   ordercode     String
   tablename     String?
   customername  String?
   customermob   String?
-  subtotal      Float    @default(0)
-  discount      Float    @default(0)
-  servicecharge Float    @default(0)
-  grandtotal    Float    @default(0)
-  timestamp     DateTime @default(now())
+  subtotal      Float         @default(0)
+  discount      Float         @default(0)
+  servicecharge Float         @default(0)
+  grandtotal    Float         @default(0)
+  paymentmethod PaymentMethod @default(COUNTER)
+  paymentstatus PaymentStatus @default(UNPAID)
+  timestamp     DateTime      @default(now())
 
   restaurant Restaurant    @relation(fields: [restroid], references: [id], onDelete: Cascade)
   items      HistoryItem[]
@@ -289,4 +296,14 @@ enum OrderStatus {
   CONFIRMED
   COMPLETED
   CANCELLED
+}
+
+enum PaymentMethod {
+  COUNTER
+  UPI
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
 }

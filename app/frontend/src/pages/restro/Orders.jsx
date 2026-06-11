@@ -67,6 +67,11 @@ export default function RestroOrders() {
     onSuccess: () => { qc.invalidateQueries(['active-orders']); toast.success('Order cancelled'); },
   });
 
+  const markPaidMutation = useMutation({
+    mutationFn: (id) => api.patch(`/orders/${id}/mark-paid`),
+    onSuccess: () => { qc.invalidateQueries(['active-orders']); toast.success('Marked as paid'); },
+  });
+
   const mergeMutation = useMutation({
     mutationFn: (ids) => api.post('/orders/merge', { orderIds: ids }),
     onSuccess: () => {
@@ -231,7 +236,14 @@ export default function RestroOrders() {
                     </p>
                   </div>
                 </div>
-                <span className={STATUS_BADGE[order.status]}>{order.status}</span>
+                <div className="flex flex-col items-end gap-1">
+                  <span className={STATUS_BADGE[order.status]}>{order.status}</span>
+                  {order.paymentmethod === 'UPI' && (
+                    <span className={order.paymentstatus === 'PAID' ? 'badge-green' : 'badge-yellow'}>
+                      {order.paymentstatus === 'PAID' ? 'UPI: Paid' : 'UPI: Pending'}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Items list */}
@@ -271,6 +283,13 @@ export default function RestroOrders() {
                   title="Print kitchen ticket">
                   <Printer size={14} />
                 </button>
+                {order.paymentmethod === 'UPI' && order.paymentstatus === 'UNPAID' && (
+                  <button className="btn-secondary btn-sm flex-1"
+                    onClick={() => markPaidMutation.mutate(order.id)}
+                    disabled={markPaidMutation.isPending}>
+                    Mark Paid
+                  </button>
+                )}
                 <button className="btn-danger btn-sm px-3"
                   onClick={() => cancelMutation.mutate(order.id)}
                   disabled={cancelMutation.isPending}

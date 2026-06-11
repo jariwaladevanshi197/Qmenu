@@ -4,7 +4,7 @@ import { useAuthStore } from '../../store/auth';
 import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
-import { RefreshCw, Copy, ExternalLink, Printer, Monitor } from 'lucide-react';
+import { RefreshCw, Copy, ExternalLink, Printer, Monitor, Wallet } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
@@ -14,6 +14,7 @@ export default function RestroSettings() {
   const { user } = useAuthStore();
   const [form, setForm] = useState({ restroname: '', mobileno: '', email: '', address: '', gstno: '', discount: '', servicecharge: '', logo: null });
   const [printForm, setPrintForm] = useState({ printNodeApiKey: '', printNodePrinterId: '' });
+  const [upiForm, setUpiForm] = useState({ upiId: '' });
   const [otpVisible, setOtpVisible] = useState(false);
 
   const { data: profile, isLoading } = useQuery({
@@ -25,6 +26,7 @@ export default function RestroSettings() {
     if (profile) {
       setForm({ restroname: profile.restroname || '', mobileno: profile.mobileno || '', email: profile.email || '', address: profile.address || '', gstno: profile.gstno || '', discount: String(profile.discount || 0), servicecharge: String(profile.servicecharge || 0), logo: null });
       setPrintForm({ printNodeApiKey: profile.printNodeApiKey || '', printNodePrinterId: profile.printNodePrinterId || '' });
+      setUpiForm({ upiId: profile.upiId || '' });
     }
   }, [profile]);
 
@@ -56,6 +58,18 @@ export default function RestroSettings() {
     fd.append('printNodeApiKey', printForm.printNodeApiKey);
     fd.append('printNodePrinterId', printForm.printNodePrinterId);
     printMutation.mutate(fd);
+  };
+
+  const upiMutation = useMutation({
+    mutationFn: (fd) => api.put('/restaurant/profile', fd),
+    onSuccess: () => toast.success('UPI settings saved'),
+    onError: (e) => toast.error(e.response?.data?.error || 'Error'),
+  });
+
+  const saveUpiSettings = () => {
+    const fd = new FormData();
+    fd.append('upiId', upiForm.upiId);
+    upiMutation.mutate(fd);
   };
 
   const displayUrl = `${window.location.origin}/display/${profile?.slug || user?.slug}`;
@@ -180,6 +194,30 @@ export default function RestroSettings() {
         <div className="flex justify-end">
           <button className="btn-primary btn-sm" onClick={savePrintSettings} disabled={printMutation.isPending}>
             {printMutation.isPending ? 'Saving...' : 'Save Printing Settings'}
+          </button>
+        </div>
+      </div>
+
+      {/* ── UPI Payments ── */}
+      <div className="card p-6 mb-5">
+        <h2 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
+          <Wallet size={16} /> UPI Payments
+        </h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Enter your UPI ID (e.g. from GPay/PhonePe/Paytm/BHIM) to let customers pay you directly
+          for their order — no fees, no setup. They'll see a "Pay via UPI" option and a QR code on
+          their order page; mark the order "Paid" from Live Orders once you receive the payment.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <Field label="UPI ID">
+            <input className="input" placeholder="e.g. yourname@okaxis"
+              value={upiForm.upiId}
+              onChange={(e) => setUpiForm({ ...upiForm, upiId: e.target.value })} />
+          </Field>
+        </div>
+        <div className="flex justify-end">
+          <button className="btn-primary btn-sm" onClick={saveUpiSettings} disabled={upiMutation.isPending}>
+            {upiMutation.isPending ? 'Saving...' : 'Save UPI Settings'}
           </button>
         </div>
       </div>
