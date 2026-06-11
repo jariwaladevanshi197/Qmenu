@@ -1,6 +1,6 @@
 import { PrismaClient } from '../generated/client/index.js';
 import { emitNewOrder } from '../utils/realtime.js';
-import { generateOrderCode } from '../utils/helpers.js';
+import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
 import { printKitchenOrder } from '../utils/printOrder.js';
 
 const prisma = new PrismaClient();
@@ -26,17 +26,21 @@ export const placeStaffOrder = async (req, res) => {
       };
     });
 
-    const order = await prisma.order.create({
-      data: {
-        restroid: req.user.id,
-        tableid: tableid ? parseInt(tableid) : null,
-        ordercode: generateOrderCode(),
-        customername: customername || 'Walk-in Customer',
-        customermob: customermob || null,
-        status: 'CONFIRMED', // staff orders go straight to confirmed
-        items: { create: enriched },
-      },
-      include: { items: true, table: true },
+    const order = await prisma.$transaction(async (tx) => {
+      const orderNumber = await allocateOrderNumber(tx, req.user.id);
+      return tx.order.create({
+        data: {
+          restroid: req.user.id,
+          tableid: tableid ? parseInt(tableid) : null,
+          ordercode: generateOrderCode(),
+          orderNumber,
+          customername: customername || 'Walk-in Customer',
+          customermob: customermob || null,
+          status: 'CONFIRMED', // staff orders go straight to confirmed
+          items: { create: enriched },
+        },
+        include: { items: true, table: true },
+      });
     });
 
     emitNewOrder(req.app.get('io'), req.user.id, order);

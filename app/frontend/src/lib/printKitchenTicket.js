@@ -28,7 +28,7 @@ function buildReceiptHtml(order, restroName) {
 </style></head><body>
 <p class="center bold">${restroName || 'KITCHEN TICKET'}</p>
 <div class="divider"></div>
-<p class="center big">#${order.ordercode}</p>
+<p class="center big">#${order.orderNumber}</p>
 <p class="center">Table: ${order.table?.name || 'Walk-in'}</p>
 <p class="center" style="font-size:11px;color:#555">${time}</p>
 <div class="divider"></div>

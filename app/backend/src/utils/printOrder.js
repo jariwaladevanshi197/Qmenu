@@ -15,7 +15,7 @@ export async function printKitchenOrder(order, restro = {}) {
     divider,
     center('KITCHEN TICKET'),
     divider,
-    `Order : #${order.ordercode}`,
+    `Order : #${order.orderNumber}`,
     `Table : ${order.table?.name || 'Walk-in'}`,
     `Time  : ${new Date(order.createdAt || Date.now()).toLocaleString('en-IN')}`,
     thin,
@@ -39,7 +39,7 @@ export async function printKitchenOrder(order, restro = {}) {
       },
       body: JSON.stringify({
         printer: parseInt(printerId),
-        title: `Kitchen - #${order.ordercode}`,
+        title: `Kitchen - #${order.orderNumber}`,
         contentType: 'raw_base64',
         content,
         source: 'QMenu',

@@ -3291,6 +3291,7 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    nextOrderNumber: number | null
   }
 
   export type RestaurantSumAggregateOutputType = {
@@ -3303,6 +3304,7 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    nextOrderNumber: number | null
   }
 
   export type RestaurantMinAggregateOutputType = {
@@ -3331,6 +3333,7 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    nextOrderNumber: number | null
     printNodeApiKey: string | null
     printNodePrinterId: string | null
     upiId: string | null
@@ -3376,6 +3379,7 @@ export namespace Prisma {
     discount: number | null
     servicecharge: number | null
     maxStaff: number | null
+    nextOrderNumber: number | null
     printNodeApiKey: string | null
     printNodePrinterId: string | null
     upiId: string | null
@@ -3421,6 +3425,7 @@ export namespace Prisma {
     discount: number
     servicecharge: number
     maxStaff: number
+    nextOrderNumber: number
     printNodeApiKey: number
     printNodePrinterId: number
     upiId: number
@@ -3452,6 +3457,7 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    nextOrderNumber?: true
   }
 
   export type RestaurantSumAggregateInputType = {
@@ -3464,6 +3470,7 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    nextOrderNumber?: true
   }
 
   export type RestaurantMinAggregateInputType = {
@@ -3492,6 +3499,7 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    nextOrderNumber?: true
     printNodeApiKey?: true
     printNodePrinterId?: true
     upiId?: true
@@ -3537,6 +3545,7 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    nextOrderNumber?: true
     printNodeApiKey?: true
     printNodePrinterId?: true
     upiId?: true
@@ -3582,6 +3591,7 @@ export namespace Prisma {
     discount?: true
     servicecharge?: true
     maxStaff?: true
+    nextOrderNumber?: true
     printNodeApiKey?: true
     printNodePrinterId?: true
     upiId?: true
@@ -3714,6 +3724,7 @@ export namespace Prisma {
     discount: number
     servicecharge: number
     maxStaff: number
+    nextOrderNumber: number
     printNodeApiKey: string | null
     printNodePrinterId: string | null
     upiId: string | null
@@ -3778,6 +3789,7 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    nextOrderNumber?: boolean
     printNodeApiKey?: boolean
     printNodePrinterId?: boolean
     upiId?: boolean
@@ -3834,6 +3846,7 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    nextOrderNumber?: boolean
     printNodeApiKey?: boolean
     printNodePrinterId?: boolean
     upiId?: boolean
@@ -3880,6 +3893,7 @@ export namespace Prisma {
     discount?: boolean
     servicecharge?: boolean
     maxStaff?: boolean
+    nextOrderNumber?: boolean
     printNodeApiKey?: boolean
     printNodePrinterId?: boolean
     upiId?: boolean
@@ -3956,6 +3970,7 @@ export namespace Prisma {
       discount: number
       servicecharge: number
       maxStaff: number
+      nextOrderNumber: number
       printNodeApiKey: string | null
       printNodePrinterId: string | null
       upiId: string | null
@@ -4401,6 +4416,7 @@ export namespace Prisma {
     readonly discount: FieldRef<"Restaurant", 'Float'>
     readonly servicecharge: FieldRef<"Restaurant", 'Float'>
     readonly maxStaff: FieldRef<"Restaurant", 'Int'>
+    readonly nextOrderNumber: FieldRef<"Restaurant", 'Int'>
     readonly printNodeApiKey: FieldRef<"Restaurant", 'String'>
     readonly printNodePrinterId: FieldRef<"Restaurant", 'String'>
     readonly upiId: FieldRef<"Restaurant", 'String'>
@@ -10191,6 +10207,7 @@ export namespace Prisma {
     id: number | null
     restroid: number | null
     tableid: number | null
+    orderNumber: number | null
     subtotal: number | null
     discount: number | null
     servicecharge: number | null
@@ -10201,6 +10218,7 @@ export namespace Prisma {
     id: number | null
     restroid: number | null
     tableid: number | null
+    orderNumber: number | null
     subtotal: number | null
     discount: number | null
     servicecharge: number | null
@@ -10212,6 +10230,7 @@ export namespace Prisma {
     restroid: number | null
     tableid: number | null
     ordercode: string | null
+    orderNumber: number | null
     customername: string | null
     customermob: string | null
     status: $Enums.OrderStatus | null
@@ -10230,6 +10249,7 @@ export namespace Prisma {
     restroid: number | null
     tableid: number | null
     ordercode: string | null
+    orderNumber: number | null
     customername: string | null
     customermob: string | null
     status: $Enums.OrderStatus | null
@@ -10248,6 +10268,7 @@ export namespace Prisma {
     restroid: number
     tableid: number
     ordercode: number
+    orderNumber: number
     customername: number
     customermob: number
     status: number
@@ -10267,6 +10288,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     tableid?: true
+    orderNumber?: true
     subtotal?: true
     discount?: true
     servicecharge?: true
@@ -10277,6 +10299,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     tableid?: true
+    orderNumber?: true
     subtotal?: true
     discount?: true
     servicecharge?: true
@@ -10288,6 +10311,7 @@ export namespace Prisma {
     restroid?: true
     tableid?: true
     ordercode?: true
+    orderNumber?: true
     customername?: true
     customermob?: true
     status?: true
@@ -10306,6 +10330,7 @@ export namespace Prisma {
     restroid?: true
     tableid?: true
     ordercode?: true
+    orderNumber?: true
     customername?: true
     customermob?: true
     status?: true
@@ -10324,6 +10349,7 @@ export namespace Prisma {
     restroid?: true
     tableid?: true
     ordercode?: true
+    orderNumber?: true
     customername?: true
     customermob?: true
     status?: true
@@ -10429,6 +10455,7 @@ export namespace Prisma {
     restroid: number
     tableid: number | null
     ordercode: string
+    orderNumber: number
     customername: string | null
     customermob: string | null
     status: $Enums.OrderStatus
@@ -10466,6 +10493,7 @@ export namespace Prisma {
     restroid?: boolean
     tableid?: boolean
     ordercode?: boolean
+    orderNumber?: boolean
     customername?: boolean
     customermob?: boolean
     status?: boolean
@@ -10488,6 +10516,7 @@ export namespace Prisma {
     restroid?: boolean
     tableid?: boolean
     ordercode?: boolean
+    orderNumber?: boolean
     customername?: boolean
     customermob?: boolean
     status?: boolean
@@ -10508,6 +10537,7 @@ export namespace Prisma {
     restroid?: boolean
     tableid?: boolean
     ordercode?: boolean
+    orderNumber?: boolean
     customername?: boolean
     customermob?: boolean
     status?: boolean
@@ -10544,6 +10574,7 @@ export namespace Prisma {
       restroid: number
       tableid: number | null
       ordercode: string
+      orderNumber: number
       customername: string | null
       customermob: string | null
       status: $Enums.OrderStatus
@@ -10955,6 +10986,7 @@ export namespace Prisma {
     readonly restroid: FieldRef<"Order", 'Int'>
     readonly tableid: FieldRef<"Order", 'Int'>
     readonly ordercode: FieldRef<"Order", 'String'>
+    readonly orderNumber: FieldRef<"Order", 'Int'>
     readonly customername: FieldRef<"Order", 'String'>
     readonly customermob: FieldRef<"Order", 'String'>
     readonly status: FieldRef<"Order", 'OrderStatus'>
@@ -12389,6 +12421,7 @@ export namespace Prisma {
   export type OrderHistoryAvgAggregateOutputType = {
     id: number | null
     restroid: number | null
+    orderNumber: number | null
     subtotal: number | null
     discount: number | null
     servicecharge: number | null
@@ -12398,6 +12431,7 @@ export namespace Prisma {
   export type OrderHistorySumAggregateOutputType = {
     id: number | null
     restroid: number | null
+    orderNumber: number | null
     subtotal: number | null
     discount: number | null
     servicecharge: number | null
@@ -12408,6 +12442,7 @@ export namespace Prisma {
     id: number | null
     restroid: number | null
     ordercode: string | null
+    orderNumber: number | null
     tablename: string | null
     customername: string | null
     customermob: string | null
@@ -12424,6 +12459,7 @@ export namespace Prisma {
     id: number | null
     restroid: number | null
     ordercode: string | null
+    orderNumber: number | null
     tablename: string | null
     customername: string | null
     customermob: string | null
@@ -12440,6 +12476,7 @@ export namespace Prisma {
     id: number
     restroid: number
     ordercode: number
+    orderNumber: number
     tablename: number
     customername: number
     customermob: number
@@ -12457,6 +12494,7 @@ export namespace Prisma {
   export type OrderHistoryAvgAggregateInputType = {
     id?: true
     restroid?: true
+    orderNumber?: true
     subtotal?: true
     discount?: true
     servicecharge?: true
@@ -12466,6 +12504,7 @@ export namespace Prisma {
   export type OrderHistorySumAggregateInputType = {
     id?: true
     restroid?: true
+    orderNumber?: true
     subtotal?: true
     discount?: true
     servicecharge?: true
@@ -12476,6 +12515,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     ordercode?: true
+    orderNumber?: true
     tablename?: true
     customername?: true
     customermob?: true
@@ -12492,6 +12532,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     ordercode?: true
+    orderNumber?: true
     tablename?: true
     customername?: true
     customermob?: true
@@ -12508,6 +12549,7 @@ export namespace Prisma {
     id?: true
     restroid?: true
     ordercode?: true
+    orderNumber?: true
     tablename?: true
     customername?: true
     customermob?: true
@@ -12611,6 +12653,7 @@ export namespace Prisma {
     id: number
     restroid: number
     ordercode: string
+    orderNumber: number
     tablename: string | null
     customername: string | null
     customermob: string | null
@@ -12646,6 +12689,7 @@ export namespace Prisma {
     id?: boolean
     restroid?: boolean
     ordercode?: boolean
+    orderNumber?: boolean
     tablename?: boolean
     customername?: boolean
     customermob?: boolean
@@ -12665,6 +12709,7 @@ export namespace Prisma {
     id?: boolean
     restroid?: boolean
     ordercode?: boolean
+    orderNumber?: boolean
     tablename?: boolean
     customername?: boolean
     customermob?: boolean
@@ -12682,6 +12727,7 @@ export namespace Prisma {
     id?: boolean
     restroid?: boolean
     ordercode?: boolean
+    orderNumber?: boolean
     tablename?: boolean
     customername?: boolean
     customermob?: boolean
@@ -12713,6 +12759,7 @@ export namespace Prisma {
       id: number
       restroid: number
       ordercode: string
+      orderNumber: number
       tablename: string | null
       customername: string | null
       customermob: string | null
@@ -13121,6 +13168,7 @@ export namespace Prisma {
     readonly id: FieldRef<"OrderHistory", 'Int'>
     readonly restroid: FieldRef<"OrderHistory", 'Int'>
     readonly ordercode: FieldRef<"OrderHistory", 'String'>
+    readonly orderNumber: FieldRef<"OrderHistory", 'Int'>
     readonly tablename: FieldRef<"OrderHistory", 'String'>
     readonly customername: FieldRef<"OrderHistory", 'String'>
     readonly customermob: FieldRef<"OrderHistory", 'String'>
@@ -17572,6 +17620,7 @@ export namespace Prisma {
     discount: 'discount',
     servicecharge: 'servicecharge',
     maxStaff: 'maxStaff',
+    nextOrderNumber: 'nextOrderNumber',
     printNodeApiKey: 'printNodeApiKey',
     printNodePrinterId: 'printNodePrinterId',
     upiId: 'upiId',
@@ -17674,6 +17723,7 @@ export namespace Prisma {
     restroid: 'restroid',
     tableid: 'tableid',
     ordercode: 'ordercode',
+    orderNumber: 'orderNumber',
     customername: 'customername',
     customermob: 'customermob',
     status: 'status',
@@ -17709,6 +17759,7 @@ export namespace Prisma {
     id: 'id',
     restroid: 'restroid',
     ordercode: 'ordercode',
+    orderNumber: 'orderNumber',
     tablename: 'tablename',
     customername: 'customername',
     customermob: 'customermob',
@@ -18045,6 +18096,7 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    nextOrderNumber?: IntFilter<"Restaurant"> | number
     printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     upiId?: StringNullableFilter<"Restaurant"> | string | null
@@ -18100,6 +18152,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
     printNodeApiKey?: SortOrderInput | SortOrder
     printNodePrinterId?: SortOrderInput | SortOrder
     upiId?: SortOrderInput | SortOrder
@@ -18158,6 +18211,7 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    nextOrderNumber?: IntFilter<"Restaurant"> | number
     printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     upiId?: StringNullableFilter<"Restaurant"> | string | null
@@ -18213,6 +18267,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
     printNodeApiKey?: SortOrderInput | SortOrder
     printNodePrinterId?: SortOrderInput | SortOrder
     upiId?: SortOrderInput | SortOrder
@@ -18266,6 +18321,7 @@ export namespace Prisma {
     discount?: FloatWithAggregatesFilter<"Restaurant"> | number
     servicecharge?: FloatWithAggregatesFilter<"Restaurant"> | number
     maxStaff?: IntWithAggregatesFilter<"Restaurant"> | number
+    nextOrderNumber?: IntWithAggregatesFilter<"Restaurant"> | number
     printNodeApiKey?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     upiId?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
@@ -18693,6 +18749,7 @@ export namespace Prisma {
     restroid?: IntFilter<"Order"> | number
     tableid?: IntNullableFilter<"Order"> | number | null
     ordercode?: StringFilter<"Order"> | string
+    orderNumber?: IntFilter<"Order"> | number
     customername?: StringNullableFilter<"Order"> | string | null
     customermob?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
@@ -18714,6 +18771,7 @@ export namespace Prisma {
     restroid?: SortOrder
     tableid?: SortOrderInput | SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     customername?: SortOrderInput | SortOrder
     customermob?: SortOrderInput | SortOrder
     status?: SortOrder
@@ -18738,6 +18796,7 @@ export namespace Prisma {
     NOT?: OrderWhereInput | OrderWhereInput[]
     restroid?: IntFilter<"Order"> | number
     tableid?: IntNullableFilter<"Order"> | number | null
+    orderNumber?: IntFilter<"Order"> | number
     customername?: StringNullableFilter<"Order"> | string | null
     customermob?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
@@ -18759,6 +18818,7 @@ export namespace Prisma {
     restroid?: SortOrder
     tableid?: SortOrderInput | SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     customername?: SortOrderInput | SortOrder
     customermob?: SortOrderInput | SortOrder
     status?: SortOrder
@@ -18785,6 +18845,7 @@ export namespace Prisma {
     restroid?: IntWithAggregatesFilter<"Order"> | number
     tableid?: IntNullableWithAggregatesFilter<"Order"> | number | null
     ordercode?: StringWithAggregatesFilter<"Order"> | string
+    orderNumber?: IntWithAggregatesFilter<"Order"> | number
     customername?: StringNullableWithAggregatesFilter<"Order"> | string | null
     customermob?: StringNullableWithAggregatesFilter<"Order"> | string | null
     status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
@@ -18885,6 +18946,7 @@ export namespace Prisma {
     id?: IntFilter<"OrderHistory"> | number
     restroid?: IntFilter<"OrderHistory"> | number
     ordercode?: StringFilter<"OrderHistory"> | string
+    orderNumber?: IntFilter<"OrderHistory"> | number
     tablename?: StringNullableFilter<"OrderHistory"> | string | null
     customername?: StringNullableFilter<"OrderHistory"> | string | null
     customermob?: StringNullableFilter<"OrderHistory"> | string | null
@@ -18903,6 +18965,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     tablename?: SortOrderInput | SortOrder
     customername?: SortOrderInput | SortOrder
     customermob?: SortOrderInput | SortOrder
@@ -18924,6 +18987,7 @@ export namespace Prisma {
     NOT?: OrderHistoryWhereInput | OrderHistoryWhereInput[]
     restroid?: IntFilter<"OrderHistory"> | number
     ordercode?: StringFilter<"OrderHistory"> | string
+    orderNumber?: IntFilter<"OrderHistory"> | number
     tablename?: StringNullableFilter<"OrderHistory"> | string | null
     customername?: StringNullableFilter<"OrderHistory"> | string | null
     customermob?: StringNullableFilter<"OrderHistory"> | string | null
@@ -18942,6 +19006,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     tablename?: SortOrderInput | SortOrder
     customername?: SortOrderInput | SortOrder
     customermob?: SortOrderInput | SortOrder
@@ -18966,6 +19031,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"OrderHistory"> | number
     restroid?: IntWithAggregatesFilter<"OrderHistory"> | number
     ordercode?: StringWithAggregatesFilter<"OrderHistory"> | string
+    orderNumber?: IntWithAggregatesFilter<"OrderHistory"> | number
     tablename?: StringNullableWithAggregatesFilter<"OrderHistory"> | string | null
     customername?: StringNullableWithAggregatesFilter<"OrderHistory"> | string | null
     customermob?: StringNullableWithAggregatesFilter<"OrderHistory"> | string | null
@@ -19361,6 +19427,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -19416,6 +19483,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -19468,6 +19536,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19523,6 +19592,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19577,6 +19647,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -19620,6 +19691,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19665,6 +19737,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20106,6 +20179,7 @@ export namespace Prisma {
 
   export type OrderCreateInput = {
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -20127,6 +20201,7 @@ export namespace Prisma {
     restroid: number
     tableid?: number | null
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -20143,6 +20218,7 @@ export namespace Prisma {
 
   export type OrderUpdateInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -20164,6 +20240,7 @@ export namespace Prisma {
     restroid?: IntFieldUpdateOperationsInput | number
     tableid?: NullableIntFieldUpdateOperationsInput | number | null
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -20183,6 +20260,7 @@ export namespace Prisma {
     restroid: number
     tableid?: number | null
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -20198,6 +20276,7 @@ export namespace Prisma {
 
   export type OrderUpdateManyMutationInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -20216,6 +20295,7 @@ export namespace Prisma {
     restroid?: IntFieldUpdateOperationsInput | number
     tableid?: NullableIntFieldUpdateOperationsInput | number | null
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -20310,6 +20390,7 @@ export namespace Prisma {
 
   export type OrderHistoryCreateInput = {
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -20328,6 +20409,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -20343,6 +20425,7 @@ export namespace Prisma {
 
   export type OrderHistoryUpdateInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20361,6 +20444,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20378,6 +20462,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -20392,6 +20477,7 @@ export namespace Prisma {
 
   export type OrderHistoryUpdateManyMutationInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20408,6 +20494,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21036,6 +21123,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
     printNodeApiKey?: SortOrder
     printNodePrinterId?: SortOrder
     upiId?: SortOrder
@@ -21065,6 +21153,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
   }
 
   export type RestaurantMaxOrderByAggregateInput = {
@@ -21093,6 +21182,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
     printNodeApiKey?: SortOrder
     printNodePrinterId?: SortOrder
     upiId?: SortOrder
@@ -21138,6 +21228,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
     printNodeApiKey?: SortOrder
     printNodePrinterId?: SortOrder
     upiId?: SortOrder
@@ -21167,6 +21258,7 @@ export namespace Prisma {
     discount?: SortOrder
     servicecharge?: SortOrder
     maxStaff?: SortOrder
+    nextOrderNumber?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -21516,6 +21608,7 @@ export namespace Prisma {
     restroid?: SortOrder
     tableid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     customername?: SortOrder
     customermob?: SortOrder
     status?: SortOrder
@@ -21533,6 +21626,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     tableid?: SortOrder
+    orderNumber?: SortOrder
     subtotal?: SortOrder
     discount?: SortOrder
     servicecharge?: SortOrder
@@ -21544,6 +21638,7 @@ export namespace Prisma {
     restroid?: SortOrder
     tableid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     customername?: SortOrder
     customermob?: SortOrder
     status?: SortOrder
@@ -21562,6 +21657,7 @@ export namespace Prisma {
     restroid?: SortOrder
     tableid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     customername?: SortOrder
     customermob?: SortOrder
     status?: SortOrder
@@ -21579,6 +21675,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     tableid?: SortOrder
+    orderNumber?: SortOrder
     subtotal?: SortOrder
     discount?: SortOrder
     servicecharge?: SortOrder
@@ -21693,6 +21790,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     tablename?: SortOrder
     customername?: SortOrder
     customermob?: SortOrder
@@ -21708,6 +21806,7 @@ export namespace Prisma {
   export type OrderHistoryAvgOrderByAggregateInput = {
     id?: SortOrder
     restroid?: SortOrder
+    orderNumber?: SortOrder
     subtotal?: SortOrder
     discount?: SortOrder
     servicecharge?: SortOrder
@@ -21718,6 +21817,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     tablename?: SortOrder
     customername?: SortOrder
     customermob?: SortOrder
@@ -21734,6 +21834,7 @@ export namespace Prisma {
     id?: SortOrder
     restroid?: SortOrder
     ordercode?: SortOrder
+    orderNumber?: SortOrder
     tablename?: SortOrder
     customername?: SortOrder
     customermob?: SortOrder
@@ -21749,6 +21850,7 @@ export namespace Prisma {
   export type OrderHistorySumOrderByAggregateInput = {
     id?: SortOrder
     restroid?: SortOrder
+    orderNumber?: SortOrder
     subtotal?: SortOrder
     discount?: SortOrder
     servicecharge?: SortOrder
@@ -23340,6 +23442,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutRestaurantInput = {
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -23359,6 +23462,7 @@ export namespace Prisma {
     id?: number
     tableid?: number | null
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -23385,6 +23489,7 @@ export namespace Prisma {
 
   export type OrderHistoryCreateWithoutRestaurantInput = {
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -23401,6 +23506,7 @@ export namespace Prisma {
   export type OrderHistoryUncheckedCreateWithoutRestaurantInput = {
     id?: number
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -23690,6 +23796,7 @@ export namespace Prisma {
     restroid?: IntFilter<"Order"> | number
     tableid?: IntNullableFilter<"Order"> | number | null
     ordercode?: StringFilter<"Order"> | string
+    orderNumber?: IntFilter<"Order"> | number
     customername?: StringNullableFilter<"Order"> | string | null
     customermob?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
@@ -23726,6 +23833,7 @@ export namespace Prisma {
     id?: IntFilter<"OrderHistory"> | number
     restroid?: IntFilter<"OrderHistory"> | number
     ordercode?: StringFilter<"OrderHistory"> | string
+    orderNumber?: IntFilter<"OrderHistory"> | number
     tablename?: StringNullableFilter<"OrderHistory"> | string | null
     customername?: StringNullableFilter<"OrderHistory"> | string | null
     customermob?: StringNullableFilter<"OrderHistory"> | string | null
@@ -23879,6 +23987,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -23933,6 +24042,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24000,6 +24110,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24054,6 +24165,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24105,6 +24217,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24158,6 +24271,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24241,6 +24355,7 @@ export namespace Prisma {
     discount?: FloatFilter<"Restaurant"> | number
     servicecharge?: FloatFilter<"Restaurant"> | number
     maxStaff?: IntFilter<"Restaurant"> | number
+    nextOrderNumber?: IntFilter<"Restaurant"> | number
     printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     upiId?: StringNullableFilter<"Restaurant"> | string | null
@@ -24284,6 +24399,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24338,6 +24454,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24440,6 +24557,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24494,6 +24612,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24561,6 +24680,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24615,6 +24735,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24737,6 +24858,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24791,6 +24913,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24903,6 +25026,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24957,6 +25081,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -24991,6 +25116,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutTableInput = {
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -25010,6 +25136,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -25092,6 +25219,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25146,6 +25274,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25229,6 +25358,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -25283,6 +25413,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -25403,6 +25534,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25457,6 +25589,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25530,6 +25663,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutItemsInput = {
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -25550,6 +25684,7 @@ export namespace Prisma {
     restroid: number
     tableid?: number | null
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -25611,6 +25746,7 @@ export namespace Prisma {
 
   export type OrderUpdateWithoutItemsInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -25631,6 +25767,7 @@ export namespace Prisma {
     restroid?: IntFieldUpdateOperationsInput | number
     tableid?: NullableIntFieldUpdateOperationsInput | number | null
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -25704,6 +25841,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -25758,6 +25896,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -25854,6 +25993,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25908,6 +26048,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25967,6 +26108,7 @@ export namespace Prisma {
 
   export type OrderHistoryCreateWithoutItemsInput = {
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -25984,6 +26126,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -26014,6 +26157,7 @@ export namespace Prisma {
 
   export type OrderHistoryUpdateWithoutItemsInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26031,6 +26175,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26067,6 +26212,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -26121,6 +26267,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -26188,6 +26335,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26242,6 +26390,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26293,6 +26442,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -26347,6 +26497,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -26414,6 +26565,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26468,6 +26620,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26519,6 +26672,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -26573,6 +26727,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -26662,6 +26817,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26716,6 +26872,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26803,6 +26960,7 @@ export namespace Prisma {
     id?: number
     tableid?: number | null
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -26819,6 +26977,7 @@ export namespace Prisma {
   export type OrderHistoryCreateManyRestaurantInput = {
     id?: number
     ordercode: string
+    orderNumber?: number
     tablename?: string | null
     customername?: string | null
     customermob?: string | null
@@ -26959,6 +27118,7 @@ export namespace Prisma {
 
   export type OrderUpdateWithoutRestaurantInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -26978,6 +27138,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tableid?: NullableIntFieldUpdateOperationsInput | number | null
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -26996,6 +27157,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     tableid?: NullableIntFieldUpdateOperationsInput | number | null
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -27011,6 +27173,7 @@ export namespace Prisma {
 
   export type OrderHistoryUpdateWithoutRestaurantInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27027,6 +27190,7 @@ export namespace Prisma {
   export type OrderHistoryUncheckedUpdateWithoutRestaurantInput = {
     id?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27043,6 +27207,7 @@ export namespace Prisma {
   export type OrderHistoryUncheckedUpdateManyWithoutRestaurantInput = {
     id?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     tablename?: NullableStringFieldUpdateOperationsInput | string | null
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27187,6 +27352,7 @@ export namespace Prisma {
     discount?: number
     servicecharge?: number
     maxStaff?: number
+    nextOrderNumber?: number
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
@@ -27230,6 +27396,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27283,6 +27450,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27336,6 +27504,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     servicecharge?: FloatFieldUpdateOperationsInput | number
     maxStaff?: IntFieldUpdateOperationsInput | number
+    nextOrderNumber?: IntFieldUpdateOperationsInput | number
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27451,6 +27620,7 @@ export namespace Prisma {
     id?: number
     restroid: number
     ordercode: string
+    orderNumber?: number
     customername?: string | null
     customermob?: string | null
     status?: $Enums.OrderStatus
@@ -27473,6 +27643,7 @@ export namespace Prisma {
 
   export type OrderUpdateWithoutTableInput = {
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -27492,6 +27663,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -27510,6 +27682,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     restroid?: IntFieldUpdateOperationsInput | number
     ordercode?: StringFieldUpdateOperationsInput | string
+    orderNumber?: IntFieldUpdateOperationsInput | number
     customername?: NullableStringFieldUpdateOperationsInput | string | null
     customermob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus

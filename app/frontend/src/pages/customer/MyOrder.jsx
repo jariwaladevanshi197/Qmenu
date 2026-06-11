@@ -84,7 +84,7 @@ export default function CustomerMyOrder() {
           {order.table?.name && <p className="text-sm mt-1 opacity-70" style={{ color: s.color }}>Table: {order.table.name}</p>}
           {order.status === 'COMPLETED' && (
             <div className="mt-4 p-4 rounded-xl bg-green-600 text-white">
-              <p className="text-xl font-black">#{order.ordercode}</p>
+              <p className="text-xl font-black">#{order.orderNumber}</p>
               <p className="text-sm font-semibold mt-1">Please collect your order from the counter</p>
             </div>
           )}
@@ -92,7 +92,7 @@ export default function CustomerMyOrder() {
 
         {/* Order details */}
         <div className="p-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
-          <p className="text-xs opacity-50 mb-3 font-mono" style={{ color: th.text }}>#{order.ordercode}</p>
+          <p className="text-xs opacity-50 mb-3 font-mono" style={{ color: th.text }}>#{order.orderNumber}</p>
           <div className="space-y-2">
             {order.items.map((item) => (
               <div key={item.id} className="flex justify-between text-sm">

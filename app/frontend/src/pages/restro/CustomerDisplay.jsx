@@ -36,7 +36,7 @@ export default function CustomerDisplay() {
     if (!restroid) return;
     const unsub = subscribeToReadyOrders(restroid, (newEntry) => {
       qc.invalidateQueries(['ready-orders', slug]);
-      setFlash(newEntry.ordercode);
+      setFlash(newEntry.orderNumber);
       setTimeout(() => setFlash(null), 4000);
     });
     return unsub;
@@ -68,7 +68,7 @@ export default function CustomerDisplay() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {readyOrders.map((order) => {
-              const isNew = flash === order.ordercode;
+              const isNew = flash === order.orderNumber;
               return (
                 <div key={order.ordercode}
                   className={`rounded-2xl flex flex-col items-center justify-center p-6 transition-all duration-500 ${
@@ -77,7 +77,7 @@ export default function CustomerDisplay() {
                       : 'bg-gray-800 border border-gray-700'
                   }`}>
                   <p className={`text-3xl font-black tracking-wide ${isNew ? 'text-white' : 'text-green-400'}`}>
-                    #{order.ordercode}
+                    #{order.orderNumber}
                   </p>
                   {order.tablename && (
                     <p className={`text-sm mt-1 ${isNew ? 'text-green-100' : 'text-gray-400'}`}>

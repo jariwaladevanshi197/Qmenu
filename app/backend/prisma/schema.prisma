@@ -52,6 +52,9 @@ model Restaurant {
   servicecharge Float    @default(0)
   maxStaff      Int      @default(5)
 
+  // Per-restaurant sequential order token (resets logic: keeps incrementing, never reused)
+  nextOrderNumber Int @default(1)
+
   // Kitchen auto-print (PrintNode)
   printNodeApiKey    String?
   printNodePrinterId String?
@@ -178,6 +181,7 @@ model Order {
   restroid      Int
   tableid       Int?
   ordercode     String      @unique
+  orderNumber   Int         @default(0)
   customername  String?
   customermob   String?
   status        OrderStatus @default(PENDING)
@@ -218,6 +222,7 @@ model OrderHistory {
   id            Int      @id @default(autoincrement())
   restroid      Int
   ordercode     String
+  orderNumber   Int      @default(0)
   tablename     String?
   customername  String?
   customermob   String?

@@ -204,7 +204,7 @@ export default function KitchenDisplay() {
                         {isPending ? '🟡 New Order' : '🔵 Preparing'}
                       </span>
                       <p className="font-bold text-white text-sm mt-0.5">
-                        #{order.ordercode}
+                        #{order.orderNumber}
                       </p>
                     </div>
                     <div className="text-right">

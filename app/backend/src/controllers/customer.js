@@ -1,6 +1,6 @@
 ﻿import { PrismaClient } from '../generated/client/index.js';
 import { emitNewOrder, emitWaiterCall } from '../utils/realtime.js';
-import { generateOrderCode } from '../utils/helpers.js';
+import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
 import { printKitchenOrder } from '../utils/printOrder.js';
 
 const prisma = new PrismaClient();
@@ -79,22 +79,26 @@ export const placeOrder = async (req, res) => {
     const scAmt = restro.servicecharge ? ((subtotal - discountAmt) * restro.servicecharge) / 100 : 0;
     const grandtotal = subtotal - discountAmt + scAmt;
 
-    const order = await prisma.order.create({
-      data: {
-        restroid: restro.id,
-        tableid: table.id,
-        ordercode: generateOrderCode(),
-        customername,
-        customermob,
-        status: 'PENDING',
-        subtotal,
-        discount: discountAmt,
-        servicecharge: scAmt,
-        grandtotal,
-        paymentmethod: paymentmethod === 'UPI' ? 'UPI' : 'COUNTER',
-        items: { create: enriched },
-      },
-      include: { items: true, table: true },
+    const order = await prisma.$transaction(async (tx) => {
+      const orderNumber = await allocateOrderNumber(tx, restro.id);
+      return tx.order.create({
+        data: {
+          restroid: restro.id,
+          tableid: table.id,
+          ordercode: generateOrderCode(),
+          orderNumber,
+          customername,
+          customermob,
+          status: 'PENDING',
+          subtotal,
+          discount: discountAmt,
+          servicecharge: scAmt,
+          grandtotal,
+          paymentmethod: paymentmethod === 'UPI' ? 'UPI' : 'COUNTER',
+          items: { create: enriched },
+        },
+        include: { items: true, table: true },
+      });
     });
 
     emitNewOrder(req.app.get('io'), restro.id, order);
@@ -116,7 +120,7 @@ export const getReadyOrders = async (req, res) => {
     const since = new Date(Date.now() - 30 * 60 * 1000); // last 30 minutes
     const orders = await prisma.orderHistory.findMany({
       where: { restroid: restro.id, timestamp: { gte: since } },
-      select: { ordercode: true, tablename: true, timestamp: true },
+      select: { ordercode: true, orderNumber: true, tablename: true, timestamp: true },
       orderBy: { timestamp: 'desc' },
       take: 20,
     });

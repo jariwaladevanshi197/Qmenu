@@ -1,6 +1,6 @@
 ﻿import { PrismaClient } from '../generated/client/index.js';
 import { emitOrderUpdate } from '../utils/realtime.js';
-import { generateOrderCode } from '../utils/helpers.js';
+import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
 
 const prisma = new PrismaClient();
 
@@ -54,6 +54,7 @@ export const completeOrder = async (req, res) => {
       data: {
         restroid: req.user.id,
         ordercode: order.ordercode,
+        orderNumber: order.orderNumber,
         tablename: order.table?.name || '',
         customername: order.customername,
         customermob: order.customermob,
@@ -114,16 +115,20 @@ export const mergeOrders = async (req, res) => {
     });
 
     const allItems = orders.flatMap((o) => o.items.map(({ id: _id, orderid: _oid, ...rest }) => rest));
-    const merged = await prisma.order.create({
-      data: {
-        restroid: req.user.id,
-        tableid: orders[0].tableid,
-        ordercode: generateOrderCode(),
-        customername: orders.map((o) => o.customername).filter(Boolean).join(', '),
-        status: 'CONFIRMED',
-        items: { create: allItems },
-      },
-      include: { items: true, table: true },
+    const merged = await prisma.$transaction(async (tx) => {
+      const orderNumber = await allocateOrderNumber(tx, req.user.id);
+      return tx.order.create({
+        data: {
+          restroid: req.user.id,
+          tableid: orders[0].tableid,
+          ordercode: generateOrderCode(),
+          orderNumber,
+          customername: orders.map((o) => o.customername).filter(Boolean).join(', '),
+          status: 'CONFIRMED',
+          items: { create: allItems },
+        },
+        include: { items: true, table: true },
+      });
     });
 
     await prisma.order.updateMany({ where: { id: { in: orderIds } }, data: { status: 'CANCELLED' } });
