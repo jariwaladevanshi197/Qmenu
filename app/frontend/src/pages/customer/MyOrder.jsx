@@ -6,7 +6,8 @@ import api from '../../lib/api';
 import { useTheme } from '../../hooks/useTheme';
 import { PageLoader } from '../../components/ui/Spinner';
 import { buildUpiLink } from '../../lib/upi';
-import { CheckCircle, Clock, XCircle, ArrowLeft } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { CheckCircle, Clock, XCircle, ArrowLeft, Copy } from 'lucide-react';
 
 const STATUS = {
   PENDING:   { label: 'Order Received',  icon: Clock,        color: '#d97706', bg: '#fef3c7' },
@@ -109,6 +110,33 @@ export default function CustomerMyOrder() {
                   Pay ₹{order.grandtotal?.toFixed(2)} via UPI. Staff will confirm once received.
                 </p>
                 {qrDataUrl && <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />}
+                <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
+                  Scan the QR with any UPI app, or pay manually using the details below.
+                </p>
+                <div className="space-y-2 mb-3">
+                  <div className="flex items-center justify-between gap-2 px-3 py-2"
+                    style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
+                    <div className="text-left">
+                      <p className="text-[10px] opacity-50 uppercase font-semibold" style={{ color: th.text }}>UPI ID</p>
+                      <p className="text-sm font-bold" style={{ color: th.text }}>{restro.upiId}</p>
+                    </div>
+                    <button onClick={() => { navigator.clipboard.writeText(restro.upiId); toast.success('UPI ID copied'); }}
+                      className="p-2" style={{ backgroundColor: `${th.text}10`, borderRadius: th.radius }}>
+                      <Copy size={14} style={{ color: th.text }} />
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between gap-2 px-3 py-2"
+                    style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
+                    <div className="text-left">
+                      <p className="text-[10px] opacity-50 uppercase font-semibold" style={{ color: th.text }}>Amount</p>
+                      <p className="text-sm font-bold" style={{ color: th.text }}>₹{order.grandtotal?.toFixed(2)}</p>
+                    </div>
+                    <button onClick={() => { navigator.clipboard.writeText(String(order.grandtotal)); toast.success('Amount copied'); }}
+                      className="p-2" style={{ backgroundColor: `${th.text}10`, borderRadius: th.radius }}>
+                      <Copy size={14} style={{ color: th.text }} />
+                    </button>
+                  </div>
+                </div>
                 {upiLink && (
                   <a href={upiLink} className="block w-full py-3 text-sm font-bold"
                     style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}>
