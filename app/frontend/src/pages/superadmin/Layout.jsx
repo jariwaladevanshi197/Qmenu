@@ -87,8 +87,10 @@ export default function SuperAdminLayout() {
           </button>
           <span className="font-semibold text-gray-900">Q-Menu Admin</span>
         </header>
-        <main className="flex-1 overflow-y-auto p-6">
-          <Outlet />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <div className="max-w-[1920px] mx-auto">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

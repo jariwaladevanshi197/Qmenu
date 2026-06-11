@@ -189,8 +189,8 @@ export default function RestroMenu() {
 
       {/* Item Modal */}
       <Modal open={!!itemModal} onClose={() => setItemModal(null)} title={itemModal === 'new' ? 'Add Menu Item' : 'Edit Item'} size="md">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-2"><Field label="Category">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="sm:col-span-2"><Field label="Category">
             <select className="input" value={itemForm.categoryid} onChange={(e) => setItemForm({ ...itemForm, categoryid: e.target.value })}>
               <option value="">Select Category</option>
               {categories.map((c) => <option key={c.id} value={c.id}>{c.name_eng}</option>)}
@@ -218,7 +218,7 @@ export default function RestroMenu() {
               <option value="true">Available</option><option value="false">Unavailable</option>
             </select>
           </Field>
-          <div className="col-span-2"><Field label="Item Image"><input className="input" type="file" accept="image/*" onChange={(e) => setItemForm({ ...itemForm, image: e.target.files[0] })} /></Field></div>
+          <div className="sm:col-span-2"><Field label="Item Image"><input className="input" type="file" accept="image/*" onChange={(e) => setItemForm({ ...itemForm, image: e.target.files[0] })} /></Field></div>
         </div>
         <div className="flex justify-end gap-3 mt-5">
           <button className="btn-secondary" onClick={() => setItemModal(null)}>Cancel</button>

@@ -27,6 +27,8 @@ export default function CustomerCart() {
 
   const placeOrder = async () => {
     if (!form.customername.trim()) return toast.error('Please enter your name');
+    if (!form.customermob.trim()) return toast.error('Please enter your mobile number');
+    if (!/^\d{10}$/.test(form.customermob.trim())) return toast.error('Please enter a valid 10-digit mobile number');
     if (!items.length) return toast.error('Cart is empty');
     setPlacing(true);
     try {
@@ -56,7 +58,7 @@ export default function CustomerCart() {
     <div className="min-h-screen pb-24" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif`, color: th.text }}>
       {/* Header */}
       <div className="sticky top-0 z-10 shadow-sm" style={{ backgroundColor: th.navBg }}>
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
           <button onClick={() => navigate(-1)} className="p-2" style={{ borderRadius: th.radius, backgroundColor: `${th.text}08` }}>
             <ArrowLeft size={18} style={{ color: th.text }} />
           </button>
@@ -64,7 +66,7 @@ export default function CustomerCart() {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-4">
+      <div className="max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto px-4 py-4">
         {!items.length ? (
           <div className="text-center py-20">
             <ShoppingBag size={48} className="mx-auto mb-4 opacity-20" style={{ color: th.primary }} />
@@ -78,7 +80,7 @@ export default function CustomerCart() {
         ) : (
           <>
             {/* Items */}
-            <div className="space-y-3 mb-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
               {items.map((item) => (
                 <div key={item.menuitemid} className="flex items-center gap-3 p-3 shadow-sm"
                   style={{ backgroundColor: th.card, borderRadius: th.radius }}>
@@ -106,48 +108,50 @@ export default function CustomerCart() {
               ))}
             </div>
 
-            {/* Bill summary */}
-            <div className="p-4 mb-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
-              <p className="font-bold mb-3" style={{ color: th.text }}>Bill Summary</p>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="opacity-60" style={{ color: th.text }}>Subtotal</span><span style={{ color: th.text }}>₹{subtotal.toFixed(2)}</span></div>
-                {discount > 0 && <div className="flex justify-between text-green-600"><span>Discount ({restro.discount}%)</span><span>-₹{discount.toFixed(2)}</span></div>}
-                {sc > 0 && <div className="flex justify-between"><span className="opacity-60" style={{ color: th.text }}>Service ({restro.servicecharge}%)</span><span style={{ color: th.text }}>₹{sc.toFixed(2)}</span></div>}
-                <div className="flex justify-between font-bold pt-2" style={{ borderTop: `1px solid ${th.text}10` }}>
-                  <span style={{ color: th.text }}>Total</span>
-                  <span style={{ color: th.primary }}>₹{grand.toFixed(2)}</span>
+            {/* Bill summary + Payment */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4 items-start">
+              <div className="p-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+                <p className="font-bold mb-3" style={{ color: th.text }}>Bill Summary</p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between"><span className="opacity-60" style={{ color: th.text }}>Subtotal</span><span style={{ color: th.text }}>₹{subtotal.toFixed(2)}</span></div>
+                  {discount > 0 && <div className="flex justify-between text-green-600"><span>Discount ({restro.discount}%)</span><span>-₹{discount.toFixed(2)}</span></div>}
+                  {sc > 0 && <div className="flex justify-between"><span className="opacity-60" style={{ color: th.text }}>Service ({restro.servicecharge}%)</span><span style={{ color: th.text }}>₹{sc.toFixed(2)}</span></div>}
+                  <div className="flex justify-between font-bold pt-2" style={{ borderTop: `1px solid ${th.text}10` }}>
+                    <span style={{ color: th.text }}>Total</span>
+                    <span style={{ color: th.primary }}>₹{grand.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Payment method */}
-            {restro.upiId && (
-              <div className="p-4 mb-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
-                <p className="font-bold mb-3" style={{ color: th.text }}>Payment</p>
-                <div className="grid grid-cols-2 gap-2">
-                  <button type="button" onClick={() => setPaymentMethod('COUNTER')}
-                    className="py-2.5 text-sm font-semibold border"
-                    style={{
-                      borderRadius: th.radius,
-                      borderColor: paymentMethod === 'COUNTER' ? th.primary : `${th.text}15`,
-                      backgroundColor: paymentMethod === 'COUNTER' ? `${th.primary}15` : 'transparent',
-                      color: th.text,
-                    }}>
-                    Pay at Counter
-                  </button>
-                  <button type="button" onClick={() => setPaymentMethod('UPI')}
-                    className="py-2.5 text-sm font-semibold border"
-                    style={{
-                      borderRadius: th.radius,
-                      borderColor: paymentMethod === 'UPI' ? th.primary : `${th.text}15`,
-                      backgroundColor: paymentMethod === 'UPI' ? `${th.primary}15` : 'transparent',
-                      color: th.text,
-                    }}>
-                    Pay via UPI
-                  </button>
+              {/* Payment method */}
+              {restro.upiId && (
+                <div className="p-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+                  <p className="font-bold mb-3" style={{ color: th.text }}>Payment</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button type="button" onClick={() => setPaymentMethod('COUNTER')}
+                      className="py-2.5 text-sm font-semibold border"
+                      style={{
+                        borderRadius: th.radius,
+                        borderColor: paymentMethod === 'COUNTER' ? th.primary : `${th.text}15`,
+                        backgroundColor: paymentMethod === 'COUNTER' ? `${th.primary}15` : 'transparent',
+                        color: th.text,
+                      }}>
+                      Pay at Counter
+                    </button>
+                    <button type="button" onClick={() => setPaymentMethod('UPI')}
+                      className="py-2.5 text-sm font-semibold border"
+                      style={{
+                        borderRadius: th.radius,
+                        borderColor: paymentMethod === 'UPI' ? th.primary : `${th.text}15`,
+                        backgroundColor: paymentMethod === 'UPI' ? `${th.primary}15` : 'transparent',
+                        color: th.text,
+                      }}>
+                      Pay via UPI
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Customer details */}
             <div className="p-4 mb-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
@@ -160,9 +164,9 @@ export default function CustomerCart() {
                     style={{ backgroundColor: `${th.text}06`, borderColor: `${th.text}15`, borderRadius: th.radius, color: th.text }} />
                 </div>
                 <div>
-                  <label className="text-xs font-medium opacity-60 mb-1 block" style={{ color: th.text }}>Mobile (optional)</label>
-                  <input className="w-full px-3 py-2.5 text-sm outline-none border" placeholder="Your mobile"
-                    value={form.customermob} onChange={(e) => setForm({ ...form, customermob: e.target.value })}
+                  <label className="text-xs font-medium opacity-60 mb-1 block" style={{ color: th.text }}>Mobile *</label>
+                  <input className="w-full px-3 py-2.5 text-sm outline-none border" placeholder="Your mobile" type="tel" inputMode="numeric" maxLength={10}
+                    value={form.customermob} onChange={(e) => setForm({ ...form, customermob: e.target.value.replace(/\D/g, '') })}
                     style={{ backgroundColor: `${th.text}06`, borderColor: `${th.text}15`, borderRadius: th.radius, color: th.text }} />
                 </div>
               </div>
@@ -173,7 +177,7 @@ export default function CustomerCart() {
 
       {items.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 p-3 z-10" style={{ backgroundColor: th.navBg, borderTop: `1px solid ${th.primary}20` }}>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto">
             <button className="w-full py-3 text-sm font-bold shadow-lg"
               style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}
               onClick={placeOrder} disabled={placing}>

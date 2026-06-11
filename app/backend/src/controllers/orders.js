@@ -231,6 +231,45 @@ export const getReport = async (req, res) => {
   }
 };
 
+export const getCustomers = async (req, res) => {
+  try {
+    const [orders, history] = await Promise.all([
+      prisma.order.findMany({
+        where: { restroid: req.user.id, customermob: { not: null } },
+        select: { customername: true, customermob: true, grandtotal: true, createdAt: true },
+      }),
+      prisma.orderHistory.findMany({
+        where: { restroid: req.user.id, customermob: { not: null } },
+        select: { customername: true, customermob: true, grandtotal: true, timestamp: true },
+      }),
+    ]);
+
+    const all = [
+      ...orders.map((o) => ({ ...o, date: o.createdAt })),
+      ...history.map((h) => ({ ...h, date: h.timestamp })),
+    ];
+
+    const map = new Map();
+    for (const o of all) {
+      const mob = o.customermob?.trim();
+      if (!mob) continue;
+      const existing = map.get(mob) || { customername: o.customername, customermob: mob, orderCount: 0, totalSpent: 0, lastOrderAt: o.date };
+      existing.orderCount += 1;
+      existing.totalSpent += o.grandtotal || 0;
+      if (new Date(o.date) > new Date(existing.lastOrderAt)) {
+        existing.lastOrderAt = o.date;
+        existing.customername = o.customername || existing.customername;
+      }
+      map.set(mob, existing);
+    }
+
+    const customers = [...map.values()].sort((a, b) => new Date(b.lastOrderAt) - new Date(a.lastOrderAt));
+    res.json(customers);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
 export const getFeedback = async (req, res) => {
   try {
     const feedback = await prisma.feedback.findMany({

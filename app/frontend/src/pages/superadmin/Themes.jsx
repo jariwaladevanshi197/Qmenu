@@ -203,10 +203,10 @@ const ThemeBuilder = ({ initial, onSave, onCancel, saving }) => {
           <button onClick={onCancel} className="p-2 rounded-lg hover:bg-gray-100"><X size={18} /></button>
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-col lg:flex-row flex-1 overflow-y-auto lg:overflow-hidden">
 
           {/* Left panel: controls */}
-          <div className="w-80 shrink-0 overflow-y-auto border-r border-gray-100 px-5 py-4 space-y-6">
+          <div className="w-full lg:w-80 lg:shrink-0 lg:overflow-y-auto border-b lg:border-b-0 lg:border-r border-gray-100 px-5 py-4 space-y-6">
 
             {/* Theme name */}
             <div>
@@ -287,7 +287,7 @@ const ThemeBuilder = ({ initial, onSave, onCancel, saving }) => {
           </div>
 
           {/* Right panel: live preview */}
-          <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-6 bg-gray-50/80">
+          <div className="flex-1 lg:overflow-y-auto flex flex-col items-center justify-center p-6 bg-gray-50/80">
             <PhonePreview theme={t} />
 
             {/* Color summary strip */}
@@ -361,7 +361,7 @@ export default function SuperAdminThemes() {
       </div>
 
       {/* Theme cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
         {themes.map((theme) => (
           <div key={theme.id} className="card overflow-hidden">
             {/* Gradient header using theme colors */}

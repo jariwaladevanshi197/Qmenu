@@ -104,7 +104,7 @@ export default function CustomerMenu() {
 
       {/* Navbar */}
       <div className="sticky top-0 z-10 shadow-sm" style={{ backgroundColor: th.navBg }}>
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {restro.logo && <img src={restro.logo.startsWith('http') ? restro.logo : `${API}${restro.logo}`} alt={restro.restroname} className="w-9 h-9 object-cover shadow-sm" style={{ borderRadius: th.radius }} />}
             <div>
@@ -121,7 +121,7 @@ export default function CustomerMenu() {
         </div>
 
         {/* Search */}
-        <div className="max-w-2xl mx-auto px-4 pb-3">
+        <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 pb-3">
           <div className="relative">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 opacity-40" style={{ color: th.text }} />
             <input className="w-full pl-8 pr-8 py-2 text-sm outline-none border" placeholder="Search menu..."
@@ -132,7 +132,7 @@ export default function CustomerMenu() {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4">
+      <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4">
         {/* Lang + actions */}
         <div className="flex items-center justify-between py-3 gap-2">
           <div className="flex gap-0.5 p-0.5 rounded-lg" style={{ backgroundColor: `${th.text}10` }}>
@@ -217,7 +217,7 @@ export default function CustomerMenu() {
         )}
 
         {/* Items */}
-        <div className="space-y-3 mt-1">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 mt-1">
           {activeCatItems.map((item) => {
             const qty = getQty(item.id);
             const imgSrc = item.image ? (item.image.startsWith('http') ? item.image : `${API}${item.image}`) : null;
@@ -264,7 +264,7 @@ export default function CustomerMenu() {
             );
           })}
           {search && !activeCatItems.length && (
-            <div className="text-center py-16 opacity-50" style={{ color: th.text }}>No items match "{search}"</div>
+            <div className="text-center py-16 opacity-50 lg:col-span-2 2xl:col-span-3" style={{ color: th.text }}>No items match "{search}"</div>
           )}
         </div>
       </div>
@@ -324,7 +324,7 @@ export default function CustomerMenu() {
       {/* Fixed cart bar — only when ordered via QR */}
       {canOrder && count() > 0 && (
         <div className="fixed bottom-0 left-0 right-0 p-3 z-10" style={{ backgroundColor: th.navBg, borderTop: `1px solid ${th.primary}20` }}>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
             <button className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold shadow-lg"
               style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}
               onClick={() => navigate(`/menu/${slug}/cart${tableid ? `?table=${tableid}` : ''}`)}>

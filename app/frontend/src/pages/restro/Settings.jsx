@@ -162,7 +162,7 @@ export default function RestroSettings() {
       <div className="card p-6 mb-5">
         <h2 className="text-base font-semibold text-gray-900 mb-1">Billing Configuration</h2>
         <p className="text-sm text-gray-500 mb-4">Applied automatically to every completed order.</p>
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <Field label="Discount (%)">
             <input className="input" type="number" min="0" max="100" value={form.discount} onChange={(e) => setForm({ ...form, discount: e.target.value })} placeholder="0" />
           </Field>

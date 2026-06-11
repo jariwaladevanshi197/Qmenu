@@ -358,7 +358,7 @@ export default function SuperAdminRestaurants() {
               <option value="1">Mega</option><option value="2">Mega + Web</option>
             </select>
           </Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Price (₹)"><input className="input" type="number" value={planForm.price} onChange={(e) => setPlanForm({ ...planForm, price: e.target.value })} /></Field>
             <Field label="Months"><input className="input" type="number" value={planForm.subplan} onChange={(e) => setPlanForm({ ...planForm, subplan: e.target.value })} /></Field>
             <Field label="Payment Date"><input className="input" type="date" value={planForm.paymentdate} onChange={(e) => setPlanForm({ ...planForm, paymentdate: e.target.value })} /></Field>
@@ -447,7 +447,7 @@ export default function SuperAdminRestaurants() {
                   <Field label="About Us">
                     <textarea className="input" rows={4} value={websiteForm.aboutText || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, aboutText: e.target.value })} placeholder="Tell customers about your restaurant..." />
                   </Field>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Field label="Public Phone">
                       <input className="input" value={websiteForm.phone || ''} onChange={(e) => setWebsiteForm({ ...websiteForm, phone: e.target.value })} placeholder="Display phone number" />
                     </Field>

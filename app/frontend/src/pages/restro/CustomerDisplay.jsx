@@ -66,7 +66,7 @@ export default function CustomerDisplay() {
             <p className="text-gray-600">Completed orders will appear here</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
             {readyOrders.map((order) => {
               const isNew = flash === order.orderNumber;
               return (
@@ -76,11 +76,11 @@ export default function CustomerDisplay() {
                       ? 'bg-green-500 scale-105 shadow-lg shadow-green-500/40'
                       : 'bg-gray-800 border border-gray-700'
                   }`}>
-                  <p className={`text-3xl font-black tracking-wide ${isNew ? 'text-white' : 'text-green-400'}`}>
+                  <p className={`text-3xl 2xl:text-4xl font-black tracking-wide ${isNew ? 'text-white' : 'text-green-400'}`}>
                     #{order.orderNumber}
                   </p>
                   {order.tablename && (
-                    <p className={`text-sm mt-1 ${isNew ? 'text-green-100' : 'text-gray-400'}`}>
+                    <p className={`text-sm 2xl:text-base mt-1 ${isNew ? 'text-green-100' : 'text-gray-400'}`}>
                       {order.tablename}
                     </p>
                   )}

@@ -62,7 +62,7 @@ export default function RestroTables() {
         <button className="btn-primary" onClick={() => { setForm({ name: '' }); setModal('new'); }}><Plus size={16} /> Add Table</button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
         {tables.map((t) => (
           <div key={t.id} className="card p-4">
             <div className="flex items-center justify-between mb-3">

@@ -52,6 +52,8 @@ export const placeOrder = async (req, res) => {
     if (!restro || !restro.status) return res.status(404).json({ error: 'Restaurant not found' });
 
     const { tableid, customername, customermob, items, paymentmethod } = req.body;
+    if (!customername?.trim()) return res.status(400).json({ error: 'Name is required' });
+    if (!customermob?.trim() || !/^\d{10}$/.test(customermob.trim())) return res.status(400).json({ error: 'A valid 10-digit mobile number is required' });
     if (!items?.length) return res.status(400).json({ error: 'No items provided' });
     // tableid from QR = tableNumber (restaurant-specific). Must provide a valid table.
     if (!tableid) return res.status(400).json({ error: 'Table QR is required to place an order. Please scan your table QR code.' });

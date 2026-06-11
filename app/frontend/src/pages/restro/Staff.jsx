@@ -24,12 +24,13 @@ const ALL_PAGES = [
   { key: 'history',       label: 'History',      desc: 'Past completed orders' },
   { key: 'report',        label: 'Report',       desc: 'Sales analytics' },
   { key: 'feedback',      label: 'Feedback',     desc: 'Customer feedback' },
+  { key: 'customers',     label: 'Customers',    desc: 'View customer list' },
   { key: 'staff',         label: 'Staff',        desc: 'Manage staff members' },
 ];
 
 // Default page access by role
 const ROLE_DEFAULTS = {
-  manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'staff'],
+  manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'customers', 'staff'],
   cashier: ['orders', 'notifications', 'history'],
   staff:   ['orders', 'notifications'],
   kitchen: [],  // kitchen role gets the dedicated KDS screen — no regular pages
@@ -248,7 +249,7 @@ export default function RestroStaff() {
             </div>
           </Field>
           <Field label="Role">
-            <div className="grid grid-cols-3 gap-2 mt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
               {ROLES.map(({ value, label, icon: Icon, desc }) => (
                 <button key={value} type="button" onClick={() => handleRoleChange(value)}
                   className={`p-3 rounded-xl border-2 text-left transition-all ${form.role === value ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -302,7 +303,7 @@ export default function RestroStaff() {
       <Modal open={!!editTarget} onClose={() => setEditTarget(null)} title={`Edit: ${editTarget?.fullname}`} size="md">
         <div className="space-y-4">
           <Field label="Role">
-            <div className="grid grid-cols-3 gap-2 mt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
               {ROLES.map(({ value, label, icon: Icon, desc }) => (
                 <button key={value} type="button" onClick={() => handleEditRoleChange(value)}
                   className={`p-3 rounded-xl border-2 text-left transition-all ${editForm.role === value ? 'border-primary-400 bg-primary-50' : 'border-gray-200 hover:border-gray-300'}`}>

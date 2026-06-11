@@ -68,7 +68,7 @@ export default function CustomerMyOrder() {
     <div className="min-h-screen" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif` }}>
       {/* Header */}
       <div className="sticky top-0 z-10 shadow-sm" style={{ backgroundColor: th.navBg }}>
-        <div className="max-w-md mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-md lg:max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
           <button onClick={() => navigate(`/menu/${slug}`)} className="p-2" style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
             <ArrowLeft size={18} style={{ color: th.text }} />
           </button>
@@ -76,7 +76,7 @@ export default function CustomerMyOrder() {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 py-6 space-y-4">
+      <div className="max-w-md lg:max-w-2xl mx-auto px-4 py-6 space-y-4">
         {/* Status card */}
         <div className="p-6 text-center shadow-sm" style={{ backgroundColor: s.bg, borderRadius: th.radius }}>
           <Icon size={44} className="mx-auto mb-3" style={{ color: s.color }} />

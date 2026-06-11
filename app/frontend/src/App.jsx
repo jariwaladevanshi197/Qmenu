@@ -21,6 +21,7 @@ import RestroSettings from "./pages/restro/Settings";
 import RestroNotifications from "./pages/restro/Notifications";
 import RestroInvoice from "./pages/restro/Invoice";
 import RestroStaff from "./pages/restro/Staff";
+import RestroCustomers from "./pages/restro/Customers";
 import CustomerMenu from "./pages/customer/Menu";
 import CustomerCart from "./pages/customer/Cart";
 import CustomerMyOrder from "./pages/customer/MyOrder";
@@ -68,6 +69,7 @@ export default function App() {
         <Route path="notifications" element={<RestroNotifications />} />
         <Route path="invoice/:id" element={<RestroInvoice />} />
         <Route path="staff" element={<RestroStaff />} />
+        <Route path="customers" element={<RestroCustomers />} />
         <Route path="feedback" element={<RestroFeedback />} />
         <Route path="settings" element={<RestroSettings />} />
       </Route>

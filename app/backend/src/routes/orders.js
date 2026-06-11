@@ -4,7 +4,7 @@ import {
   getActiveOrders, confirmOrder, completeOrder, cancelOrder,
   mergeOrders, getOrderHistory, getSingleHistory, getReport,
   getFeedback, deleteFeedback, getWaiterRequests, dismissWaiterRequest,
-  markOrderPaid,
+  markOrderPaid, getCustomers,
 } from '../controllers/orders.js';
 
 const router = Router();
@@ -21,6 +21,8 @@ router.post('/merge', mergeOrders);
 router.get('/history', getOrderHistory);
 router.get('/history/:id', getSingleHistory);
 router.get('/report', getReport);
+
+router.get('/customers', getCustomers);
 
 router.get('/feedback', getFeedback);
 router.delete('/feedback/:id', deleteFeedback);

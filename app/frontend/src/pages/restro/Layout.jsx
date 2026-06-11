@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import {
   LayoutDashboard, BookOpen, Table2, ClipboardList,
   History, BarChart2, MessageSquare, Settings,
-  LogOut, UtensilsCrossed, Menu, Bell, Users,
+  LogOut, UtensilsCrossed, Menu, Bell, Users, Contact,
 } from "lucide-react";
 
 const radiusPx = { sharp: "2px", rounded: "10px", pill: "999px" };
@@ -140,6 +140,7 @@ export default function RestroLayout() {
     { to: "/restro/history",       label: "History",      icon: History,         key: "history" },
     { to: "/restro/report",        label: "Report",       icon: BarChart2,       key: "report" },
     { to: "/restro/feedback",      label: "Feedback",     icon: MessageSquare,   key: "feedback" },
+    { to: "/restro/customers",     label: "Customers",    icon: Contact,         key: "customers" },
     { to: "/restro/staff",         label: "Staff",        icon: Users,           key: "staff" },
     { to: "/restro/settings",      label: "Settings",     icon: Settings,        key: "settings" },
   ];
@@ -252,8 +253,10 @@ export default function RestroLayout() {
           )}
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6" style={{ backgroundColor: th.bg }}>
-          <Outlet />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6" style={{ backgroundColor: th.bg }}>
+          <div className="max-w-[1920px] mx-auto">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
