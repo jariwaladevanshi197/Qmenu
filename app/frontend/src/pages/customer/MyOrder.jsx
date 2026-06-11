@@ -135,7 +135,11 @@ export default function CustomerMyOrder() {
                   ))}
                 </div>
 
-                {qrDataUrl && <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />}
+                {restro.upiQrImage ? (
+                  <img src={restro.upiQrImage} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={220} height={220} style={{ objectFit: 'contain' }} />
+                ) : (
+                  qrDataUrl && <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />
+                )}
                 <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
                   Tap an app above, scan the QR, or pay manually using the details below.
                 </p>

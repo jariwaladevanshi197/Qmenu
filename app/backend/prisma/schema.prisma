@@ -57,7 +57,8 @@ model Restaurant {
   printNodePrinterId String?
 
   // UPI payments
-  upiId String?
+  upiId      String?
+  upiQrImage String?
 
   // Mega+Web website fields
   websiteEnabled  Boolean  @default(false)

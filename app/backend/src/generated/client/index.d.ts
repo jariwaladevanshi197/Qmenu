@@ -3334,6 +3334,7 @@ export namespace Prisma {
     printNodeApiKey: string | null
     printNodePrinterId: string | null
     upiId: string | null
+    upiQrImage: string | null
     websiteEnabled: boolean | null
     heroTitle: string | null
     tagline: string | null
@@ -3378,6 +3379,7 @@ export namespace Prisma {
     printNodeApiKey: string | null
     printNodePrinterId: string | null
     upiId: string | null
+    upiQrImage: string | null
     websiteEnabled: boolean | null
     heroTitle: string | null
     tagline: string | null
@@ -3422,6 +3424,7 @@ export namespace Prisma {
     printNodeApiKey: number
     printNodePrinterId: number
     upiId: number
+    upiQrImage: number
     websiteEnabled: number
     heroTitle: number
     tagline: number
@@ -3492,6 +3495,7 @@ export namespace Prisma {
     printNodeApiKey?: true
     printNodePrinterId?: true
     upiId?: true
+    upiQrImage?: true
     websiteEnabled?: true
     heroTitle?: true
     tagline?: true
@@ -3536,6 +3540,7 @@ export namespace Prisma {
     printNodeApiKey?: true
     printNodePrinterId?: true
     upiId?: true
+    upiQrImage?: true
     websiteEnabled?: true
     heroTitle?: true
     tagline?: true
@@ -3580,6 +3585,7 @@ export namespace Prisma {
     printNodeApiKey?: true
     printNodePrinterId?: true
     upiId?: true
+    upiQrImage?: true
     websiteEnabled?: true
     heroTitle?: true
     tagline?: true
@@ -3711,6 +3717,7 @@ export namespace Prisma {
     printNodeApiKey: string | null
     printNodePrinterId: string | null
     upiId: string | null
+    upiQrImage: string | null
     websiteEnabled: boolean
     heroTitle: string | null
     tagline: string | null
@@ -3774,6 +3781,7 @@ export namespace Prisma {
     printNodeApiKey?: boolean
     printNodePrinterId?: boolean
     upiId?: boolean
+    upiQrImage?: boolean
     websiteEnabled?: boolean
     heroTitle?: boolean
     tagline?: boolean
@@ -3829,6 +3837,7 @@ export namespace Prisma {
     printNodeApiKey?: boolean
     printNodePrinterId?: boolean
     upiId?: boolean
+    upiQrImage?: boolean
     websiteEnabled?: boolean
     heroTitle?: boolean
     tagline?: boolean
@@ -3874,6 +3883,7 @@ export namespace Prisma {
     printNodeApiKey?: boolean
     printNodePrinterId?: boolean
     upiId?: boolean
+    upiQrImage?: boolean
     websiteEnabled?: boolean
     heroTitle?: boolean
     tagline?: boolean
@@ -3949,6 +3959,7 @@ export namespace Prisma {
       printNodeApiKey: string | null
       printNodePrinterId: string | null
       upiId: string | null
+      upiQrImage: string | null
       websiteEnabled: boolean
       heroTitle: string | null
       tagline: string | null
@@ -4393,6 +4404,7 @@ export namespace Prisma {
     readonly printNodeApiKey: FieldRef<"Restaurant", 'String'>
     readonly printNodePrinterId: FieldRef<"Restaurant", 'String'>
     readonly upiId: FieldRef<"Restaurant", 'String'>
+    readonly upiQrImage: FieldRef<"Restaurant", 'String'>
     readonly websiteEnabled: FieldRef<"Restaurant", 'Boolean'>
     readonly heroTitle: FieldRef<"Restaurant", 'String'>
     readonly tagline: FieldRef<"Restaurant", 'String'>
@@ -17563,6 +17575,7 @@ export namespace Prisma {
     printNodeApiKey: 'printNodeApiKey',
     printNodePrinterId: 'printNodePrinterId',
     upiId: 'upiId',
+    upiQrImage: 'upiQrImage',
     websiteEnabled: 'websiteEnabled',
     heroTitle: 'heroTitle',
     tagline: 'tagline',
@@ -18035,6 +18048,7 @@ export namespace Prisma {
     printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     upiId?: StringNullableFilter<"Restaurant"> | string | null
+    upiQrImage?: StringNullableFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableFilter<"Restaurant"> | string | null
     tagline?: StringNullableFilter<"Restaurant"> | string | null
@@ -18089,6 +18103,7 @@ export namespace Prisma {
     printNodeApiKey?: SortOrderInput | SortOrder
     printNodePrinterId?: SortOrderInput | SortOrder
     upiId?: SortOrderInput | SortOrder
+    upiQrImage?: SortOrderInput | SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrderInput | SortOrder
     tagline?: SortOrderInput | SortOrder
@@ -18146,6 +18161,7 @@ export namespace Prisma {
     printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     upiId?: StringNullableFilter<"Restaurant"> | string | null
+    upiQrImage?: StringNullableFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableFilter<"Restaurant"> | string | null
     tagline?: StringNullableFilter<"Restaurant"> | string | null
@@ -18200,6 +18216,7 @@ export namespace Prisma {
     printNodeApiKey?: SortOrderInput | SortOrder
     printNodePrinterId?: SortOrderInput | SortOrder
     upiId?: SortOrderInput | SortOrder
+    upiQrImage?: SortOrderInput | SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrderInput | SortOrder
     tagline?: SortOrderInput | SortOrder
@@ -18252,6 +18269,7 @@ export namespace Prisma {
     printNodeApiKey?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     upiId?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    upiQrImage?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolWithAggregatesFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
     tagline?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
@@ -19346,6 +19364,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -19400,6 +19419,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -19451,6 +19471,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19505,6 +19526,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19558,6 +19580,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -19600,6 +19623,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19644,6 +19668,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21014,6 +21039,7 @@ export namespace Prisma {
     printNodeApiKey?: SortOrder
     printNodePrinterId?: SortOrder
     upiId?: SortOrder
+    upiQrImage?: SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrder
     tagline?: SortOrder
@@ -21070,6 +21096,7 @@ export namespace Prisma {
     printNodeApiKey?: SortOrder
     printNodePrinterId?: SortOrder
     upiId?: SortOrder
+    upiQrImage?: SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrder
     tagline?: SortOrder
@@ -21114,6 +21141,7 @@ export namespace Prisma {
     printNodeApiKey?: SortOrder
     printNodePrinterId?: SortOrder
     upiId?: SortOrder
+    upiQrImage?: SortOrder
     websiteEnabled?: SortOrder
     heroTitle?: SortOrder
     tagline?: SortOrder
@@ -23854,6 +23882,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23907,6 +23936,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -23973,6 +24003,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24026,6 +24057,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24076,6 +24108,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24128,6 +24161,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24210,6 +24244,7 @@ export namespace Prisma {
     printNodeApiKey?: StringNullableFilter<"Restaurant"> | string | null
     printNodePrinterId?: StringNullableFilter<"Restaurant"> | string | null
     upiId?: StringNullableFilter<"Restaurant"> | string | null
+    upiQrImage?: StringNullableFilter<"Restaurant"> | string | null
     websiteEnabled?: BoolFilter<"Restaurant"> | boolean
     heroTitle?: StringNullableFilter<"Restaurant"> | string | null
     tagline?: StringNullableFilter<"Restaurant"> | string | null
@@ -24252,6 +24287,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24305,6 +24341,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24406,6 +24443,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24459,6 +24497,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24525,6 +24564,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24578,6 +24618,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24699,6 +24740,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24752,6 +24794,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24863,6 +24906,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -24916,6 +24960,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25050,6 +25095,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25103,6 +25149,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25185,6 +25232,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25238,6 +25286,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25357,6 +25406,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25410,6 +25460,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25656,6 +25707,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25709,6 +25761,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -25804,6 +25857,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25857,6 +25911,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26015,6 +26070,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26068,6 +26124,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26134,6 +26191,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26187,6 +26245,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26237,6 +26296,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26290,6 +26350,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26356,6 +26417,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26409,6 +26471,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26459,6 +26522,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26512,6 +26576,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -26600,6 +26665,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26653,6 +26719,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27123,6 +27190,7 @@ export namespace Prisma {
     printNodeApiKey?: string | null
     printNodePrinterId?: string | null
     upiId?: string | null
+    upiQrImage?: string | null
     websiteEnabled?: boolean
     heroTitle?: string | null
     tagline?: string | null
@@ -27165,6 +27233,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27217,6 +27286,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27269,6 +27339,7 @@ export namespace Prisma {
     printNodeApiKey?: NullableStringFieldUpdateOperationsInput | string | null
     printNodePrinterId?: NullableStringFieldUpdateOperationsInput | string | null
     upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    upiQrImage?: NullableStringFieldUpdateOperationsInput | string | null
     websiteEnabled?: BoolFieldUpdateOperationsInput | boolean
     heroTitle?: NullableStringFieldUpdateOperationsInput | string | null
     tagline?: NullableStringFieldUpdateOperationsInput | string | null

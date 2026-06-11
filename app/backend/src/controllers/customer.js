@@ -11,7 +11,7 @@ export const getRestaurantBySlug = async (req, res) => {
       where: { slug: req.params.slug },
       select: {
         id: true, restroname: true, slug: true, logo: true, status: true,
-        subtype: true, pdf: true, discount: true, servicecharge: true, upiId: true,
+        subtype: true, pdf: true, discount: true, servicecharge: true, upiId: true, upiQrImage: true,
         theme: {
           select: {
             id: true, title: true, primaryColor: true, secondaryColor: true,

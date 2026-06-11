@@ -72,6 +72,19 @@ export default function RestroSettings() {
     upiMutation.mutate(fd);
   };
 
+  const qrMutation = useMutation({
+    mutationFn: (fd) => api.post('/restaurant/upi-qr', fd),
+    onSuccess: () => toast.success('UPI QR uploaded'),
+    onError: (e) => toast.error(e.response?.data?.error || 'Error'),
+  });
+
+  const uploadQrImage = (file) => {
+    if (!file) return;
+    const fd = new FormData();
+    fd.append('qrImage', file);
+    qrMutation.mutate(fd);
+  };
+
   const displayUrl = `${window.location.origin}/display/${profile?.slug || user?.slug}`;
   const kitchenUrl = `${window.location.origin}/restro/kitchen`;
 
@@ -215,10 +228,26 @@ export default function RestroSettings() {
               onChange={(e) => setUpiForm({ ...upiForm, upiId: e.target.value })} />
           </Field>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end mb-5">
           <button className="btn-primary btn-sm" onClick={saveUpiSettings} disabled={upiMutation.isPending}>
             {upiMutation.isPending ? 'Saving...' : 'Save UPI Settings'}
           </button>
+        </div>
+
+        <div className="border-t border-gray-100 pt-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">UPI QR Code (optional)</h3>
+          <p className="text-sm text-gray-500 mb-3">
+            Already have a UPI QR code from your bank's app (GPay/PhonePe/Paytm merchant QR)? Upload
+            it here — customers will see this exact image on their order page instead of a
+            generated QR, which can be more reliable for receiving payments.
+          </p>
+          <div className="flex items-center gap-4">
+            {profile?.upiQrImage && (
+              <img src={profile.upiQrImage} alt="UPI QR" className="w-24 h-24 object-contain rounded-lg border border-gray-100" />
+            )}
+            <input className="input" type="file" accept="image/*"
+              onChange={(e) => uploadQrImage(e.target.files[0])} disabled={qrMutation.isPending} />
+          </div>
         </div>
       </div>
 

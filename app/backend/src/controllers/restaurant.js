@@ -85,6 +85,17 @@ export const uploadPdfMenu = async (req, res) => {
   }
 };
 
+export const uploadUpiQr = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
+    const qrPath = await saveToSupabase(req.file, 'qr');
+    await prisma.restaurant.update({ where: { id: req.user.id }, data: { upiQrImage: qrPath } });
+    res.json({ upiQrImage: qrPath });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
 export const getStats = async (req, res) => {
   try {
     const rid = req.user.id;

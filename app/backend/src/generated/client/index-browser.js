@@ -164,6 +164,7 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   printNodeApiKey: 'printNodeApiKey',
   printNodePrinterId: 'printNodePrinterId',
   upiId: 'upiId',
+  upiQrImage: 'upiQrImage',
   websiteEnabled: 'websiteEnabled',
   heroTitle: 'heroTitle',
   tagline: 'tagline',
