@@ -46,11 +46,9 @@ export default function RestroCustomers() {
           <h1 className="text-2xl font-bold text-gray-900">Customers</h1>
           <p className="text-sm text-gray-500 mt-0.5">{customers.length} total · {filtered.length} shown</p>
         </div>
-        {filtered.length > 0 && (
-          <button className="btn-secondary btn-sm" onClick={() => exportCSV(filtered)}>
-            <Download size={14} /> Export CSV
-          </button>
-        )}
+        <button className="btn-secondary btn-sm" onClick={() => exportCSV(filtered)} disabled={!filtered.length}>
+          <Download size={14} /> Export CSV
+        </button>
       </div>
 
       {/* Search */}
