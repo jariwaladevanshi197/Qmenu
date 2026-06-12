@@ -134,9 +134,11 @@ export default function RestroSettings() {
   };
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-2xl 2xl:max-w-6xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Settings</h1>
 
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-5 items-start">
+      <div>
       <div className="card p-6 mb-5">
         <h2 className="text-base font-semibold text-gray-900 mb-4">Restaurant Profile</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -204,7 +206,9 @@ export default function RestroSettings() {
       <div className="flex justify-end mb-5">
         <button className="btn-primary" onClick={submit} disabled={updateMutation.isPending}>{updateMutation.isPending ? 'Saving...' : 'Save Changes'}</button>
       </div>
+      </div>
 
+      <div>
       <div className="card p-6 mb-5">
         <h2 className="text-base font-semibold text-gray-900 mb-1">OTP / Restro Code</h2>
         <p className="text-sm text-gray-500 mb-4">Customers need this code to call waiter or place orders from their table.</p>
@@ -315,6 +319,8 @@ export default function RestroSettings() {
         <p className="text-sm text-gray-500 mb-4">Upload a PDF version of your menu for download by customers.</p>
         {profile?.pdf && <p className="text-sm text-green-600 mb-3">✓ PDF uploaded</p>}
         <input type="file" accept=".pdf" className="input mb-3" onChange={(e) => { const fd = new FormData(); fd.append('pdf', e.target.files[0]); pdfMutation.mutate(fd); }} />
+      </div>
+      </div>
       </div>
     </div>
   );
