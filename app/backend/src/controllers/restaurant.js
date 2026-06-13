@@ -64,12 +64,12 @@ export const generateTableQR = async (req, res) => {
 
     // Generate the QR code, then composite the table name below it
     const qrSize = 400;
-    const labelHeight = 60;
+    const labelHeight = 100;
     const qrBuffer = await QRCode.toBuffer(menuUrl, { width: qrSize, margin: 2 });
 
     const labelSvg = `<svg width="${qrSize}" height="${labelHeight}" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="white"/>
-      <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="black" text-anchor="middle" dominant-baseline="middle">${escapeXml(table.name)}</text>
+      <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="black" text-anchor="middle" dominant-baseline="central">${escapeXml(table.name)}</text>
     </svg>`;
 
     const finalBuffer = await sharp({
