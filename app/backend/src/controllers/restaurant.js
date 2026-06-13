@@ -1,6 +1,7 @@
 ﻿import { prisma } from '../lib/prisma.js';
 import QRCode from 'qrcode';
-import sharp from 'sharp';
+import { Jimp, JimpMime, HorizontalAlign, VerticalAlign, loadFont } from 'jimp';
+import { SANS_64_BLACK } from 'jimp/fonts';
 import { saveToSupabase } from '../middleware/upload.js';
 
 export const getProfile = async (req, res) => {
@@ -52,8 +53,6 @@ export const updateOtp = async (req, res) => {
   }
 };
 
-const escapeXml = (s) => String(s).replace(/[<>&'"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[c]));
-
 export const generateTableQR = async (req, res) => {
   try {
     const table = await prisma.table.findFirst({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
@@ -62,25 +61,27 @@ export const generateTableQR = async (req, res) => {
     const restro = await prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { slug: true } });
     const menuUrl = `${process.env.CLIENT_URL}/menu/${restro.slug}?table=${table.tableNumber}`;
 
-    // Generate the QR code, then composite the table name below it
+    // Generate the QR code, then print the table name below it using Jimp's
+    // bundled bitmap font (no system fonts needed, works on serverless)
     const qrSize = 400;
     const labelHeight = 100;
     const qrBuffer = await QRCode.toBuffer(menuUrl, { width: qrSize, margin: 2 });
+    const qrImg = await Jimp.read(qrBuffer);
 
-    const labelSvg = `<svg width="${qrSize}" height="${labelHeight}" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="white"/>
-      <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="black" text-anchor="middle" dominant-baseline="central">${escapeXml(table.name)}</text>
-    </svg>`;
+    const canvas = new Jimp({ width: qrSize, height: qrSize + labelHeight, color: 0xffffffff });
+    canvas.composite(qrImg, 0, 0);
 
-    const finalBuffer = await sharp({
-      create: { width: qrSize, height: qrSize + labelHeight, channels: 3, background: 'white' },
-    })
-      .composite([
-        { input: qrBuffer, top: 0, left: 0 },
-        { input: Buffer.from(labelSvg), top: qrSize, left: 0 },
-      ])
-      .png()
-      .toBuffer();
+    const font = await loadFont(SANS_64_BLACK);
+    canvas.print({
+      x: 0,
+      y: qrSize,
+      text: { text: table.name, alignmentX: HorizontalAlign.CENTER, alignmentY: VerticalAlign.MIDDLE },
+      maxWidth: qrSize,
+      maxHeight: labelHeight,
+      font,
+    });
+
+    const finalBuffer = await canvas.getBuffer(JimpMime.png);
 
     const filename = `qr_table_${table.id}_${Date.now()}.png`;
     const { uploadToStorage } = await import('../utils/supabase.js');
