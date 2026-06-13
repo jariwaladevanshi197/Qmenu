@@ -1,5 +1,6 @@
 ﻿import { prisma } from '../lib/prisma.js';
 import QRCode from 'qrcode';
+import sharp from 'sharp';
 import { saveToSupabase } from '../middleware/upload.js';
 
 export const getProfile = async (req, res) => {
@@ -51,6 +52,8 @@ export const updateOtp = async (req, res) => {
   }
 };
 
+const escapeXml = (s) => String(s).replace(/[<>&'"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[c]));
+
 export const generateTableQR = async (req, res) => {
   try {
     const table = await prisma.table.findFirst({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
@@ -59,11 +62,29 @@ export const generateTableQR = async (req, res) => {
     const restro = await prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { slug: true } });
     const menuUrl = `${process.env.CLIENT_URL}/menu/${restro.slug}?table=${table.tableNumber}`;
 
-    // Generate QR as a Buffer and upload directly to Supabase Storage
-    const qrBuffer = await QRCode.toBuffer(menuUrl, { width: 400, margin: 2 });
+    // Generate the QR code, then composite the table name below it
+    const qrSize = 400;
+    const labelHeight = 60;
+    const qrBuffer = await QRCode.toBuffer(menuUrl, { width: qrSize, margin: 2 });
+
+    const labelSvg = `<svg width="${qrSize}" height="${labelHeight}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="white"/>
+      <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="black" text-anchor="middle" dominant-baseline="middle">${escapeXml(table.name)}</text>
+    </svg>`;
+
+    const finalBuffer = await sharp({
+      create: { width: qrSize, height: qrSize + labelHeight, channels: 3, background: 'white' },
+    })
+      .composite([
+        { input: qrBuffer, top: 0, left: 0 },
+        { input: Buffer.from(labelSvg), top: qrSize, left: 0 },
+      ])
+      .png()
+      .toBuffer();
+
     const filename = `qr_table_${table.id}_${Date.now()}.png`;
     const { uploadToStorage } = await import('../utils/supabase.js');
-    const qrPath = await uploadToStorage(qrBuffer, 'qr', filename, 'image/png');
+    const qrPath = await uploadToStorage(finalBuffer, 'qr', filename, 'image/png');
 
     await prisma.table.update({ where: { id: table.id }, data: { qrimage: qrPath } });
     res.json({ qrimage: qrPath, url: menuUrl });
