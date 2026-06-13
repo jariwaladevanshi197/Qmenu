@@ -64,13 +64,14 @@ export default function CustomerMyOrder() {
   const s = STATUS[order.status] || STATUS.PENDING;
   const Icon = s.icon;
   const orderTotal = order.items.reduce((sum, i) => sum + i.totalprice, 0);
+  const backToMenuUrl = `/menu/${slug}${order.table?.tableNumber ? `?table=${order.table.tableNumber}` : ''}`;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif` }}>
       {/* Header */}
       <div className="sticky top-0 z-10 shadow-sm" style={{ backgroundColor: th.navBg }}>
         <div className="max-w-md lg:max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <button onClick={() => navigate(`/menu/${slug}`)} className="p-2" style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
+          <button onClick={() => navigate(backToMenuUrl)} className="p-2" style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
             <ArrowLeft size={18} style={{ color: th.text }} />
           </button>
           <h1 className="font-bold" style={{ color: th.text }}>My Order</h1>
@@ -179,7 +180,7 @@ export default function CustomerMyOrder() {
 
         <button className="w-full py-3 text-sm font-bold"
           style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}
-          onClick={() => navigate(`/menu/${slug}`)}>
+          onClick={() => navigate(backToMenuUrl)}>
           Back to Menu
         </button>
       </div>
