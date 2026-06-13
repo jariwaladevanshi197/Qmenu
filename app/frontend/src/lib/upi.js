@@ -5,6 +5,9 @@ function buildParams({ upiId, payeeName, amount, note }) {
     am: amount,
     cu: 'INR',
     tn: note,
+    mc: '0000',
+    mode: '02',
+    purpose: '00',
   }).toString();
 }
 
