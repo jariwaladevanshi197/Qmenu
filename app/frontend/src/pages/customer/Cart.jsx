@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import QRCode from 'qrcode';
 import api from '../../lib/api';
 import { useCartStore } from '../../store/cart';
 import { useTheme } from '../../hooks/useTheme';
+import { buildUpiLink, buildUpiAppLinks } from '../../lib/upi';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
-import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag, Copy } from 'lucide-react';
 
 export default function CustomerCart() {
   const { slug } = useParams();
@@ -16,6 +18,8 @@ export default function CustomerCart() {
   const [form, setForm] = useState({ customername: '', customermob: '' });
   const [placing, setPlacing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('COUNTER');
+  const [showPaymentStep, setShowPaymentStep] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState(null);
   const { items, updateQty, removeItem, clearCart, total } = useCartStore();
 
   const { data: restro } = useQuery({
@@ -25,11 +29,33 @@ export default function CustomerCart() {
 
   const th = useTheme(restro?.theme);
 
+  const subtotal = total();
+  const discount = restro?.discount ? (subtotal * restro.discount) / 100 : 0;
+  const sc = restro?.servicecharge ? ((subtotal - discount) * restro.servicecharge) / 100 : 0;
+  const grand = subtotal - discount + sc;
+
+  const upiLink = restro?.upiId
+    ? buildUpiLink({ upiId: restro.upiId, payeeName: restro.restroname, amount: grand, note: `Order - ${form.customername || 'Customer'}` })
+    : null;
+
+  const upiAppLinks = restro?.upiId
+    ? buildUpiAppLinks({ upiId: restro.upiId, payeeName: restro.restroname, amount: grand, note: `Order - ${form.customername || 'Customer'}` })
+    : [];
+
+  useEffect(() => {
+    if (!upiLink || restro?.upiQrImage) { setQrDataUrl(null); return; }
+    QRCode.toDataURL(upiLink, { width: 220, margin: 1 }).then(setQrDataUrl).catch(() => setQrDataUrl(null));
+  }, [upiLink, restro?.upiQrImage]);
+
+  const validateDetails = () => {
+    if (!form.customername.trim()) { toast.error('Please enter your name'); return false; }
+    if (!form.customermob.trim() || !/^\d{10}$/.test(form.customermob.trim())) { toast.error('Please enter a valid 10-digit mobile number'); return false; }
+    if (!items.length) { toast.error('Cart is empty'); return false; }
+    return true;
+  };
+
   const placeOrder = async () => {
-    if (!form.customername.trim()) return toast.error('Please enter your name');
-    if (!form.customermob.trim()) return toast.error('Please enter your mobile number');
-    if (!/^\d{10}$/.test(form.customermob.trim())) return toast.error('Please enter a valid 10-digit mobile number');
-    if (!items.length) return toast.error('Cart is empty');
+    if (!validateDetails()) return;
     setPlacing(true);
     try {
       const { data } = await api.post(`/customer/restro/${slug}/order`, {
@@ -47,12 +73,16 @@ export default function CustomerCart() {
     } finally { setPlacing(false); }
   };
 
-  if (!restro) return <PageLoader />;
+  const handlePrimaryAction = () => {
+    if (!validateDetails()) return;
+    if (paymentMethod === 'UPI' && !showPaymentStep) {
+      setShowPaymentStep(true);
+      return;
+    }
+    placeOrder();
+  };
 
-  const subtotal = total();
-  const discount = restro.discount ? (subtotal * restro.discount) / 100 : 0;
-  const sc = restro.servicecharge ? ((subtotal - discount) * restro.servicecharge) / 100 : 0;
-  const grand = subtotal - discount + sc;
+  if (!restro) return <PageLoader />;
 
   return (
     <div className="min-h-screen pb-24" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif`, color: th.text }}>
@@ -128,7 +158,7 @@ export default function CustomerCart() {
                 <div className="p-4 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
                   <p className="font-bold mb-3" style={{ color: th.text }}>Payment</p>
                   <div className="grid grid-cols-2 gap-2">
-                    <button type="button" onClick={() => setPaymentMethod('COUNTER')}
+                    <button type="button" onClick={() => { setPaymentMethod('COUNTER'); setShowPaymentStep(false); }}
                       className="py-2.5 text-sm font-semibold border"
                       style={{
                         borderRadius: th.radius,
@@ -138,7 +168,7 @@ export default function CustomerCart() {
                       }}>
                       Pay at Counter
                     </button>
-                    <button type="button" onClick={() => setPaymentMethod('UPI')}
+                    <button type="button" onClick={() => { setPaymentMethod('UPI'); setShowPaymentStep(false); }}
                       className="py-2.5 text-sm font-semibold border"
                       style={{
                         borderRadius: th.radius,
@@ -171,6 +201,63 @@ export default function CustomerCart() {
                 </div>
               </div>
             </div>
+
+            {/* Payment step - shown after "Proceed to Pay" for UPI */}
+            {paymentMethod === 'UPI' && showPaymentStep && (
+              <div className="p-4 mb-4 shadow-sm text-center" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+                <p className="font-bold mb-1" style={{ color: th.text }}>Pay ₹{grand.toFixed(2)} via UPI</p>
+                <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>Complete the payment, then tap "I've Paid" to place your order.</p>
+
+                {restro.upiQrImage ? (
+                  <>
+                    <img src={restro.upiQrImage} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={220} height={220} style={{ objectFit: 'contain' }} />
+                    <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
+                      Scan this QR with any UPI app, then enter ₹{grand.toFixed(2)} manually to pay.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      {upiAppLinks.map((app) => (
+                        <a key={app.name} href={app.href}
+                          className="py-2.5 text-sm font-semibold border text-center"
+                          style={{
+                            borderRadius: th.radius,
+                            borderColor: `${th.text}15`,
+                            backgroundColor: app.color,
+                            color: app.textColor,
+                          }}>
+                          {app.name}
+                        </a>
+                      ))}
+                    </div>
+                    {qrDataUrl && (
+                      <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />
+                    )}
+                    <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
+                      Tap an app above or scan the QR to pay.
+                    </p>
+                  </>
+                )}
+
+                <div className="flex items-center justify-between gap-2 px-3 py-2 mb-3"
+                  style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
+                  <div className="text-left">
+                    <p className="text-[10px] opacity-50 uppercase font-semibold" style={{ color: th.text }}>UPI ID</p>
+                    <p className="text-sm font-bold" style={{ color: th.text }}>{restro.upiId}</p>
+                  </div>
+                  <button type="button" onClick={() => { navigator.clipboard.writeText(restro.upiId); toast.success('UPI ID copied'); }}
+                    className="p-2" style={{ backgroundColor: `${th.text}10`, borderRadius: th.radius }}>
+                    <Copy size={14} style={{ color: th.text }} />
+                  </button>
+                </div>
+
+                <button type="button" onClick={() => setShowPaymentStep(false)}
+                  className="text-xs font-semibold underline" style={{ color: th.text }}>
+                  ← Back to cart
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -180,8 +267,14 @@ export default function CustomerCart() {
           <div className="max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto">
             <button className="w-full py-3 text-sm font-bold shadow-lg"
               style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}
-              onClick={placeOrder} disabled={placing}>
-              {placing ? 'Placing Order...' : `Place Order · ₹${grand.toFixed(2)}`}
+              onClick={handlePrimaryAction} disabled={placing}>
+              {placing
+                ? 'Placing Order...'
+                : paymentMethod === 'UPI' && !showPaymentStep
+                  ? `Proceed to Pay · ₹${grand.toFixed(2)}`
+                  : paymentMethod === 'UPI'
+                    ? `I've Paid - Place Order`
+                    : `Place Order · ₹${grand.toFixed(2)}`}
             </button>
           </div>
         </div>
