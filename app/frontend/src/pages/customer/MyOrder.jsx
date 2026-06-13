@@ -121,38 +121,39 @@ export default function CustomerMyOrder() {
                   Pay ₹{order.grandtotal?.toFixed(2)} via UPI. Staff will confirm once received.
                 </p>
 
-                {restro.upiQrImage ? (
-                  <>
-                    <img src={restro.upiQrImage} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={220} height={220} style={{ objectFit: 'contain' }} />
-                    <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
-                      Scan this QR with any UPI app, then enter ₹{order.grandtotal?.toFixed(2)} manually to pay.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    {/* Choose UPI app */}
-                    <div className="grid grid-cols-2 gap-2 mb-4">
-                      {upiAppLinks.map((app) => (
-                        <a key={app.name} href={app.href}
-                          className="py-2.5 text-sm font-semibold border text-center"
-                          style={{
-                            borderRadius: th.radius,
-                            borderColor: `${th.text}15`,
-                            backgroundColor: app.color,
-                            color: app.textColor,
-                          }}>
-                          {app.name}
-                        </a>
-                      ))}
-                    </div>
+                {/* Choose UPI app */}
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  {upiAppLinks.map((app) => (
+                    <a key={app.name} href={app.href}
+                      className="py-2.5 text-sm font-semibold border text-center"
+                      style={{
+                        borderRadius: th.radius,
+                        borderColor: `${th.text}15`,
+                        backgroundColor: app.color,
+                        color: app.textColor,
+                      }}>
+                      {app.name}
+                    </a>
+                  ))}
+                </div>
 
-                    {qrDataUrl && (
-                      <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />
-                    )}
-                    <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
-                      Tap an app above, scan the QR, or pay manually using the details below.
+                {qrDataUrl && (
+                  <img src={qrDataUrl} alt="UPI QR" className="mx-auto mb-3 rounded-lg" width={180} height={180} />
+                )}
+                <p className="text-xs opacity-60 mb-3" style={{ color: th.text }}>
+                  Tap an app above, scan the QR, or pay manually using the details below.
+                </p>
+
+                {restro.upiQrImage && (
+                  <details className="mb-3 text-left">
+                    <summary className="text-xs font-semibold cursor-pointer text-center" style={{ color: th.text }}>
+                      App not working? Scan our QR code instead
+                    </summary>
+                    <img src={restro.upiQrImage} alt="UPI QR" className="mx-auto mt-3 mb-2 rounded-lg" width={220} height={220} style={{ objectFit: 'contain' }} />
+                    <p className="text-xs opacity-60 text-center" style={{ color: th.text }}>
+                      Scan with any UPI app, then enter ₹{order.grandtotal?.toFixed(2)} manually to pay.
                     </p>
-                  </>
+                  </details>
                 )}
                 <div className="space-y-2 mb-3">
                   <div className="flex items-center justify-between gap-2 px-3 py-2"
