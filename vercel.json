@@ -6,7 +6,7 @@
     "api/index.js": {
       "memory": 1024,
       "maxDuration": 30,
-      "includeFiles": "app/backend/node_modules/@jimp/plugin-print/dist/fonts/**"
+      "includeFiles": "app/backend/src/assets/fonts/**"
     }
   },
   "routes": [

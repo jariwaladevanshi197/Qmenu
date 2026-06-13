@@ -1,8 +1,11 @@
 ﻿import { prisma } from '../lib/prisma.js';
 import QRCode from 'qrcode';
 import { Jimp, JimpMime, HorizontalAlign, VerticalAlign, loadFont } from 'jimp';
-import { SANS_64_BLACK } from 'jimp/fonts';
 import { saveToSupabase } from '../middleware/upload.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const QR_LABEL_FONT = path.join(path.dirname(fileURLToPath(import.meta.url)), '../assets/fonts/open-sans-64-black/open-sans-64-black.fnt');
 
 export const getProfile = async (req, res) => {
   try {
@@ -71,7 +74,7 @@ export const generateTableQR = async (req, res) => {
     const canvas = new Jimp({ width: qrSize, height: qrSize + labelHeight, color: 0xffffffff });
     canvas.composite(qrImg, 0, 0);
 
-    const font = await loadFont(SANS_64_BLACK);
+    const font = await loadFont(QR_LABEL_FONT);
     canvas.print({
       x: 0,
       y: qrSize,
