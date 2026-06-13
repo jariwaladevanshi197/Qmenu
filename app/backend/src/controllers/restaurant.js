@@ -1,11 +1,35 @@
 ﻿import { prisma } from '../lib/prisma.js';
 import QRCode from 'qrcode';
-import { Jimp, JimpMime, HorizontalAlign, VerticalAlign, loadFont } from 'jimp';
+import { Jimp, JimpMime, HorizontalAlign, VerticalAlign } from 'jimp';
 import { saveToSupabase } from '../middleware/upload.js';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
+import parseBMFontXML from 'parse-bmfont-xml';
 
-const QR_LABEL_FONT = path.join(path.dirname(fileURLToPath(import.meta.url)), '../assets/fonts/open-sans-64-black/open-sans-64-black.fnt');
+const QR_LABEL_FONT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '../assets/fonts/open-sans-64-black');
+const QR_LABEL_FONT_FNT = path.join(QR_LABEL_FONT_DIR, 'open-sans-64-black.fnt');
+const QR_LABEL_FONT_PNG = path.join(QR_LABEL_FONT_DIR, 'open-sans-64-black.png');
+
+// Builds a Jimp BmFont object directly from local font files, bypassing
+// Jimp's loadFont (which resolves the page PNG via a runtime fs/fetch path
+// that Vercel's serverless function tracer doesn't reliably bundle)
+async function loadTableLabelFont() {
+  const rawFont = parseBMFontXML(fs.readFileSync(QR_LABEL_FONT_FNT, 'utf-8'));
+  const pageImg = await Jimp.read(fs.readFileSync(QR_LABEL_FONT_PNG));
+
+  const chars = {};
+  for (const c of rawFont.chars) chars[String.fromCharCode(c.id)] = c;
+
+  const kernings = {};
+  for (const k of rawFont.kernings) {
+    const first = String.fromCharCode(k.first);
+    kernings[first] = kernings[first] || {};
+    kernings[first][String.fromCharCode(k.second)] = k.amount;
+  }
+
+  return { ...rawFont, chars, kernings, pages: [pageImg] };
+}
 
 export const getProfile = async (req, res) => {
   try {
@@ -74,7 +98,7 @@ export const generateTableQR = async (req, res) => {
     const canvas = new Jimp({ width: qrSize, height: qrSize + labelHeight, color: 0xffffffff });
     canvas.composite(qrImg, 0, 0);
 
-    const font = await loadFont(QR_LABEL_FONT);
+    const font = await loadTableLabelFont();
     canvas.print({
       x: 0,
       y: qrSize,
