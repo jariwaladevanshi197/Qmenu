@@ -88,23 +88,35 @@ export const generateTableQR = async (req, res) => {
     const restro = await prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { slug: true } });
     const menuUrl = `${process.env.CLIENT_URL}/menu/${restro.slug}?table=${table.tableNumber}`;
 
-    // Generate the QR code, then print the table name below it using Jimp's
-    // bundled bitmap font (no system fonts needed, works on serverless)
+    // Generate the QR code, then print the table name and scan instruction
+    // below it using Jimp's bundled bitmap font (no system fonts needed, works on serverless)
     const qrSize = 400;
-    const labelHeight = 100;
+    const nameHeight = 90;
+    const instructionHeight = 90;
+    const totalLabelHeight = nameHeight + instructionHeight;
     const qrBuffer = await QRCode.toBuffer(menuUrl, { width: qrSize, margin: 2 });
     const qrImg = await Jimp.read(qrBuffer);
 
-    const canvas = new Jimp({ width: qrSize, height: qrSize + labelHeight, color: 0xffffffff });
+    const canvas = new Jimp({ width: qrSize, height: qrSize + totalLabelHeight, color: 0xffffffff });
     canvas.composite(qrImg, 0, 0);
 
     const font = await loadTableLabelFont();
+    // Table name
     canvas.print({
       x: 0,
       y: qrSize,
       text: { text: table.name, alignmentX: HorizontalAlign.CENTER, alignmentY: VerticalAlign.MIDDLE },
       maxWidth: qrSize,
-      maxHeight: labelHeight,
+      maxHeight: nameHeight,
+      font,
+    });
+    // Scan instruction
+    canvas.print({
+      x: 0,
+      y: qrSize + nameHeight,
+      text: { text: 'Scan QR & Order', alignmentX: HorizontalAlign.CENTER, alignmentY: VerticalAlign.MIDDLE },
+      maxWidth: qrSize,
+      maxHeight: instructionHeight,
       font,
     });
 
