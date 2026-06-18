@@ -1,15 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, QrCode, Bell, BarChart2, Palette, Users, ShieldCheck, Smartphone, ArrowRight, Check, Star, ChevronRight } from 'lucide-react';
+import { UtensilsCrossed, QrCode, Bell, BarChart2, Palette, Users, ShieldCheck, Smartphone, ArrowRight, Check, Star, ChevronRight, ChefHat, Database, MessageSquare, Globe } from 'lucide-react';
 
 const FEATURES = [
   { icon: QrCode,      title: 'QR Code Menus',        desc: 'Each table gets a unique QR code. Customers scan and browse your full digital menu instantly.',  color: '#f97316' },
   { icon: Bell,        title: 'Real-time Orders',      desc: 'Orders appear live on your dashboard the moment customers place them. No delays.',              color: '#3b82f6' },
+  { icon: ChefHat,     title: 'Kitchen Display',       desc: 'A dedicated live kitchen screen with auto-print tickets so the kitchen never misses an order.', color: '#ef4444' },
   { icon: Palette,     title: 'Custom Themes',         desc: 'Design your menu with your brand colors, fonts and style. Make it uniquely yours.',             color: '#8b5cf6' },
   { icon: BarChart2,   title: 'Sales Analytics',       desc: 'Daily revenue charts, top-selling items, hourly trends. Know your business inside out.',        color: '#10b981' },
+  { icon: Database,    title: 'Customer CRM',          desc: 'Every customer is saved with order history and total spend. Search, filter and export to CSV.', color: '#14b8a6' },
   { icon: Users,       title: 'Staff Management',      desc: 'Add multiple staff accounts with role-based access. Manager, Cashier, and Staff roles.',        color: '#f59e0b' },
-  { icon: Smartphone,  title: 'Mobile First',          desc: 'Customers browse on their phone. Restaurant admin works perfectly on any screen size.',         color: '#ec4899' },
+  { icon: MessageSquare, title: 'Customer Feedback',   desc: 'Collect ratings and feedback from diners after every visit, then export and act on it.',        color: '#a855f7' },
+  { icon: Smartphone,  title: 'Fully Responsive',      desc: 'A polished experience on phones, tablets, laptops and large 4K displays — for staff and guests.', color: '#ec4899' },
   { icon: ShieldCheck, title: 'Multi-language',        desc: 'Display menu in English, Gujarati and Hindi. Auto-translation when adding items.',              color: '#06b6d4' },
   { icon: Bell,        title: 'Waiter Call System',    desc: 'Customers tap one button to call a waiter. Staff get instant alerts with table number.',        color: '#84cc16' },
+  { icon: Globe,       title: 'Dedicated Website',     desc: 'Get a branded restaurant website with your menu, location, hours and social links.',           color: '#6366f1' },
 ];
 
 const STEPS = [
@@ -22,15 +26,15 @@ const STEPS = [
 const PLANS = [
   {
     name: 'Mega',
-    price: '₹1,999',
+    price: '₹1,499',
     period: '/month',
     color: '#8b5cf6',
     popular: true,
-    features: ['QR code digital menu', 'Unlimited tables', 'Live order management', 'Custom theme & branding', 'Full sales reports & analytics', 'Staff management (10 users)', 'Waiter call system', 'Invoice & printing', 'PDF menu upload', 'Customer feedback system'],
+    features: ['QR code digital menu', 'Unlimited tables', 'Live order management', 'Custom theme & branding', 'Full sales reports & analytics', 'Staff management (10 users)', 'Waiter call system', 'Invoice & printing', 'PDF menu upload', 'Customer feedback system', 'Customer CRM & CSV export'],
   },
   {
     name: 'Mega + Web',
-    price: '₹2,999',
+    price: '₹2,499',
     period: '/month',
     color: '#f97316',
     features: ['Everything in Mega', 'Dedicated restaurant website', 'Online presence & SEO', 'Custom domain support', 'Priority support', 'Unlimited staff accounts', 'Advanced analytics dashboard', 'Multi-branch support'],
