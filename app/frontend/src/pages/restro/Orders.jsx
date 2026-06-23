@@ -262,6 +262,14 @@ export default function RestroOrders() {
                 <span className="font-bold text-gray-900 text-base">₹{orderTotal}</span>
               </div>
 
+              {/* UTR for UPI orders */}
+              {order.paymentmethod === 'UPI' && order.utrnumber && (
+                <div className="flex items-center justify-between text-xs mb-3 px-2 py-1.5 rounded-lg bg-amber-50 border border-amber-200">
+                  <span className="text-amber-700 font-medium">UTR: <span className="font-mono font-bold">{order.utrnumber}</span></span>
+                  <span className="text-amber-500 text-[10px]">Verify in UPI app</span>
+                </div>
+              )}
+
               {/* Actions */}
               <div className="flex gap-2">
                 {order.status === 'PENDING' && (

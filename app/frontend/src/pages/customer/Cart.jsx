@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../lib/api';
 import { useCartStore } from '../../store/cart';
 import { useTheme } from '../../hooks/useTheme';
+import { buildUpiAppLinks } from '../../lib/upi';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
-import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag, Copy, X } from 'lucide-react';
 
 export default function CustomerCart() {
   const { slug } = useParams();
@@ -16,6 +17,8 @@ export default function CustomerCart() {
   const [form, setForm] = useState({ customername: '', customermob: '' });
   const [placing, setPlacing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('COUNTER');
+  const [showPaymentSheet, setShowPaymentSheet] = useState(false);
+  const [utrNumber, setUtrNumber] = useState('');
   const { items, updateQty, removeItem, clearCart, total } = useCartStore();
 
   const { data: restro } = useQuery({
@@ -25,11 +28,38 @@ export default function CustomerCart() {
 
   const th = useTheme(restro?.theme);
 
-  const placeOrder = async () => {
-    if (!form.customername.trim()) return toast.error('Please enter your name');
-    if (!form.customermob.trim()) return toast.error('Please enter your mobile number');
-    if (!/^\d{10}$/.test(form.customermob.trim())) return toast.error('Please enter a valid 10-digit mobile number');
-    if (!items.length) return toast.error('Cart is empty');
+  const subtotal = total();
+  const discount = restro?.discount ? (subtotal * restro.discount) / 100 : 0;
+  const sc = restro?.servicecharge ? ((subtotal - discount) * restro.servicecharge) / 100 : 0;
+  const grand = subtotal - discount + sc;
+
+  const upiAppLinks = restro?.upiId
+    ? buildUpiAppLinks({
+        upiId: restro.upiId,
+        payeeName: restro.restroname,
+        amount: grand.toFixed(2),
+        note: 'Food Order',
+      })
+    : [];
+
+  const validateForm = () => {
+    if (!form.customername.trim()) { toast.error('Please enter your name'); return false; }
+    if (!form.customermob.trim()) { toast.error('Please enter your mobile number'); return false; }
+    if (!/^\d{10}$/.test(form.customermob.trim())) { toast.error('Please enter a valid 10-digit mobile number'); return false; }
+    if (!items.length) { toast.error('Cart is empty'); return false; }
+    return true;
+  };
+
+  const handlePlaceOrder = () => {
+    if (!validateForm()) return;
+    if (paymentMethod === 'UPI' && restro?.upiId) {
+      setShowPaymentSheet(true);
+    } else {
+      submitOrder(null);
+    }
+  };
+
+  const submitOrder = async (utr) => {
     setPlacing(true);
     try {
       const { data } = await api.post(`/customer/restro/${slug}/order`, {
@@ -38,21 +68,25 @@ export default function CustomerCart() {
         customermob: form.customermob,
         items: items.map((i) => ({ menuitemid: i.menuitemid, quantity: i.quantity })),
         paymentmethod: paymentMethod,
+        utrnumber: utr || undefined,
       });
       clearCart();
       toast.success('Order placed!');
       navigate(`/menu/${slug}/order/${data.ordercode}`);
     } catch (e) {
       toast.error(e.response?.data?.error || 'Failed to place order');
-    } finally { setPlacing(false); }
+    } finally {
+      setPlacing(false);
+    }
+  };
+
+  const handleConfirmPayment = () => {
+    if (!utrNumber.trim()) { toast.error('Please enter your UTR / Transaction ID'); return; }
+    if (!/^\d{12}$/.test(utrNumber.trim())) { toast.error('UTR must be a 12-digit number'); return; }
+    submitOrder(utrNumber.trim());
   };
 
   if (!restro) return <PageLoader />;
-
-  const subtotal = total();
-  const discount = restro.discount ? (subtotal * restro.discount) / 100 : 0;
-  const sc = restro.servicecharge ? ((subtotal - discount) * restro.servicecharge) / 100 : 0;
-  const grand = subtotal - discount + sc;
 
   return (
     <div className="min-h-screen pb-24" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif`, color: th.text }}>
@@ -180,8 +214,83 @@ export default function CustomerCart() {
           <div className="max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto">
             <button className="w-full py-3 text-sm font-bold shadow-lg"
               style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}
-              onClick={placeOrder} disabled={placing}>
+              onClick={handlePlaceOrder} disabled={placing}>
               {placing ? 'Placing Order...' : `Place Order · ₹${grand.toFixed(2)}`}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* UPI Payment Bottom Sheet */}
+      {showPaymentSheet && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowPaymentSheet(false)} />
+
+          <div className="relative rounded-t-2xl p-5 max-h-[90vh] overflow-y-auto"
+            style={{ backgroundColor: th.bg }}>
+            {/* Handle + Close */}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <p className="font-bold text-lg" style={{ color: th.text }}>Pay via UPI</p>
+                <p className="text-sm opacity-60" style={{ color: th.text }}>Amount: <span className="font-bold" style={{ color: th.primary }}>₹{grand.toFixed(2)}</span></p>
+              </div>
+              <button onClick={() => setShowPaymentSheet(false)}
+                className="p-2" style={{ backgroundColor: `${th.text}10`, borderRadius: th.radius }}>
+                <X size={16} style={{ color: th.text }} />
+              </button>
+            </div>
+
+            {/* Step 1: Pay */}
+            <p className="text-xs font-bold uppercase opacity-50 mb-2" style={{ color: th.text }}>Step 1 — Pay using any UPI app</p>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {upiAppLinks.map((app) => (
+                <a key={app.name} href={app.href}
+                  className="py-3 text-sm font-semibold text-center border"
+                  style={{
+                    borderRadius: th.radius,
+                    borderColor: `${th.text}15`,
+                    backgroundColor: app.color,
+                    color: app.textColor,
+                  }}>
+                  {app.name}
+                </a>
+              ))}
+            </div>
+
+            {/* UPI ID */}
+            <div className="flex items-center justify-between gap-2 px-3 py-2 mb-4"
+              style={{ backgroundColor: `${th.text}08`, borderRadius: th.radius }}>
+              <div>
+                <p className="text-[10px] opacity-50 uppercase font-semibold" style={{ color: th.text }}>UPI ID</p>
+                <p className="text-sm font-bold" style={{ color: th.text }}>{restro.upiId}</p>
+              </div>
+              <button onClick={() => { navigator.clipboard.writeText(restro.upiId); toast.success('UPI ID copied'); }}
+                className="p-2" style={{ backgroundColor: `${th.text}10`, borderRadius: th.radius }}>
+                <Copy size={14} style={{ color: th.text }} />
+              </button>
+            </div>
+
+            {/* Step 2: Enter UTR */}
+            <p className="text-xs font-bold uppercase opacity-50 mb-2" style={{ color: th.text }}>Step 2 — Enter Transaction ID (UTR) *</p>
+            <p className="text-xs opacity-50 mb-2" style={{ color: th.text }}>
+              After paying, open your UPI app → tap the transaction → copy the 12-digit UTR / Reference number.
+            </p>
+            <input
+              className="w-full px-3 py-2.5 text-sm outline-none border mb-4"
+              placeholder="e.g. 123456789012"
+              type="tel"
+              inputMode="numeric"
+              maxLength={12}
+              value={utrNumber}
+              onChange={(e) => setUtrNumber(e.target.value.replace(/\D/g, ''))}
+              style={{ backgroundColor: `${th.text}06`, borderColor: `${th.text}15`, borderRadius: th.radius, color: th.text }}
+            />
+
+            <button className="w-full py-3 text-sm font-bold shadow-lg"
+              style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius, opacity: utrNumber.length === 12 ? 1 : 0.5 }}
+              onClick={handleConfirmPayment} disabled={placing || utrNumber.length !== 12}>
+              {placing ? 'Placing Order...' : 'Confirm Payment & Place Order'}
             </button>
           </div>
         </div>

@@ -191,6 +191,7 @@ model Order {
   grandtotal    Float       @default(0)
   paymentmethod PaymentMethod @default(COUNTER)
   paymentstatus PaymentStatus @default(UNPAID)
+  utrnumber     String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 

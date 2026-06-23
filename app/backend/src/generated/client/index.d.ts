@@ -10240,6 +10240,7 @@ export namespace Prisma {
     grandtotal: number | null
     paymentmethod: $Enums.PaymentMethod | null
     paymentstatus: $Enums.PaymentStatus | null
+    utrnumber: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10259,6 +10260,7 @@ export namespace Prisma {
     grandtotal: number | null
     paymentmethod: $Enums.PaymentMethod | null
     paymentstatus: $Enums.PaymentStatus | null
+    utrnumber: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10278,6 +10280,7 @@ export namespace Prisma {
     grandtotal: number
     paymentmethod: number
     paymentstatus: number
+    utrnumber: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10321,6 +10324,7 @@ export namespace Prisma {
     grandtotal?: true
     paymentmethod?: true
     paymentstatus?: true
+    utrnumber?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10340,6 +10344,7 @@ export namespace Prisma {
     grandtotal?: true
     paymentmethod?: true
     paymentstatus?: true
+    utrnumber?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10359,6 +10364,7 @@ export namespace Prisma {
     grandtotal?: true
     paymentmethod?: true
     paymentstatus?: true
+    utrnumber?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10465,6 +10471,7 @@ export namespace Prisma {
     grandtotal: number
     paymentmethod: $Enums.PaymentMethod
     paymentstatus: $Enums.PaymentStatus
+    utrnumber: string | null
     createdAt: Date
     updatedAt: Date
     _count: OrderCountAggregateOutputType | null
@@ -10503,6 +10510,7 @@ export namespace Prisma {
     grandtotal?: boolean
     paymentmethod?: boolean
     paymentstatus?: boolean
+    utrnumber?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
@@ -10526,6 +10534,7 @@ export namespace Prisma {
     grandtotal?: boolean
     paymentmethod?: boolean
     paymentstatus?: boolean
+    utrnumber?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
@@ -10547,6 +10556,7 @@ export namespace Prisma {
     grandtotal?: boolean
     paymentmethod?: boolean
     paymentstatus?: boolean
+    utrnumber?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -10584,6 +10594,7 @@ export namespace Prisma {
       grandtotal: number
       paymentmethod: $Enums.PaymentMethod
       paymentstatus: $Enums.PaymentStatus
+      utrnumber: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["order"]>
@@ -10996,6 +11007,7 @@ export namespace Prisma {
     readonly grandtotal: FieldRef<"Order", 'Float'>
     readonly paymentmethod: FieldRef<"Order", 'PaymentMethod'>
     readonly paymentstatus: FieldRef<"Order", 'PaymentStatus'>
+    readonly utrnumber: FieldRef<"Order", 'String'>
     readonly createdAt: FieldRef<"Order", 'DateTime'>
     readonly updatedAt: FieldRef<"Order", 'DateTime'>
   }
@@ -17733,6 +17745,7 @@ export namespace Prisma {
     grandtotal: 'grandtotal',
     paymentmethod: 'paymentmethod',
     paymentstatus: 'paymentstatus',
+    utrnumber: 'utrnumber',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -18759,6 +18772,7 @@ export namespace Prisma {
     grandtotal?: FloatFilter<"Order"> | number
     paymentmethod?: EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
+    utrnumber?: StringNullableFilter<"Order"> | string | null
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     restaurant?: XOR<RestaurantRelationFilter, RestaurantWhereInput>
@@ -18781,6 +18795,7 @@ export namespace Prisma {
     grandtotal?: SortOrder
     paymentmethod?: SortOrder
     paymentstatus?: SortOrder
+    utrnumber?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     restaurant?: RestaurantOrderByWithRelationInput
@@ -18806,6 +18821,7 @@ export namespace Prisma {
     grandtotal?: FloatFilter<"Order"> | number
     paymentmethod?: EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
+    utrnumber?: StringNullableFilter<"Order"> | string | null
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     restaurant?: XOR<RestaurantRelationFilter, RestaurantWhereInput>
@@ -18828,6 +18844,7 @@ export namespace Prisma {
     grandtotal?: SortOrder
     paymentmethod?: SortOrder
     paymentstatus?: SortOrder
+    utrnumber?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrderCountOrderByAggregateInput
@@ -18855,6 +18872,7 @@ export namespace Prisma {
     grandtotal?: FloatWithAggregatesFilter<"Order"> | number
     paymentmethod?: EnumPaymentMethodWithAggregatesFilter<"Order"> | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusWithAggregatesFilter<"Order"> | $Enums.PaymentStatus
+    utrnumber?: StringNullableWithAggregatesFilter<"Order"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
   }
@@ -20189,6 +20207,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     restaurant: RestaurantCreateNestedOneWithoutOrdersInput
@@ -20211,6 +20230,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -20228,6 +20248,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     restaurant?: RestaurantUpdateOneRequiredWithoutOrdersNestedInput
@@ -20250,6 +20271,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -20270,6 +20292,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20286,6 +20309,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20305,6 +20329,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21618,6 +21643,7 @@ export namespace Prisma {
     grandtotal?: SortOrder
     paymentmethod?: SortOrder
     paymentstatus?: SortOrder
+    utrnumber?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -21648,6 +21674,7 @@ export namespace Prisma {
     grandtotal?: SortOrder
     paymentmethod?: SortOrder
     paymentstatus?: SortOrder
+    utrnumber?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -21667,6 +21694,7 @@ export namespace Prisma {
     grandtotal?: SortOrder
     paymentmethod?: SortOrder
     paymentstatus?: SortOrder
+    utrnumber?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -23452,6 +23480,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     table?: TableCreateNestedOneWithoutOrdersInput
@@ -23472,6 +23501,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -23806,6 +23836,7 @@ export namespace Prisma {
     grandtotal?: FloatFilter<"Order"> | number
     paymentmethod?: EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
+    utrnumber?: StringNullableFilter<"Order"> | string | null
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
   }
@@ -25126,6 +25157,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     restaurant: RestaurantCreateNestedOneWithoutOrdersInput
@@ -25146,6 +25178,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -25673,6 +25706,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     restaurant: RestaurantCreateNestedOneWithoutOrdersInput
@@ -25694,6 +25728,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -25756,6 +25791,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     restaurant?: RestaurantUpdateOneRequiredWithoutOrdersNestedInput
@@ -25777,6 +25813,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -26970,6 +27007,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -27128,6 +27166,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     table?: TableUpdateOneWithoutOrdersNestedInput
@@ -27148,6 +27187,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -27167,6 +27207,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27630,6 +27671,7 @@ export namespace Prisma {
     grandtotal?: number
     paymentmethod?: $Enums.PaymentMethod
     paymentstatus?: $Enums.PaymentStatus
+    utrnumber?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -27653,6 +27695,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     restaurant?: RestaurantUpdateOneRequiredWithoutOrdersNestedInput
@@ -27673,6 +27716,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -27692,6 +27736,7 @@ export namespace Prisma {
     grandtotal?: FloatFieldUpdateOperationsInput | number
     paymentmethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     paymentstatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    utrnumber?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

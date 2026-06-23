@@ -51,7 +51,7 @@ export const placeOrder = async (req, res) => {
     const restro = await prisma.restaurant.findUnique({ where: { slug: req.params.slug }, select: { id: true, status: true, printNodeApiKey: true, printNodePrinterId: true, discount: true, servicecharge: true } });
     if (!restro || !restro.status) return res.status(404).json({ error: 'Restaurant not found' });
 
-    const { tableid, customername, customermob, items, paymentmethod } = req.body;
+    const { tableid, customername, customermob, items, paymentmethod, utrnumber } = req.body;
     if (!customername?.trim()) return res.status(400).json({ error: 'Name is required' });
     if (!customermob?.trim() || !/^\d{10}$/.test(customermob.trim())) return res.status(400).json({ error: 'A valid 10-digit mobile number is required' });
     if (!items?.length) return res.status(400).json({ error: 'No items provided' });
@@ -95,6 +95,7 @@ export const placeOrder = async (req, res) => {
           servicecharge: scAmt,
           grandtotal,
           paymentmethod: paymentmethod === 'UPI' ? 'UPI' : 'COUNTER',
+          utrnumber: paymentmethod === 'UPI' ? (utrnumber?.trim() || null) : null,
           items: { create: enriched },
         },
         include: { items: true, table: true },

@@ -92,7 +92,7 @@ export const generateTableQR = async (req, res) => {
     // below it using Jimp's bundled bitmap font (no system fonts needed, works on serverless)
     const qrSize = 400;
     const nameHeight = 90;
-    const instructionHeight = 90;
+    const instructionHeight = 160;
     const totalLabelHeight = nameHeight + instructionHeight;
     const qrBuffer = await QRCode.toBuffer(menuUrl, { width: qrSize, margin: 2 });
     const qrImg = await Jimp.read(qrBuffer);

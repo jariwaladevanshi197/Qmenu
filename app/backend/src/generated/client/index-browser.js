@@ -256,6 +256,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   grandtotal: 'grandtotal',
   paymentmethod: 'paymentmethod',
   paymentstatus: 'paymentstatus',
+  utrnumber: 'utrnumber',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
