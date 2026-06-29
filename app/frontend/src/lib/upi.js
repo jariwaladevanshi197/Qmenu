@@ -1,14 +1,12 @@
 function buildParams({ upiId, payeeName, amount, note }) {
-  return new URLSearchParams({
-    pa: upiId,
-    pn: payeeName,
-    am: amount,
-    cu: 'INR',
-    tn: note,
-    mc: '0000',
-    mode: '02',
-    purpose: '00',
-  }).toString();
+  // URLSearchParams encodes '@' as '%40' which breaks UPI VPA lookup.
+  // Build the query string manually: pa must never be percent-encoded,
+  // pn/tn use encodeURIComponent (spaces → %20, not +).
+  const pa = upiId.trim();
+  const pn = encodeURIComponent(payeeName.trim());
+  const tn = encodeURIComponent(note);
+  // amount must be a plain decimal string — no encoding needed
+  return `pa=${pa}&pn=${pn}&am=${amount}&cu=INR&tn=${tn}`;
 }
 
 export function buildUpiLink(opts) {
