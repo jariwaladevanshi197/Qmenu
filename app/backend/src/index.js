@@ -9,10 +9,10 @@ dotenv.config();
 const httpServer = createServer(app);
 
 const allowedOrigins = [
-  process.env.CLIENT_URL,
+  ...(process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',') : []),
   'http://localhost:5173',
   'http://localhost:5174',
-].filter(Boolean);
+].map((o) => o && o.trim()).filter(Boolean);
 
 const io = new Server(httpServer, {
   cors: { origin: allowedOrigins, methods: ['GET', 'POST'] },

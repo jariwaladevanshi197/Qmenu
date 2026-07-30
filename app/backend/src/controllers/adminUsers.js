@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import { serverError } from '../utils/http.js';
 import { prisma } from '../lib/prisma.js';
 import { ALL_PERMISSIONS, resolvePermissions } from '../utils/permissions.js';
 
@@ -25,7 +26,7 @@ export const getAdmins = async (req, res) => {
     });
     res.json(admins.map(formatAdmin));
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -47,7 +48,7 @@ export const createAdmin = async (req, res) => {
     });
     res.status(201).json(formatAdmin(admin));
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -92,7 +93,7 @@ export const updateAdmin = async (req, res) => {
     });
     res.json(formatAdmin(updated));
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -107,6 +108,6 @@ export const deleteAdmin = async (req, res) => {
     await prisma.admin.delete({ where: { id } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

@@ -1,4 +1,5 @@
 ﻿import { prisma } from '../lib/prisma.js';
+import { serverError } from '../utils/http.js';
 import QRCode from 'qrcode';
 import { Jimp, JimpMime, HorizontalAlign, VerticalAlign } from 'jimp';
 import { saveToSupabase } from '../middleware/upload.js';
@@ -50,7 +51,7 @@ export const getProfile = async (req, res) => {
     const { password: _pw, ...safe } = restro;
     res.json(safe);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -66,7 +67,7 @@ export const updateProfile = async (req, res) => {
     const restro = await prisma.restaurant.update({ where: { id: req.user.id }, data });
     res.json(restro);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -76,7 +77,7 @@ export const updateOtp = async (req, res) => {
     await prisma.restaurant.update({ where: { id: req.user.id }, data: { restrootp: otp } });
     res.json({ otp });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -129,7 +130,7 @@ export const generateTableQR = async (req, res) => {
     await prisma.table.update({ where: { id: table.id }, data: { qrimage: qrPath } });
     res.json({ qrimage: qrPath, url: menuUrl });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -140,7 +141,7 @@ export const uploadPdfMenu = async (req, res) => {
     await prisma.restaurant.update({ where: { id: req.user.id }, data: { pdf: pdfPath } });
     res.json({ pdf: pdfPath });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -151,7 +152,7 @@ export const uploadUpiQr = async (req, res) => {
     await prisma.restaurant.update({ where: { id: req.user.id }, data: { upiQrImage: qrPath } });
     res.json({ upiQrImage: qrPath });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -175,6 +176,6 @@ export const getStats = async (req, res) => {
 
     res.json({ totalOrders, todayOrders, totalRevenue: totalRevenue._sum.grandtotal || 0, pendingOrders, categories, items, tables, feedback, waiterRequests });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

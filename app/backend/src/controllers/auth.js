@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import { serverError } from '../utils/http.js';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma.js';
 import { resolvePermissions } from '../utils/permissions.js';
@@ -24,7 +25,7 @@ export const superAdminLogin = async (req, res) => {
     const token = signToken({ id: admin.id, role: admin.role, username: admin.username, isRoot: admin.isRoot, permissions: perms });
     res.json({ token, user: { id: admin.id, fullname: admin.fullname, username: admin.username, email: admin.email, role: admin.role, isRoot: admin.isRoot, permissions: perms } });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -47,7 +48,7 @@ export const restroLogin = async (req, res) => {
       user: { id: restro.id, restroname: restro.restroname, slug: restro.slug, subtype: restro.subtype, role: 'restro' },
     });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -66,6 +67,6 @@ export const getMe = async (req, res) => {
     });
     res.json({ ...restro, role: 'restro' });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

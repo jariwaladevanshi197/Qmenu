@@ -1,4 +1,5 @@
 ﻿import bcrypt from 'bcryptjs';
+import { serverError } from '../utils/http.js';
 import { prisma } from '../lib/prisma.js';
 import { generateSlug } from '../utils/helpers.js';
 import { saveToSupabase } from '../middleware/upload.js';
@@ -13,7 +14,7 @@ export const getDashboardStats = async (_req, res) => {
     ]);
     res.json({ total, active, inactive: total - active, expiringSoon, totalRevenue: totalRevenue._sum.price || 0 });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -31,7 +32,7 @@ export const getRestaurants = async (req, res) => {
     });
     res.json(restaurants);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -72,7 +73,7 @@ export const createRestaurant = async (req, res) => {
 
     res.status(201).json(restro);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -86,7 +87,7 @@ export const updateRestaurant = async (req, res) => {
     const restro = await prisma.restaurant.update({ where: { id: parseInt(id) }, data });
     res.json(restro);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -97,7 +98,7 @@ export const toggleStatus = async (req, res) => {
     const updated = await prisma.restaurant.update({ where: { id: parseInt(id) }, data: { status: current.status === 1 ? 0 : 1 } });
     res.json(updated);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -109,7 +110,7 @@ export const updatePassword = async (req, res) => {
     await prisma.restaurant.update({ where: { id: parseInt(id) }, data: { password: hashed } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -136,7 +137,7 @@ export const updatePlan = async (req, res) => {
 
     res.json(updated);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -148,7 +149,7 @@ export const getPayments = async (req, res) => {
     });
     res.json(payments);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -157,7 +158,7 @@ export const getThemes = async (_req, res) => {
     const themes = await prisma.theme.findMany();
     res.json(themes);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -181,7 +182,7 @@ export const createTheme = async (req, res) => {
     const theme = await prisma.theme.create({ data: themeFields(req.body) });
     res.status(201).json(theme);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -193,7 +194,7 @@ export const updateTheme = async (req, res) => {
     });
     res.json(theme);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -202,6 +203,6 @@ export const deleteTheme = async (req, res) => {
     await prisma.theme.delete({ where: { id: parseInt(req.params.id) } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

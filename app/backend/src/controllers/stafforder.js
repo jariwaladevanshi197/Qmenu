@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma.js';
+import { serverError } from '../utils/http.js';
 import { emitNewOrder } from '../utils/realtime.js';
 import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
 import { printKitchenOrder } from '../utils/printOrder.js';
@@ -48,6 +49,6 @@ export const placeStaffOrder = async (req, res) => {
     }).then((restro) => printKitchenOrder(order, restro || {}));
     res.status(201).json(order);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

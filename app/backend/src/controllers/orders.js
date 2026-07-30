@@ -1,4 +1,5 @@
 ﻿import { prisma } from '../lib/prisma.js';
+import { serverError } from '../utils/http.js';
 import { emitOrderUpdate } from '../utils/realtime.js';
 import { generateOrderCode, allocateOrderNumber } from '../utils/helpers.js';
 
@@ -11,7 +12,7 @@ export const getActiveOrders = async (req, res) => {
     });
     res.json(orders);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -25,7 +26,7 @@ export const confirmOrder = async (req, res) => {
     emitOrderUpdate(req.app.get('io'), req.user.id, updated);
     res.json(updated);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -71,7 +72,7 @@ export const completeOrder = async (req, res) => {
     emitOrderUpdate(req.app.get('io'), req.user.id, { ...order, status: 'COMPLETED' });
     res.json(history);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -85,7 +86,7 @@ export const markOrderPaid = async (req, res) => {
     emitOrderUpdate(req.app.get('io'), req.user.id, updated);
     res.json(updated);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -98,7 +99,7 @@ export const cancelOrder = async (req, res) => {
     emitOrderUpdate(req.app.get('io'), req.user.id, { id: parseInt(req.params.id), status: 'CANCELLED' });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -133,7 +134,7 @@ export const mergeOrders = async (req, res) => {
     emitOrderUpdate(req.app.get('io'), req.user.id, merged);
     res.json(merged);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -146,7 +147,7 @@ export const getSingleHistory = async (req, res) => {
     if (!order) return res.status(404).json({ error: 'Order not found' });
     res.json(order);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -164,7 +165,7 @@ export const getOrderHistory = async (req, res) => {
     });
     res.json(history);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -227,7 +228,7 @@ export const getReport = async (req, res) => {
       hourly,
     });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -266,7 +267,7 @@ export const getCustomers = async (req, res) => {
     const customers = [...map.values()].sort((a, b) => new Date(b.lastOrderAt) - new Date(a.lastOrderAt));
     res.json(customers);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -278,7 +279,7 @@ export const getFeedback = async (req, res) => {
     });
     res.json(feedback);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -287,7 +288,7 @@ export const deleteFeedback = async (req, res) => {
     await prisma.feedback.deleteMany({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -300,7 +301,7 @@ export const getWaiterRequests = async (req, res) => {
     });
     res.json(requests);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -312,6 +313,6 @@ export const dismissWaiterRequest = async (req, res) => {
     });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
