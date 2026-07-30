@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma.js';
+import { serverError } from '../utils/http.js';
 import { saveToSupabase } from '../middleware/upload.js';
 
 const WEBSITE_FIELDS = {
@@ -37,7 +38,7 @@ export const getWebsite = async (req, res) => {
 
     res.json({ ...restro, categories });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -54,7 +55,7 @@ export const updateWebsite = async (req, res) => {
     });
     res.json(restro);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -71,7 +72,7 @@ export const toggleWebsite = async (req, res) => {
     });
     res.json(updated);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -83,7 +84,7 @@ export const uploadBanner = async (req, res) => {
     await prisma.restaurant.update({ where: { id: parseInt(req.params.id) }, data: { bannerImage: url } });
     res.json({ bannerImage: url });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -95,7 +96,7 @@ export const uploadAboutImage = async (req, res) => {
     await prisma.restaurant.update({ where: { id: parseInt(req.params.id) }, data: { aboutImage: url } });
     res.json({ aboutImage: url });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -110,7 +111,7 @@ export const uploadGallery = async (req, res) => {
     await prisma.restaurant.update({ where: { id: parseInt(req.params.id) }, data: { galleryImages: JSON.stringify(updated) } });
     res.json({ galleryImages: updated });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -124,7 +125,7 @@ export const deleteGalleryImage = async (req, res) => {
     await prisma.restaurant.update({ where: { id: parseInt(req.params.id) }, data: { galleryImages: JSON.stringify(updated) } });
     res.json({ galleryImages: updated });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -137,6 +138,6 @@ export const getMyWebsite = async (req, res) => {
     });
     res.json(restro);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

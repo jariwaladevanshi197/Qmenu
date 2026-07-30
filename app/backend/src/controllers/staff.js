@@ -1,4 +1,5 @@
 ﻿import bcrypt from 'bcryptjs';
+import { serverError } from '../utils/http.js';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma.js';
 
@@ -15,7 +16,7 @@ export const getStaffByRestro = async (req, res) => {
       orderBy: { createdAt: 'desc' },
     });
     res.json(staff);
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 export const createStaff = async (req, res) => {
@@ -37,7 +38,7 @@ export const createStaff = async (req, res) => {
       data: { restroid: parseInt(restroid), fullname, username, password: hashed, role: role || 'staff' },
     });
     res.status(201).json({ id: staff.id, fullname: staff.fullname, username: staff.username, role: staff.role });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 export const updateStaff = async (req, res) => {
@@ -51,14 +52,14 @@ export const updateStaff = async (req, res) => {
       select: { id: true, fullname: true, username: true, role: true, status: true },
     });
     res.json(staff);
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 export const deleteStaff = async (req, res) => {
   try {
     await prisma.staff.delete({ where: { id: parseInt(req.params.id) } });
     res.json({ success: true });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 // ── Page permission defaults per role ────────────────────────────────────────
@@ -83,7 +84,7 @@ export const getMyStaff = async (req, res) => {
       prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { maxStaff: true } }),
     ]);
     res.json({ staff, maxStaff: restro?.maxStaff || 5, used: staff.length });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 export const createMyStaff = async (req, res) => {
@@ -108,7 +109,7 @@ export const createMyStaff = async (req, res) => {
       data: { restroid: req.user.id, fullname, username, password: hashed, role: staffRole, permissions: resolvedPermissions },
     });
     res.status(201).json({ id: staff.id, fullname: staff.fullname, username: staff.username, role: staff.role, permissions: staff.permissions });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 export const updateMyStaff = async (req, res) => {
@@ -130,7 +131,7 @@ export const updateMyStaff = async (req, res) => {
       select: { id: true, fullname: true, username: true, role: true, status: true, permissions: true },
     });
     res.json(staff);
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };
 
 // â”€â”€ Staff login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -166,5 +167,5 @@ export const staffLogin = async (req, res) => {
         staffName: staff.fullname, staffRole: staff.role, staffPermissions,
       },
     });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  } catch (e) { serverError(res, e); }
 };

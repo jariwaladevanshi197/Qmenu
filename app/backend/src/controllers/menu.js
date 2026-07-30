@@ -1,4 +1,5 @@
 ﻿import { prisma } from '../lib/prisma.js';
+import { serverError } from '../utils/http.js';
 import { saveToSupabase } from '../middleware/upload.js';
 
 // â”€â”€ Categories â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -12,7 +13,7 @@ export const getCategories = async (req, res) => {
     });
     res.json(categories);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -29,7 +30,7 @@ export const createCategory = async (req, res) => {
     });
     res.status(201).json(cat);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -43,7 +44,7 @@ export const updateCategory = async (req, res) => {
     });
     res.json(cat);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -52,7 +53,7 @@ export const deleteCategory = async (req, res) => {
     await prisma.category.deleteMany({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -66,7 +67,7 @@ export const getItems = async (req, res) => {
     const items = await prisma.menuItem.findMany({ where, orderBy: { id: 'asc' } });
     res.json(items);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -91,7 +92,7 @@ export const createItem = async (req, res) => {
     });
     res.status(201).json(item);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -112,7 +113,7 @@ export const updateItem = async (req, res) => {
     const item = await prisma.menuItem.findUnique({ where: { id: parseInt(id) } });
     res.json(item);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -121,7 +122,7 @@ export const deleteItem = async (req, res) => {
     await prisma.menuItem.deleteMany({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -132,7 +133,7 @@ export const getTables = async (req, res) => {
     const tables = await prisma.table.findMany({ where: { restroid: req.user.id }, orderBy: { id: 'asc' } });
     res.json(tables);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -144,7 +145,7 @@ export const createTable = async (req, res) => {
     const table = await prisma.table.create({ data: { restroid: req.user.id, name, tableNumber: count + 1 } });
     res.status(201).json(table);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -155,7 +156,7 @@ export const updateTable = async (req, res) => {
     await prisma.table.updateMany({ where: { id: parseInt(id), restroid: req.user.id }, data: { name } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };
 
@@ -164,6 +165,6 @@ export const deleteTable = async (req, res) => {
     await prisma.table.deleteMany({ where: { id: parseInt(req.params.id), restroid: req.user.id } });
     res.json({ success: true });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    serverError(res, e);
   }
 };

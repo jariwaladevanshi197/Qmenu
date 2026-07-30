@@ -36,8 +36,9 @@ export default function CustomerMyOrder() {
     ? buildUpiAppLinks({
         upiId: restro.upiId,
         payeeName: restro.restroname,
-        amount: order.grandtotal,
+        amount: Number(order.grandtotal).toFixed(2),
         note: `Order ${order.ordercode}`,
+        tr: order.ordercode,
       })
     : [];
 

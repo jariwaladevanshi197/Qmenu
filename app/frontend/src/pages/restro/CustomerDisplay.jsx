@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import api from '../../lib/api';
-import { subscribeToReadyOrders } from '../../lib/realtime';
-import { supabase } from '../../lib/supabase';
 import { formatOrderToken } from '../../lib/orderToken';
 
 // Public page — no auth needed. Open on a TV / tablet at the counter.
@@ -11,15 +9,12 @@ import { formatOrderToken } from '../../lib/orderToken';
 
 export default function CustomerDisplay() {
   const { slug } = useParams();
-  const qc = useQueryClient();
-  const [restroid, setRestroid] = useState(null);
   const [restroName, setRestroName] = useState('');
   const [flash, setFlash] = useState(null); // newly added order code to highlight
 
   // Fetch restaurant info
   useEffect(() => {
     api.get(`/customer/restro/${slug}`).then((r) => {
-      setRestroid(r.data.id);
       setRestroName(r.data.restroname);
     }).catch(() => {});
   }, [slug]);
@@ -32,16 +27,24 @@ export default function CustomerDisplay() {
     enabled: !!slug,
   });
 
-  // Realtime: flash new order code when order is completed
+  // Flash a newly-ready order token. Derived from the polled `readyOrders` list:
+  // when an order number we haven't seen appears, highlight it briefly.
+  const seenReady = useRef(new Set());
+  const firstReady = useRef(true);
   useEffect(() => {
-    if (!restroid) return;
-    const unsub = subscribeToReadyOrders(restroid, (newEntry) => {
-      qc.invalidateQueries(['ready-orders', slug]);
-      setFlash(newEntry.orderNumber);
-      setTimeout(() => setFlash(null), 4000);
-    });
-    return unsub;
-  }, [restroid, slug, qc]);
+    if (firstReady.current) {
+      readyOrders.forEach((o) => seenReady.current.add(o.orderNumber));
+      firstReady.current = false;
+      return;
+    }
+    for (const o of readyOrders) {
+      if (!seenReady.current.has(o.orderNumber)) {
+        seenReady.current.add(o.orderNumber);
+        setFlash(o.orderNumber);
+        setTimeout(() => setFlash(null), 4000);
+      }
+    }
+  }, [readyOrders]);
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col" style={{ fontFamily: 'Inter, sans-serif' }}>
