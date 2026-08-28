@@ -7,7 +7,7 @@ import { useTheme } from '../../hooks/useTheme';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/Spinner';
 import Modal from '../../components/ui/Modal';
-import { ShoppingCart, Search, Leaf, Drumstick, Plus, Minus, Download, Bell, X, MessageSquare, Star } from 'lucide-react';
+import { ShoppingCart, Search, Plus, Minus, Download, Bell, X, MessageSquare, Star, ChevronLeft } from 'lucide-react';
 
 const LANGS = [{ key: 'name_eng', label: 'Eng' }, { key: 'name_guj', label: 'ગુજ' }, { key: 'name_hindi', label: 'हिं' }];
 const API = import.meta.env.VITE_API_URL?.replace('/api', '') || '';
@@ -42,10 +42,6 @@ export default function CustomerMenu() {
   });
 
   const th = useTheme(restro?.theme);
-
-  useEffect(() => {
-    if (categories.length && activecat === null) setActivecat('all');
-  }, [categories]);
 
   // Ordering is only allowed when customer scanned a table QR
   const canOrder = !!tableid;
@@ -98,24 +94,33 @@ export default function CustomerMenu() {
     : activecat === 'all'
       ? allItems
       : categories.find((c) => c.id === activecat)?.menuItems || [];
+  const showingCategories = !search && activecat === null;
+  const currentCatLabel = activecat === 'all'
+    ? `All Items`
+    : categories.find((c) => c.id === activecat)?.[lang] || categories.find((c) => c.id === activecat)?.name_eng || '';
+  const goBack = () => { setActivecat(null); setSearch(''); };
 
   return (
-    <div className="min-h-screen pb-24" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif`, color: th.text }}>
+    <div className="min-h-screen pb-28" style={{ backgroundColor: th.bg, fontFamily: `'${th.font}', sans-serif`, color: th.text }}>
 
-      {/* Navbar */}
+      {/* Header */}
       <div className="sticky top-0 z-10 shadow-sm" style={{ backgroundColor: th.navBg }}>
         <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {restro.logo && <img src={restro.logo.startsWith('http') ? restro.logo : `${API}${restro.logo}`} alt={restro.restroname} className="w-9 h-9 object-cover shadow-sm" style={{ borderRadius: th.radius }} />}
+            {restro.logo && <img src={restro.logo.startsWith('http') ? restro.logo : `${API}${restro.logo}`} alt={restro.restroname} className="w-11 h-11 object-cover shrink-0 shadow-sm" style={{ borderRadius: th.radius }} />}
             <div>
-              <h1 className="font-bold text-sm" style={{ color: th.text }}>{restro.restroname}</h1>
-              {tableid && <p className="text-xs opacity-60" style={{ color: th.text }}>Table #{tableid}</p>}
+              <h1 className="font-extrabold text-base leading-tight" style={{ color: th.text }}>{restro.restroname}</h1>
+              {tableid && (
+                <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-bold" style={{ backgroundColor: `${th.primary}18`, color: th.primary, borderRadius: '999px' }}>
+                  TABLE {tableid}
+                </span>
+              )}
             </div>
           </div>
-          <button className="relative p-2" style={{ backgroundColor: `${th.primary}15`, borderRadius: th.radius }} onClick={() => navigate(`/menu/${slug}/cart${tableid ? `?table=${tableid}` : ''}`)}>
-            <ShoppingCart size={20} style={{ color: th.primary }} />
+          <button className="relative w-11 h-11 flex items-center justify-center shrink-0 shadow-md" style={{ backgroundColor: th.primary, borderRadius: '999px' }} onClick={() => navigate(`/menu/${slug}/cart${tableid ? `?table=${tableid}` : ''}`)}>
+            <ShoppingCart size={19} style={{ color: th.btnText }} />
             {count() > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 text-xs font-bold flex items-center justify-center" style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: '999px' }}>{count()}</span>
+              <span className="absolute -top-1 -right-1 w-5 h-5 text-[10px] font-bold flex items-center justify-center border-2" style={{ backgroundColor: th.accent, color: '#1f2937', borderRadius: '999px', borderColor: th.navBg }}>{count()}</span>
             )}
           </button>
         </div>
@@ -123,22 +128,22 @@ export default function CustomerMenu() {
         {/* Search */}
         <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 pb-3">
           <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 opacity-40" style={{ color: th.text }} />
-            <input className="w-full pl-8 pr-8 py-2 text-sm outline-none border" placeholder="Search menu..."
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40" style={{ color: th.text }} />
+            <input className="w-full pl-10 pr-8 py-2.5 text-sm outline-none border-0 font-medium" placeholder="Search for dishes..."
               value={search} onChange={(e) => setSearch(e.target.value)}
-              style={{ backgroundColor: `${th.text}08`, borderColor: `${th.text}15`, borderRadius: th.radius, color: th.text }} />
-            {search && <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-40"><X size={14} style={{ color: th.text }} /></button>}
+              style={{ backgroundColor: `${th.text}08`, borderRadius: '999px', color: th.text }} />
+            {search && <button onClick={() => setSearch('')} className="absolute right-3.5 top-1/2 -translate-y-1/2 opacity-40"><X size={14} style={{ color: th.text }} /></button>}
           </div>
         </div>
       </div>
 
       <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4">
         {/* Lang + actions */}
-        <div className="flex items-center justify-between py-3 gap-2">
-          <div className="flex gap-0.5 p-0.5 rounded-lg" style={{ backgroundColor: `${th.text}10` }}>
+        <div className="flex items-center justify-between py-3 gap-2 flex-wrap">
+          <div className="flex gap-0.5 p-0.5" style={{ backgroundColor: `${th.text}10`, borderRadius: '999px' }}>
             {LANGS.map(({ key, label }) => (
-              <button key={key} onClick={() => setLang(key)} className="px-3 py-1 text-xs font-semibold transition-all"
-                style={{ backgroundColor: lang === key ? th.primary : 'transparent', color: lang === key ? th.btnText : th.text, borderRadius: `calc(${th.radius} - 2px)` }}>
+              <button key={key} onClick={() => setLang(key)} className="px-3 py-1 text-xs font-bold transition-all"
+                style={{ backgroundColor: lang === key ? th.primary : 'transparent', color: lang === key ? th.btnText : th.text, borderRadius: '999px' }}>
                 {label}
               </button>
             ))}
@@ -146,127 +151,153 @@ export default function CustomerMenu() {
           <div className="flex gap-2 flex-wrap">
             {restro.pdf && (
               <a href={restro.pdf.startsWith('http') ? restro.pdf : `${API}${restro.pdf}`} download
-                className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border"
-                style={{ borderColor: `${th.primary}40`, color: th.primary, borderRadius: th.radius }}>
-                <Download size={11} /> PDF
+                className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold shadow-sm"
+                style={{ backgroundColor: th.card, color: th.primary, borderRadius: '999px' }}>
+                <Download size={12} /> PDF
               </a>
             )}
-            {/* Feedback button */}
             <button
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border transition-all"
+              className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold shadow-sm transition-all"
               onClick={() => setFeedbackOpen(true)}
-              style={{ borderColor: `${th.primary}40`, color: th.primary, borderRadius: th.radius }}>
-              <MessageSquare size={11} /> Feedback
+              style={{ backgroundColor: th.card, color: th.primary, borderRadius: '999px' }}>
+              <MessageSquare size={12} /> Feedback
             </button>
-            {/* Waiter button */}
             <button
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border transition-all"
+              className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold shadow-sm transition-all"
               onClick={handleWaiterClick}
               disabled={waiterLoading || waiterDone}
               style={{
-                borderColor: waiterDone ? '#16a34a40' : `${th.primary}40`,
+                backgroundColor: waiterDone ? '#dcfce7' : th.card,
                 color: waiterDone ? '#16a34a' : th.primary,
-                borderRadius: th.radius,
+                borderRadius: '999px',
                 opacity: waiterLoading ? 0.6 : 1,
               }}>
-              {waiterLoading ? <><Bell size={11} /> Calling...</>
+              {waiterLoading ? <><Bell size={12} /> Calling...</>
                 : waiterDone  ? <>✓ Called</>
-                : <><Bell size={11} /> {tableid ? 'Call Waiter' : 'Waiter'}</>}
+                : <><Bell size={12} /> {tableid ? 'Call Waiter' : 'Waiter'}</>}
             </button>
           </div>
         </div>
 
         {/* No-table banner */}
         {!canOrder && (
-          <div className="mx-0 mb-3 px-4 py-3 flex items-center gap-3 text-sm font-medium"
-            style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
+          <div className="mb-3 px-4 py-3 flex items-center gap-3 text-sm font-semibold shadow-sm"
+            style={{ backgroundColor: '#fef3c7', color: '#92400e', borderRadius: th.radius }}>
             <span className="text-lg">📱</span>
             <span>Browse our menu below. <strong>Scan the QR code at your table</strong> to place an order.</span>
           </div>
         )}
 
-        {/* Category tabs */}
-        {!search && (
-          <div className="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1 scrollbar-none">
-
-            {/* All tab */}
+        {/* Category cards — browse by category */}
+        {showingCategories && (
+          <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 mt-1">
             <button onClick={() => setActivecat('all')}
-              className="shrink-0 px-4 py-2 text-sm font-semibold transition-all"
-              style={{
-                backgroundColor: activecat === 'all' ? th.primary : th.card,
-                color: activecat === 'all' ? th.btnText : th.text,
-                borderRadius: th.radius,
-                boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-              }}>
-              All ({allItems.length})
+              className="relative flex flex-col shadow-md overflow-hidden transition-transform hover:-translate-y-0.5 text-left"
+              style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+              <div className="relative w-full aspect-[4/3] flex items-center justify-center text-4xl"
+                style={{ background: `linear-gradient(135deg, ${th.primary}30, ${th.accent}35)` }}>
+                🍴
+              </div>
+              <div className="p-3">
+                <p className="font-bold text-sm leading-snug" style={{ color: th.text }}>All Items</p>
+                <p className="text-xs mt-0.5 opacity-60" style={{ color: th.text }}>{allItems.length} dishes</p>
+              </div>
             </button>
-
-            {categories.map((cat) => (
-              <button key={cat.id} onClick={() => setActivecat(cat.id)}
-                className="shrink-0 px-4 py-2 text-sm font-semibold transition-all"
-                style={{
-                  backgroundColor: activecat === cat.id ? th.primary : th.card,
-                  color: activecat === cat.id ? th.btnText : th.text,
-                  borderRadius: th.radius,
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                }}>
-                {cat[lang] || cat.name_eng}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              // Priority: admin-uploaded category image → chosen icon → a preview photo from one of its items → generic plate
+              const catImgSrc = cat.image ? (cat.image.startsWith('http') ? cat.image : `${API}${cat.image}`) : null;
+              const itemPreview = !catImgSrc && !cat.icon ? cat.menuItems.find((i) => i.image) : null;
+              const itemImgSrc = itemPreview ? (itemPreview.image.startsWith('http') ? itemPreview.image : `${API}${itemPreview.image}`) : null;
+              return (
+                <button key={cat.id} onClick={() => setActivecat(cat.id)}
+                  className="relative flex flex-col shadow-md overflow-hidden transition-transform hover:-translate-y-0.5 text-left"
+                  style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+                  <div className="relative w-full aspect-[4/3]">
+                    {catImgSrc ? (
+                      <img src={catImgSrc} alt={cat.name_eng} className="w-full h-full object-cover" />
+                    ) : cat.icon ? (
+                      <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: `linear-gradient(135deg, ${th.primary}20, ${th.accent}25)` }}>{cat.icon}</div>
+                    ) : itemImgSrc ? (
+                      <img src={itemImgSrc} alt={cat.name_eng} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-4xl" style={{ background: `linear-gradient(135deg, ${th.primary}20, ${th.accent}25)` }}>🍽️</div>
+                    )}
+                  </div>
+                  <div className="p-3">
+                    <p className="font-bold text-sm leading-snug line-clamp-1" style={{ color: th.text }}>{cat[lang] || cat.name_eng}</p>
+                    <p className="text-xs mt-0.5 opacity-60" style={{ color: th.text }}>{cat.menuItems.length} {cat.menuItems.length === 1 ? 'dish' : 'dishes'}</p>
+                  </div>
+                </button>
+              );
+            })}
+            {!categories.length && (
+              <div className="text-center py-16 opacity-50 col-span-2 lg:col-span-3 2xl:col-span-4" style={{ color: th.text }}>No categories yet</div>
+            )}
           </div>
         )}
 
-        {/* Items */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 mt-1">
-          {activeCatItems.map((item) => {
-            const qty = getQty(item.id);
-            const imgSrc = item.image ? (item.image.startsWith('http') ? item.image : `${API}${item.image}`) : null;
-            return (
-              <div key={item.id} className="flex gap-3 p-3 shadow-sm" style={{ backgroundColor: th.card, borderRadius: th.radius }}>
-                {imgSrc ? (
-                  <img src={imgSrc} alt={item.name_eng} className="w-20 h-20 object-cover shrink-0" style={{ borderRadius: `calc(${th.radius} - 4px)` }} />
-                ) : (
-                  <div className="w-20 h-20 shrink-0 flex items-center justify-center text-2xl" style={{ backgroundColor: `${th.bg}`, borderRadius: `calc(${th.radius} - 4px)` }}>🍽️</div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <div>
-                      <p className="font-semibold text-sm" style={{ color: th.text }}>{item[lang] || item.name_eng}</p>
-                      <span className="inline-flex items-center gap-1 text-xs mt-0.5" style={{ color: item.veg ? '#16a34a' : '#dc2626' }}>
-                        {item.veg ? <Leaf size={10} /> : <Drumstick size={10} />} {item.veg ? 'Veg' : 'Non-veg'}
-                      </span>
-                    </div>
-                    <p className="font-bold text-sm shrink-0" style={{ color: th.primary }}>₹{item.price}</p>
-                  </div>
-                  <div className="mt-2">
-                    {qty === 0 ? (
-                      <button onClick={() => handleAdd(item)}
-                        className="flex items-center gap-1 px-3 py-1.5 text-xs font-bold transition-all"
-                        style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}>
-                        <Plus size={12} /> Add
-                      </button>
-                    ) : (
-                      <div className="inline-flex items-center gap-2 p-1" style={{ backgroundColor: `${th.primary}15`, borderRadius: th.radius }}>
-                        <button className="w-7 h-7 flex items-center justify-center shadow-sm" onClick={() => updateQty(item.id, qty - 1)}
-                          style={{ backgroundColor: th.card, borderRadius: `calc(${th.radius} - 4px)` }}>
-                          <Minus size={12} style={{ color: th.text }} />
-                        </button>
-                        <span className="w-5 text-center text-sm font-bold" style={{ color: th.primary }}>{qty}</span>
-                        <button className="w-7 h-7 flex items-center justify-center" onClick={() => updateQty(item.id, qty + 1)}
-                          style={{ backgroundColor: th.primary, borderRadius: `calc(${th.radius} - 4px)` }}>
-                          <Plus size={12} style={{ color: th.btnText }} />
-                        </button>
+        {/* Items view — back to categories + image-forward card grid */}
+        {!showingCategories && (
+          <>
+            <button onClick={goBack} className="flex items-center gap-1.5 mb-3 text-sm font-bold" style={{ color: th.primary }}>
+              <ChevronLeft size={18} /> {search ? 'Back to categories' : currentCatLabel}
+            </button>
+
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+              {activeCatItems.map((item) => {
+                const qty = getQty(item.id);
+                const imgSrc = item.image ? (item.image.startsWith('http') ? item.image : `${API}${item.image}`) : null;
+                return (
+                  <div key={item.id} className="relative flex flex-col shadow-md overflow-hidden transition-transform hover:-translate-y-0.5"
+                    style={{ backgroundColor: th.card, borderRadius: th.radius }}>
+                    {/* Image */}
+                    <div className="relative w-full aspect-square">
+                      {imgSrc ? (
+                        <img src={imgSrc} alt={item.name_eng} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-4xl" style={{ background: `linear-gradient(135deg, ${th.primary}20, ${th.accent}25)` }}>🍽️</div>
+                      )}
+                      {/* Veg/non-veg badge */}
+                      <div className="absolute top-2 left-2 w-4 h-4 flex items-center justify-center bg-white shadow" style={{ borderRadius: '4px', border: `1.5px solid ${item.veg ? '#16a34a' : '#dc2626'}` }}>
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.veg ? '#16a34a' : '#dc2626' }} />
                       </div>
-                    )}
+                      {/* Floating add / stepper */}
+                      <div className="absolute -bottom-4 right-2">
+                        {qty === 0 ? (
+                          <button onClick={() => handleAdd(item)}
+                            className="flex items-center justify-center gap-1 px-4 h-8 text-xs font-extrabold shadow-lg transition-transform active:scale-95"
+                            style={{ backgroundColor: th.card, color: th.primary, borderRadius: '999px', border: `1.5px solid ${th.primary}` }}>
+                            <Plus size={13} /> ADD
+                          </button>
+                        ) : (
+                          <div className="flex items-center gap-2 px-1.5 h-8 shadow-lg" style={{ backgroundColor: th.primary, borderRadius: '999px' }}>
+                            <button className="w-5 h-5 flex items-center justify-center" onClick={() => updateQty(item.id, qty - 1)}>
+                              <Minus size={13} style={{ color: th.btnText }} />
+                            </button>
+                            <span className="w-3 text-center text-xs font-bold" style={{ color: th.btnText }}>{qty}</span>
+                            <button className="w-5 h-5 flex items-center justify-center" onClick={() => updateQty(item.id, qty + 1)}>
+                              <Plus size={13} style={{ color: th.btnText }} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className="p-3 pt-5">
+                      <p className="font-bold text-sm leading-snug line-clamp-2" style={{ color: th.text }}>{item[lang] || item.name_eng}</p>
+                      <p className="font-extrabold text-base mt-1.5" style={{ color: th.primary }}>₹{item.price}</p>
+                    </div>
                   </div>
+                );
+              })}
+              {!activeCatItems.length && (
+                <div className="text-center py-16 opacity-50 col-span-2 lg:col-span-3 2xl:col-span-4" style={{ color: th.text }}>
+                  {search ? `No items match "${search}"` : 'No items in this category'}
                 </div>
-              </div>
-            );
-          })}
-          {search && !activeCatItems.length && (
-            <div className="text-center py-16 opacity-50 lg:col-span-2 2xl:col-span-3" style={{ color: th.text }}>No items match "{search}"</div>
-          )}
-        </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
 
 
@@ -323,13 +354,18 @@ export default function CustomerMenu() {
 
       {/* Fixed cart bar — only when ordered via QR */}
       {canOrder && count() > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 p-3 z-10" style={{ backgroundColor: th.navBg, borderTop: `1px solid ${th.primary}20` }}>
-          <div className="max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
-            <button className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold shadow-lg"
-              style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: th.radius }}
+        <div className="fixed bottom-0 left-0 right-0 p-4 z-10">
+          <div className="max-w-2xl lg:max-w-3xl mx-auto">
+            <button className="w-full py-3.5 flex items-center justify-between px-5 text-sm shadow-xl transition-transform active:scale-[0.98]"
+              style={{ backgroundColor: th.primary, color: th.btnText, borderRadius: '999px' }}
               onClick={() => navigate(`/menu/${slug}/cart${tableid ? `?table=${tableid}` : ''}`)}>
-              <ShoppingCart size={16} />
-              View Cart ({count()} items) · ₹{useCartStore.getState().total()}
+              <span className="flex items-center gap-2 font-bold">
+                <ShoppingCart size={16} />
+                {count()} {count() === 1 ? 'item' : 'items'} added
+              </span>
+              <span className="flex items-center gap-1.5 font-extrabold">
+                View Cart · ₹{useCartStore.getState().total()}
+              </span>
             </button>
           </div>
         </div>
