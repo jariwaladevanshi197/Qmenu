@@ -11,6 +11,13 @@ export const placeStaffOrder = async (req, res) => {
     if (!items?.length) return res.status(400).json({ error: 'No items provided' });
 
     // tableid here is the actual DB table id (staff selects from dropdown, not QR)
+    let tableDbId = null;
+    if (tableid) {
+      const table = await prisma.table.findFirst({ where: { id: parseInt(tableid, 10) || -1, restroid: req.user.id }, select: { id: true } });
+      if (!table) return res.status(400).json({ error: 'Invalid table' });
+      tableDbId = table.id;
+    }
+
     const menuItems = await prisma.menuItem.findMany({
       where: { id: { in: items.map((i) => i.menuitemid) }, restroid: req.user.id },
     });
@@ -30,7 +37,7 @@ export const placeStaffOrder = async (req, res) => {
       return tx.order.create({
         data: {
           restroid: req.user.id,
-          tableid: tableid ? parseInt(tableid) : null,
+          tableid: tableDbId,
           ordercode: generateOrderCode(),
           orderNumber,
           customername: customername || 'Walk-in Customer',

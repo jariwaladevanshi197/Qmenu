@@ -31,7 +31,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
 ]
-  .map((o) => o && o.trim())
+  .map((o) => o && o.trim().replace(/\/+$/, "")) // browsers send Origin without a trailing slash
   .filter(Boolean);
 
 app.use(
@@ -39,7 +39,8 @@ app.use(
     origin: (origin, cb) => {
       // Allow same-origin / server-to-server / curl (no Origin header).
       if (!origin) return cb(null, true);
-      if (allowedOrigins.some((o) => origin === o || origin.startsWith(o))) {
+      // Exact match only — a prefix check would let https://app.vercel.app.evil.com through.
+      if (allowedOrigins.includes(origin)) {
         return cb(null, true);
       }
       // In non-prod, allow any localhost port for convenience.

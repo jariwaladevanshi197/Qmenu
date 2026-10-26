@@ -2,6 +2,7 @@
 import { serverError } from '../utils/http.js';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma.js';
+import { STAFF_ROLES, STAFF_PAGE_KEYS, ROLE_PAGE_DEFAULTS, effectiveStaffPermissions } from '../utils/permissions.js';
 
 const signToken = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
@@ -62,16 +63,38 @@ export const deleteStaff = async (req, res) => {
   } catch (e) { serverError(res, e); }
 };
 
-// ── Page permission defaults per role ────────────────────────────────────────
-
-const ROLE_PAGE_DEFAULTS = {
-  manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'staff'],
-  cashier:  ['orders', 'notifications', 'history'],
-  staff:    ['orders', 'notifications'],
-  kitchen:  ['kitchen'],  // dedicated KDS screen only
-};
-
 // ── Restaurant admin: manage own staff ───────────────────────────────────────
+
+// Validate role/permissions from the request. Returns an error message or null.
+function validateStaffInput({ role, permissions }) {
+  if (role !== undefined && !STAFF_ROLES.includes(role)) return 'Invalid role';
+  if (permissions !== undefined && permissions !== null) {
+    if (!Array.isArray(permissions)) return 'Permissions must be a list of pages';
+    const unknown = permissions.find((p) => !STAFF_PAGE_KEYS.includes(p));
+    if (unknown) return `Unknown page permission: ${unknown}`;
+  }
+  return null;
+}
+
+// Owners may grant anything. A staff member (with the 'staff' page) may only
+// hand out pages they themselves have, so they can't escalate via a new account.
+function canGrant(user, staffLike) {
+  if (!user.staffId) return true;
+  const own = user.staffPermissions || [];
+  // The kitchen screen only confirms/completes orders, which 'orders' already allows.
+  const has = (p) => own.includes(p) || (p === 'kitchen' && own.includes('orders'));
+  return effectiveStaffPermissions(staffLike).every(has);
+}
+
+// Load a staff member of the caller's restaurant that the caller may manage.
+// Returns { staff } or { status, error }.
+async function findManageableStaff(req, id) {
+  const staff = await prisma.staff.findUnique({ where: { id }, select: { id: true, restroid: true, role: true, permissions: true } });
+  if (!staff || staff.restroid !== req.user.id) return { status: 404, error: 'Staff not found' };
+  if (req.user.staffId === staff.id) return { status: 403, error: 'You cannot modify your own account' };
+  if (!canGrant(req.user, staff)) return { status: 403, error: 'You cannot manage a staff member with more access than you' };
+  return { staff };
+}
 
 export const getMyStaff = async (req, res) => {
   try {
@@ -91,6 +114,15 @@ export const createMyStaff = async (req, res) => {
   try {
     const { fullname, username, password, role, permissions } = req.body;
     if (!fullname || !username || !password) return res.status(400).json({ error: 'All fields required' });
+    const invalid = validateStaffInput({ role, permissions });
+    if (invalid) return res.status(400).json({ error: invalid });
+
+    const staffRole = role || 'staff';
+    // Use provided permissions or fall back to role defaults
+    const resolvedPermissions = Array.isArray(permissions) ? permissions : ROLE_PAGE_DEFAULTS[staffRole] || [];
+    if (!canGrant(req.user, { role: staffRole, permissions: resolvedPermissions })) {
+      return res.status(403).json({ error: 'You cannot grant access to pages you do not have' });
+    }
 
     // Check license limit
     const restro = await prisma.restaurant.findUnique({ where: { id: req.user.id }, select: { maxStaff: true } });
@@ -102,9 +134,6 @@ export const createMyStaff = async (req, res) => {
     const exists = await prisma.staff.findUnique({ where: { username } });
     if (exists) return res.status(400).json({ error: 'Username already taken' });
     const hashed = await bcrypt.hash(password, 10);
-    const staffRole = role || 'staff';
-    // Use provided permissions or fall back to role defaults
-    const resolvedPermissions = Array.isArray(permissions) ? permissions : ROLE_PAGE_DEFAULTS[staffRole] || [];
     const staff = await prisma.staff.create({
       data: { restroid: req.user.id, fullname, username, password: hashed, role: staffRole, permissions: resolvedPermissions },
     });
@@ -115,22 +144,39 @@ export const createMyStaff = async (req, res) => {
 export const updateMyStaff = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    // Ensure this staff belongs to the restaurant making the request
-    const existing = await prisma.staff.findUnique({ where: { id }, select: { restroid: true } });
-    if (!existing) return res.status(404).json({ error: 'Staff not found' });
-    if (existing.restroid !== req.user.id) return res.status(403).json({ error: 'Forbidden' });
+    const found = await findManageableStaff(req, id);
+    if (found.error) return res.status(found.status).json({ error: found.error });
 
     const { role, status, permissions } = req.body;
+    const invalid = validateStaffInput({ role, permissions });
+    if (invalid) return res.status(400).json({ error: invalid });
+
+    const nextPermissions = permissions !== undefined ? (Array.isArray(permissions) ? permissions : null) : found.staff.permissions;
+    if (!canGrant(req.user, { role: role ?? found.staff.role, permissions: nextPermissions })) {
+      return res.status(403).json({ error: 'You cannot grant access to pages you do not have' });
+    }
+
     const staff = await prisma.staff.update({
       where: { id },
       data: {
         ...(role !== undefined && { role }),
         ...(status !== undefined && { status: parseInt(status) }),
-        ...(permissions !== undefined && { permissions: Array.isArray(permissions) ? permissions : null }),
+        ...(permissions !== undefined && { permissions: nextPermissions }),
       },
       select: { id: true, fullname: true, username: true, role: true, status: true, permissions: true },
     });
     res.json(staff);
+  } catch (e) { serverError(res, e); }
+};
+
+export const deleteMyStaff = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const found = await findManageableStaff(req, id);
+    if (found.error) return res.status(found.status).json({ error: found.error });
+
+    await prisma.staff.delete({ where: { id } });
+    res.json({ success: true });
   } catch (e) { serverError(res, e); }
 };
 
@@ -150,9 +196,7 @@ export const staffLogin = async (req, res) => {
     if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
 
     // Resolve effective page permissions
-    const staffPermissions = Array.isArray(staff.permissions) && staff.permissions.length > 0
-      ? staff.permissions
-      : (ROLE_PAGE_DEFAULTS[staff.role] || ['orders', 'notifications']);
+    const staffPermissions = effectiveStaffPermissions(staff);
 
     const token = signToken({
       id: staff.restaurant.id, role: 'restro', slug: staff.restaurant.slug,

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { requireSuperAdmin, requireRestroAdmin } from '../middleware/auth.js';
+import { requireSuperAdmin, requireRestroAdmin, requireOwner, requirePermission } from '../middleware/auth.js';
 import { uploadImage, uploadLogo } from '../middleware/upload.js';
 import {
   getWebsite, updateWebsite, toggleWebsite,
@@ -12,14 +12,15 @@ const router = Router();
 router.get('/:slug', getWebsite);
 
 // Super admin
-router.put('/admin/:id', requireSuperAdmin, updateWebsite);
-router.patch('/admin/:id/toggle', requireSuperAdmin, toggleWebsite);
-router.post('/admin/:id/banner', requireSuperAdmin, uploadLogo.single('banner'), uploadBanner);
-router.post('/admin/:id/about-image', requireSuperAdmin, uploadImage.single('image'), uploadAboutImage);
-router.post('/admin/:id/gallery', requireSuperAdmin, uploadImage.single('image'), uploadGallery);
-router.delete('/admin/:id/gallery', requireSuperAdmin, deleteGalleryImage);
+const manageWebsite = [requireSuperAdmin, requirePermission('restaurants', 'manageWebsite')];
+router.put('/admin/:id', ...manageWebsite, updateWebsite);
+router.patch('/admin/:id/toggle', ...manageWebsite, toggleWebsite);
+router.post('/admin/:id/banner', ...manageWebsite, uploadLogo.single('banner'), uploadBanner);
+router.post('/admin/:id/about-image', ...manageWebsite, uploadImage.single('image'), uploadAboutImage);
+router.post('/admin/:id/gallery', ...manageWebsite, uploadImage.single('image'), uploadGallery);
+router.delete('/admin/:id/gallery', ...manageWebsite, deleteGalleryImage);
 
 // Restaurant admin (preview)
-router.get('/my/data', requireRestroAdmin, getMyWebsite);
+router.get('/my/data', requireRestroAdmin, requireOwner, getMyWebsite);
 
 export default router;

@@ -72,7 +72,7 @@ export default function RestroStaff() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => api.delete(`/staff/${id}`),
+    mutationFn: (id) => api.delete(`/staff/my/${id}`),
     onSuccess: () => { qc.invalidateQueries(['my-staff']); toast.success('Removed'); setDeleteTarget(null); },
   });
 
