@@ -21,3 +21,14 @@ export const allocateOrderNumber = async (tx, restroid) => {
   });
   return restro.nextOrderNumber - 1;
 };
+
+// Strip secrets from a restaurant row before it leaves the server. The owner
+// keeps their own PrintNode key and OTP (shown in Settings); everyone else —
+// staff and platform admins — never sees them. The password hash never leaves.
+export const safeRestaurant = (restro, { owner = false } = {}) => {
+  if (!restro) return restro;
+  const { password: _pw, ...rest } = restro;
+  if (owner) return rest;
+  const { printNodeApiKey: _key, restrootp: _otp, ...publicFields } = rest;
+  return publicFields;
+};

@@ -3,6 +3,8 @@ import { serverError } from '../utils/http.js';
 import QRCode from 'qrcode';
 import { Jimp, JimpMime, HorizontalAlign, VerticalAlign } from 'jimp';
 import { saveToSupabase } from '../middleware/upload.js';
+import { isRestroOwner } from '../middleware/auth.js';
+import { safeRestaurant } from '../utils/helpers.js';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -48,8 +50,7 @@ export const getProfile = async (req, res) => {
         },
       },
     });
-    const { password: _pw, ...safe } = restro;
-    res.json(safe);
+    res.json(safeRestaurant(restro, { owner: isRestroOwner(req.user) }));
   } catch (e) {
     serverError(res, e);
   }
@@ -65,7 +66,7 @@ export const updateProfile = async (req, res) => {
     if (req.file) data.logo = await saveToSupabase(req.file, 'logos');
 
     const restro = await prisma.restaurant.update({ where: { id: req.user.id }, data });
-    res.json(restro);
+    res.json(safeRestaurant(restro, { owner: true }));
   } catch (e) {
     serverError(res, e);
   }

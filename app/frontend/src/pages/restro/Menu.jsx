@@ -13,7 +13,9 @@ const API = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localho
 const Field = ({ label, children }) => <div><label className="label">{label}</label>{children}</div>;
 
 const emptyItem = { categoryid: '', name_eng: '', name_guj: '', name_hindi: '', price: '', veg: 'true', available: 'true', image: null };
-const emptyCat = { name_eng: '', name_guj: '', name_hindi: '', categorydesc: '' };
+const emptyCat = { name_eng: '', name_guj: '', name_hindi: '', categorydesc: '', icon: '', image: null };
+
+const CATEGORY_ICONS = ['🍕','🍔','🍟','🌭','🥪','🌮','🌯','🥙','🍗','🍖','🥘','🍲','🍜','🍝','🍣','🍱','🥗','🍳','🥞','🧁','🍰','🍦','🍩','🍪','🍹','🍺','☕','🧃','🥤','🍵'];
 
 export default function RestroMenu() {
   const qc = useQueryClient();
@@ -55,13 +57,13 @@ export default function RestroMenu() {
   });
 
   const addCatMutation = useMutation({
-    mutationFn: (data) => api.post('/menu/categories', data),
+    mutationFn: (fd) => api.post('/menu/categories', fd),
     onSuccess: () => { qc.invalidateQueries(['categories']); toast.success('Category added'); setCatModal(null); setCatForm(emptyCat); },
     onError: (e) => toast.error(e.response?.data?.error || 'Error'),
   });
 
   const editCatMutation = useMutation({
-    mutationFn: ({ id, data }) => api.put(`/menu/categories/${id}`, data),
+    mutationFn: ({ id, fd }) => api.put(`/menu/categories/${id}`, fd),
     onSuccess: () => { qc.invalidateQueries(['categories']); toast.success('Updated'); setCatModal(null); },
     onError: (e) => toast.error(e.response?.data?.error || 'Error'),
   });
@@ -83,6 +85,13 @@ export default function RestroMenu() {
     else editItemMutation.mutate({ id: itemModal, fd });
   };
 
+  const submitCategory = () => {
+    const fd = new FormData();
+    Object.entries(catForm).forEach(([k, v]) => { if (v !== null) fd.append(k, v); });
+    if (catModal === 'new') addCatMutation.mutate(fd);
+    else editCatMutation.mutate({ id: catModal, fd });
+  };
+
   if (catsLoading) return <PageLoader />;
 
   return (
@@ -102,9 +111,14 @@ export default function RestroMenu() {
         </button>
         {categories.map((cat) => (
           <button key={cat.id} onClick={() => setActiveCat(String(cat.id))} className={`shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${activeCat === String(cat.id) ? 'bg-primary-500 text-white' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'}`}>
+            {cat.image ? (
+              <img src={cat.image.startsWith('http') ? cat.image : `${API}${cat.image}`} alt="" className="w-4 h-4 rounded-full object-cover" />
+            ) : cat.icon ? (
+              <span className="text-sm leading-none">{cat.icon}</span>
+            ) : null}
             {cat.name_eng}
             <span className="text-xs opacity-70">({cat._count?.menuItems})</span>
-            <button className={`ml-1 hover:scale-110 ${activeCat === String(cat.id) ? 'text-white/70' : 'text-gray-400'}`} onClick={(e) => { e.stopPropagation(); setCatForm({ name_eng: cat.name_eng, name_guj: cat.name_guj || '', name_hindi: cat.name_hindi || '', categorydesc: cat.categorydesc || '' }); setCatModal(cat.id); }}>
+            <button className={`ml-1 hover:scale-110 ${activeCat === String(cat.id) ? 'text-white/70' : 'text-gray-400'}`} onClick={(e) => { e.stopPropagation(); setCatForm({ name_eng: cat.name_eng, name_guj: cat.name_guj || '', name_hindi: cat.name_hindi || '', categorydesc: cat.categorydesc || '', icon: cat.icon || '', image: null }); setCatModal(cat.id); }}>
               <Pencil size={11} />
             </button>
             <button className={`hover:scale-110 ${activeCat === String(cat.id) ? 'text-white/70' : 'text-red-400'}`} onClick={(e) => { e.stopPropagation(); setDeleteTarget({ type: 'cat', id: cat.id }); }}>
@@ -243,10 +257,29 @@ export default function RestroMenu() {
           <Field label={<span className="flex items-center gap-1">Name (Hindi) <Languages size={12} className="text-primary-400" /></span>}>
             <input className="input" value={catForm.name_hindi} onChange={(e) => setCatForm({ ...catForm, name_hindi: e.target.value })} placeholder="Auto-filled..." />
           </Field>
+          <Field label="Icon (shown on the public menu if no image is uploaded)">
+            <div className="flex flex-wrap gap-1.5 p-2 border border-gray-200 rounded-lg max-h-32 overflow-y-auto">
+              {catForm.icon && (
+                <button type="button" className="w-8 h-8 flex items-center justify-center rounded-lg text-xs font-medium text-gray-400 border border-dashed border-gray-300 hover:bg-gray-50"
+                  title="Clear icon" onClick={() => setCatForm({ ...catForm, icon: '' })}>
+                  <ImageOff size={14} />
+                </button>
+              )}
+              {CATEGORY_ICONS.map((ic) => (
+                <button key={ic} type="button" onClick={() => setCatForm({ ...catForm, icon: ic })}
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg text-lg transition-all ${catForm.icon === ic ? 'bg-primary-100 ring-2 ring-primary-400' : 'hover:bg-gray-100'}`}>
+                  {ic}
+                </button>
+              ))}
+            </div>
+          </Field>
+          <Field label="Or upload a custom image (overrides icon)">
+            <input className="input" type="file" accept="image/*" onChange={(e) => setCatForm({ ...catForm, image: e.target.files[0] })} />
+          </Field>
         </div>
         <div className="flex justify-end gap-3 mt-5">
           <button className="btn-secondary" onClick={() => setCatModal(null)}>Cancel</button>
-          <button className="btn-primary" onClick={() => catModal === 'new' ? addCatMutation.mutate(catForm) : editCatMutation.mutate({ id: catModal, data: catForm })} disabled={addCatMutation.isPending || editCatMutation.isPending}>
+          <button className="btn-primary" onClick={submitCategory} disabled={addCatMutation.isPending || editCatMutation.isPending}>
             {(addCatMutation.isPending || editCatMutation.isPending) ? 'Saving...' : 'Save'}
           </button>
         </div>

@@ -47,3 +47,27 @@ export function resolvePermissions(admin) {
   }
   return resolved;
 }
+
+// ── Restaurant staff page permissions ────────────────────────────────────────
+// Staff tokens carry role 'restro' (same as the owner) plus a staffId; what a
+// staff member may do is decided by these page keys, enforced server-side.
+
+export const STAFF_ROLES = ['manager', 'cashier', 'staff', 'kitchen'];
+
+export const STAFF_PAGE_KEYS = [
+  'dashboard', 'orders', 'notifications', 'menu', 'tables',
+  'history', 'report', 'feedback', 'customers', 'staff', 'kitchen',
+];
+
+export const ROLE_PAGE_DEFAULTS = {
+  manager: ['dashboard', 'orders', 'notifications', 'menu', 'tables', 'history', 'report', 'feedback', 'customers', 'staff'],
+  cashier: ['orders', 'notifications', 'history'],
+  staff:   ['orders', 'notifications'],
+  kitchen: ['kitchen'], // dedicated KDS screen only
+};
+
+// Explicit non-empty permission list wins; otherwise fall back to role defaults.
+export function effectiveStaffPermissions(staff) {
+  if (Array.isArray(staff.permissions) && staff.permissions.length > 0) return staff.permissions;
+  return ROLE_PAGE_DEFAULTS[staff.role] || ['orders', 'notifications'];
+}

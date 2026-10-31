@@ -18,11 +18,13 @@ export const getActiveOrders = async (req, res) => {
 
 export const confirmOrder = async (req, res) => {
   try {
-    const order = await prisma.order.updateMany({
-      where: { id: parseInt(req.params.id), restroid: req.user.id },
+    const id = parseInt(req.params.id);
+    const { count } = await prisma.order.updateMany({
+      where: { id, restroid: req.user.id },
       data: { status: 'CONFIRMED' },
     });
-    const updated = await prisma.order.findUnique({ where: { id: parseInt(req.params.id) }, include: { items: true, table: true } });
+    if (!count) return res.status(404).json({ error: 'Order not found' });
+    const updated = await prisma.order.findFirst({ where: { id, restroid: req.user.id }, include: { items: true, table: true } });
     emitOrderUpdate(req.app.get('io'), req.user.id, updated);
     res.json(updated);
   } catch (e) {
@@ -78,11 +80,13 @@ export const completeOrder = async (req, res) => {
 
 export const markOrderPaid = async (req, res) => {
   try {
-    await prisma.order.updateMany({
-      where: { id: parseInt(req.params.id), restroid: req.user.id },
+    const id = parseInt(req.params.id);
+    const { count } = await prisma.order.updateMany({
+      where: { id, restroid: req.user.id },
       data: { paymentstatus: 'PAID' },
     });
-    const updated = await prisma.order.findUnique({ where: { id: parseInt(req.params.id) }, include: { items: true, table: true } });
+    if (!count) return res.status(404).json({ error: 'Order not found' });
+    const updated = await prisma.order.findFirst({ where: { id, restroid: req.user.id }, include: { items: true, table: true } });
     emitOrderUpdate(req.app.get('io'), req.user.id, updated);
     res.json(updated);
   } catch (e) {
@@ -92,10 +96,11 @@ export const markOrderPaid = async (req, res) => {
 
 export const cancelOrder = async (req, res) => {
   try {
-    await prisma.order.updateMany({
+    const { count } = await prisma.order.updateMany({
       where: { id: parseInt(req.params.id), restroid: req.user.id },
       data: { status: 'CANCELLED' },
     });
+    if (!count) return res.status(404).json({ error: 'Order not found' });
     emitOrderUpdate(req.app.get('io'), req.user.id, { id: parseInt(req.params.id), status: 'CANCELLED' });
     res.json({ success: true });
   } catch (e) {
@@ -106,17 +111,22 @@ export const cancelOrder = async (req, res) => {
 export const mergeOrders = async (req, res) => {
   try {
     const { orderIds } = req.body;
-    if (!orderIds?.length) return res.status(400).json({ error: 'No orders provided' });
+    if (!Array.isArray(orderIds) || !orderIds.length) return res.status(400).json({ error: 'No orders provided' });
+    const ids = orderIds.map((id) => parseInt(id, 10)).filter(Number.isInteger);
 
     const orders = await prisma.order.findMany({
-      where: { id: { in: orderIds }, restroid: req.user.id, status: { in: ['PENDING', 'CONFIRMED'] } },
+      where: { id: { in: ids }, restroid: req.user.id, status: { in: ['PENDING', 'CONFIRMED'] } },
       include: { items: true, table: true },
+      orderBy: { createdAt: 'asc' },
     });
+    if (orders.length < 2) return res.status(400).json({ error: 'Select at least two active orders to merge' });
 
+    // Only the orders we actually loaded (this restaurant's, still active) are merged and cancelled.
+    const mergedIds = orders.map((o) => o.id);
     const allItems = orders.flatMap((o) => o.items.map(({ id: _id, orderid: _oid, ...rest }) => rest));
     const merged = await prisma.$transaction(async (tx) => {
       const orderNumber = await allocateOrderNumber(tx, req.user.id);
-      return tx.order.create({
+      const created = await tx.order.create({
         data: {
           restroid: req.user.id,
           tableid: orders[0].tableid,
@@ -128,9 +138,10 @@ export const mergeOrders = async (req, res) => {
         },
         include: { items: true, table: true },
       });
+      await tx.order.updateMany({ where: { id: { in: mergedIds }, restroid: req.user.id }, data: { status: 'CANCELLED' } });
+      return created;
     });
 
-    await prisma.order.updateMany({ where: { id: { in: orderIds } }, data: { status: 'CANCELLED' } });
     emitOrderUpdate(req.app.get('io'), req.user.id, merged);
     res.json(merged);
   } catch (e) {

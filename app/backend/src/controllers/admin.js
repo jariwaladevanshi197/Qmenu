@@ -1,7 +1,7 @@
 ﻿import bcrypt from 'bcryptjs';
 import { serverError } from '../utils/http.js';
 import { prisma } from '../lib/prisma.js';
-import { generateSlug } from '../utils/helpers.js';
+import { generateSlug, safeRestaurant } from '../utils/helpers.js';
 import { saveToSupabase } from '../middleware/upload.js';
 
 export const getDashboardStats = async (_req, res) => {
@@ -30,7 +30,7 @@ export const getRestaurants = async (req, res) => {
       include: { theme: { select: { title: true } } },
       orderBy: { id: 'desc' },
     });
-    res.json(restaurants);
+    res.json(restaurants.map((r) => safeRestaurant(r)));
   } catch (e) {
     serverError(res, e);
   }
@@ -71,7 +71,7 @@ export const createRestaurant = async (req, res) => {
       },
     });
 
-    res.status(201).json(restro);
+    res.status(201).json(safeRestaurant(restro));
   } catch (e) {
     serverError(res, e);
   }
@@ -85,7 +85,7 @@ export const updateRestaurant = async (req, res) => {
     if (req.file) data.logo = await saveToSupabase(req.file, 'logos');
 
     const restro = await prisma.restaurant.update({ where: { id: parseInt(id) }, data });
-    res.json(restro);
+    res.json(safeRestaurant(restro));
   } catch (e) {
     serverError(res, e);
   }
@@ -96,7 +96,7 @@ export const toggleStatus = async (req, res) => {
     const { id } = req.params;
     const current = await prisma.restaurant.findUnique({ where: { id: parseInt(id) }, select: { status: true } });
     const updated = await prisma.restaurant.update({ where: { id: parseInt(id) }, data: { status: current.status === 1 ? 0 : 1 } });
-    res.json(updated);
+    res.json(safeRestaurant(updated));
   } catch (e) {
     serverError(res, e);
   }
@@ -135,7 +135,7 @@ export const updatePlan = async (req, res) => {
       },
     });
 
-    res.json(updated);
+    res.json(safeRestaurant(updated));
   } catch (e) {
     serverError(res, e);
   }

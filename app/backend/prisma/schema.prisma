@@ -135,6 +135,8 @@ model Category {
   name_guj     String?
   name_hindi   String?
   categorydesc String?
+  icon         String?
+  image        String?
   sortorder    Int        @default(0)
 
   restaurant Restaurant @relation(fields: [restroid], references: [id], onDelete: Cascade)
